@@ -218,26 +218,26 @@ html,body{width:100%;background:var(--bg);color:var(--text);font-family:'EB Gara
     <div class="field-row">
       <div class="field">
         <label>Nombre</label>
-        <input id="inp-n" type="text" placeholder="Ing. David" autocomplete="given-name" oninput="chk()">
+        <input id="inp-n" type="text" placeholder="Tu nombre" autocomplete="given-name" oninput="chk()">
       </div>
       <div class="field">
         <label>Apellido</label>
-        <input id="inp-a" type="text" placeholder="Samuel" autocomplete="family-name" oninput="chk()">
+        <input id="inp-a" type="text" placeholder="Tu apellido" autocomplete="family-name" oninput="chk()">
       </div>
     </div>
     <div class="area-label">Área de postulación</div>
     <div class="areas-list">
-      <div class="area-card" onclick="selArea('biomedicas',this)">
+      <div class="area-card" onclick="selArea('Biomédicas',this)">
         <div class="ac-radio"><div class="ac-radio-dot"></div></div>
         <div class="ac-icon">🧬</div>
         <div class="ac-info"><div class="ac-name">Biomédicas</div><div class="ac-sub">Medicina, Enfermería, Farmacia</div></div>
       </div>
-      <div class="area-card" onclick="selArea('ingenierias',this)">
+      <div class="area-card" onclick="selArea('Ingenierías',this)">
         <div class="ac-radio"><div class="ac-radio-dot"></div></div>
         <div class="ac-icon">⚙️</div>
         <div class="ac-info"><div class="ac-name">Ingenierías</div><div class="ac-sub">Civil, Sistemas, Industrial</div></div>
       </div>
-      <div class="area-card" onclick="selArea('sociales',this)">
+      <div class="area-card" onclick="selArea('Sociales',this)">
         <div class="ac-radio"><div class="ac-radio-dot"></div></div>
         <div class="ac-icon">🌐</div>
         <div class="ac-info"><div class="ac-name">Sociales</div><div class="ac-sub">Derecho, Economía, CCSS</div></div>
@@ -306,47 +306,65 @@ html,body{width:100%;background:var(--bg);color:var(--text);font-family:'EB Gara
 <div class="saving-toast" id="toast">✓ Guardado</div>
 
 <script>
-// ========== CONSTANTES Y VARIABLES GLOBALES ==========
-const QS = [
+// ══════════════════════════════════════════
+// URL DEL WEB APP (Apps Script)
+// ══════════════════════════════════════════
+var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrVJ6YWfMGxJS-EckL1sHe-AEXP5mSlu4RhhVyyvmycOy_CRoh7KSNYPbehFWUHcsq/exec';
+
+// ══════════════════════════════════════════
+// KaTeX
+// ══════════════════════════════════════════
+function renderMath(el){
+  function doRender(){
+    if(typeof renderMathInElement==='undefined'){setTimeout(doRender,200);return;}
+    try{renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false,errorColor:'#ef4444',strict:false});}catch(e){console.warn('KaTeX error',e);}
+  }
+  doRender();
+}
+
+// ══════════════════════════════════════════
+// PREGUNTAS
+// ══════════════════════════════════════════
+var QS=[
   {n:1,t:"T",tm:"Análisis Vectorial",p:"¿Cuál es la diferencia entre magnitud <em>escalar</em> y magnitud <em>vectorial</em>?",o:["El escalar tiene dirección; el vector no","El vector tiene módulo, dirección y sentido; el escalar solo tiene módulo","Ambos se representan con flechas","El escalar siempre es positivo"],a:1,tip:"VECTOR = Módulo + Dirección + Sentido. Escalar = solo número. Ejemplos escalares: temperatura, masa, tiempo. Ejemplos vectoriales: fuerza, velocidad, aceleración."},
-  {n:2,t:"F",tm:"Análisis Vectorial",p:"¿Cuál es la fórmula correcta para calcular el <strong>módulo</strong> de un vector que tiene componente horizontal $A_x$ y componente vertical $A_y$?",o:["$|\\\\vec{A}| = A_x + A_y$","$|\\\\vec{A}| = A_x \\\\cdot A_y$","$|\\\\vec{A}| = \\\\sqrt{A_x^2 + A_y^2}$","$|\\\\vec{A}| = A_x^2 + A_y^2$"],a:2,tip:"Es el teorema de Pitágoras: el módulo es la hipotenusa del triángulo que forman las componentes. Raíz cuadrada SIEMPRE. Tríos útiles: 3-4-5, 6-8-10, 5-12-13, 8-15-17."},
-  {n:3,t:"F",tm:"Análisis Vectorial",p:"Un vector tiene módulo $|\\\\vec{A}|$ y forma un ángulo $\\\\theta$ con el eje horizontal. ¿Cuál es su <strong>componente horizontal</strong>?",o:["Componente horizontal $= |\\\\vec{A}| \\\\cdot \\\\sin\\\\theta$","Componente horizontal $= \\\\dfrac{|\\\\vec{A}|}{\\\\cos\\\\theta}$","Componente horizontal $= |\\\\vec{A}| \\\\cdot \\\\tan\\\\theta$","Componente horizontal $= |\\\\vec{A}| \\\\cdot \\\\cos\\\\theta$"],a:3,tip:"Regla de oro: componente HORIZONTAL → coseno del ángulo. Componente VERTICAL → seno del ángulo."},
+  {n:2,t:"F",tm:"Análisis Vectorial",p:"¿Cuál es la fórmula correcta para calcular el <strong>módulo</strong> de un vector que tiene componente horizontal $A_x$ y componente vertical $A_y$?",o:["$|\\vec{A}| = A_x + A_y$","$|\\vec{A}| = A_x \\cdot A_y$","$|\\vec{A}| = \\sqrt{A_x^2 + A_y^2}$","$|\\vec{A}| = A_x^2 + A_y^2$"],a:2,tip:"Es el teorema de Pitágoras: el módulo es la hipotenusa del triángulo que forman las componentes. Raíz cuadrada SIEMPRE. Tríos útiles: 3-4-5, 6-8-10, 5-12-13, 8-15-17."},
+  {n:3,t:"F",tm:"Análisis Vectorial",p:"Un vector tiene módulo $|\\vec{A}|$ y forma un ángulo $\\theta$ con el eje horizontal. ¿Cuál es su <strong>componente horizontal</strong>?",o:["Componente horizontal $= |\\vec{A}| \\cdot \\sin\\theta$","Componente horizontal $= \\dfrac{|\\vec{A}|}{\\cos\\theta}$","Componente horizontal $= |\\vec{A}| \\cdot \\tan\\theta$","Componente horizontal $= |\\vec{A}| \\cdot \\cos\\theta$"],a:3,tip:"Regla de oro: componente HORIZONTAL → coseno del ángulo. Componente VERTICAL → seno del ángulo."},
   {n:4,t:"U",tm:"Análisis Vectorial",p:"¿En qué unidad del SI se expresa el módulo de un vector de <strong>posición</strong>?",o:["m/s²","Newton (N)","Metro (m)","Joule (J)"],a:2,tip:"El módulo tiene las MISMAS unidades que el vector original. Posición → metro (m). Velocidad → m/s. Fuerza → Newton (N)."},
-  {n:5,t:"F",tm:"MRU",p:"Un objeto se mueve en MRU (velocidad constante). ¿Qué fórmula relaciona la posición $x$, la velocidad $v$ y el tiempo $t$?",o:["$x = x_0 + v_0 t + \\\\dfrac{1}{2}at^2$","$x = x_0 + v \\\\cdot t$","$v = v_0 + a \\\\cdot t$","$x = \\\\dfrac{1}{2} g t^2$"],a:1,tip:"En MRU no hay aceleración. La fórmula es lineal: posición = posición inicial + velocidad × tiempo."},
+  {n:5,t:"F",tm:"MRU",p:"Un objeto se mueve en MRU (velocidad constante). ¿Qué fórmula relaciona la posición $x$, la velocidad $v$ y el tiempo $t$?",o:["$x = x_0 + v_0 t + \\dfrac{1}{2}at^2$","$x = x_0 + v \\cdot t$","$v = v_0 + a \\cdot t$","$x = \\dfrac{1}{2} g t^2$"],a:1,tip:"En MRU no hay aceleración. La fórmula es lineal: posición = posición inicial + velocidad × tiempo."},
   {n:6,t:"T",tm:"MRU",p:"En el Movimiento Rectilíneo Uniforme (MRU), ¿qué magnitud permanece <strong>constante</strong>?",o:["La posición","La aceleración (a > 0)","La velocidad","La fuerza neta"],a:2,tip:"MRU = Movimiento Rectilíneo UNIFORME. 'Uniforme' significa que la velocidad NO cambia. Por eso la aceleración es CERO."},
   {n:7,t:"U",tm:"MRU",p:"¿Cuál es la unidad de la <strong>velocidad</strong> en el Sistema Internacional (SI)?",o:["km/h","m · s","m/s²","m/s"],a:3,tip:"Velocidad = distancia ÷ tiempo = metros ÷ segundos = m/s. Para convertir km/h a m/s: divide entre 3.6."},
-  {n:8,t:"F",tm:"MRUV",p:"En el MRUV, ¿cuál es la ecuación que relaciona la velocidad final $v$, la velocidad inicial $v_0$, la aceleración $a$ y el tiempo $t$?",o:["$v = \\\\dfrac{x}{t}$","$v = v_0 + a \\\\cdot t$","$v = \\\\dfrac{1}{2} a t^2$","$v = \\\\sqrt{2gh}$"],a:1,tip:"Primera ecuación del MRUV. Si parte del reposo, v₀ = 0 y queda: v = a · t."},
-  {n:9,t:"F",tm:"MRUV",p:"¿Cuál es la fórmula de la <strong>posición</strong> en MRUV cuando el cuerpo parte de la posición inicial $x_0 = 0$?",o:["$x = v \\\\cdot t$","$x = \\\\dfrac{v^2}{2a}$","$x = v_0 t + \\\\dfrac{1}{2}at^2$","$x = \\\\dfrac{1}{2} g t$"],a:2,tip:"Segunda ecuación del MRUV. Tiene un término cuadrático (t²). Si parte del reposo (v₀ = 0): x = ½ · a · t²."},
-  {n:10,t:"F",tm:"MRUV",p:"¿Qué ecuación del MRUV usas cuando el problema <strong>no da el tiempo</strong> pero pide la velocidad final?",o:["$v = v_0 + a \\\\cdot t$","$x = v_0 t + \\\\dfrac{1}{2}at^2$","$v^2 = v_0^2 + 2 \\\\cdot a \\\\cdot x$","$v = \\\\dfrac{x}{t}$"],a:2,tip:"Ecuación sin tiempo. Relaciona velocidad, aceleración y distancia sin necesitar el tiempo."},
+  {n:8,t:"F",tm:"MRUV",p:"En el MRUV, ¿cuál es la ecuación que relaciona la velocidad final $v$, la velocidad inicial $v_0$, la aceleración $a$ y el tiempo $t$?",o:["$v = \\dfrac{x}{t}$","$v = v_0 + a \\cdot t$","$v = \\dfrac{1}{2} a t^2$","$v = \\sqrt{2gh}$"],a:1,tip:"Primera ecuación del MRUV. Si parte del reposo, v₀ = 0 y queda: v = a · t."},
+  {n:9,t:"F",tm:"MRUV",p:"¿Cuál es la fórmula de la <strong>posición</strong> en MRUV cuando el cuerpo parte de la posición inicial $x_0 = 0$?",o:["$x = v \\cdot t$","$x = \\dfrac{v^2}{2a}$","$x = v_0 t + \\dfrac{1}{2}at^2$","$x = \\dfrac{1}{2} g t$"],a:2,tip:"Segunda ecuación del MRUV. Tiene un término cuadrático (t²). Si parte del reposo (v₀ = 0): x = ½ · a · t²."},
+  {n:10,t:"F",tm:"MRUV",p:"¿Qué ecuación del MRUV usas cuando el problema <strong>no da el tiempo</strong> pero pide la velocidad final?",o:["$v = v_0 + a \\cdot t$","$x = v_0 t + \\dfrac{1}{2}at^2$","$v^2 = v_0^2 + 2 \\cdot a \\cdot x$","$v = \\dfrac{x}{t}$"],a:2,tip:"Ecuación sin tiempo. Relaciona velocidad, aceleración y distancia sin necesitar el tiempo."},
   {n:11,t:"U",tm:"MRUV",p:"¿Cuál es la unidad de la <strong>aceleración</strong> en el Sistema Internacional?",o:["m/s","N · m","m/s²","kg · m/s"],a:2,tip:"Aceleración = cambio de velocidad ÷ tiempo = (m/s) ÷ s = m/s²."},
   {n:12,t:"T",tm:"MRUV",p:"La gráfica de velocidad versus tiempo (v-t) de un MRUV tiene la forma de:",o:["Una parábola","Una curva exponencial","Una línea horizontal","Una línea recta inclinada"],a:3,tip:"La pendiente de esa recta inclinada es igual a la aceleración."},
   {n:13,t:"U",tm:"Caída Libre",p:"¿Cuál es el valor estándar de la aceleración de la gravedad ($g$) en la superficie terrestre?",o:["8.0 m/s²","9.8 m/s²","10.8 m/s²","12.0 m/s²"],a:1,tip:"g = 9.8 m/s² (en exámenes peruanos se usa g = 10 m/s²)."},
-  {n:14,t:"F",tm:"Caída Libre",p:"Un objeto cae desde una altura $h$ partiendo del reposo. ¿Cuál es la fórmula para calcular el <strong>tiempo de caída</strong>?",o:["$t = \\\\dfrac{h}{g}$","$t = \\\\sqrt{\\\\dfrac{h}{2g}}$","$t = \\\\sqrt{\\\\dfrac{2h}{g}}$","$t = 2 \\\\cdot h \\\\cdot g$"],a:2,tip:"Se despeja t de h = ½·g·t². El '2' siempre va arriba. Ejemplo: h=20m, g=10 → t=√4=2s."},
-  {n:15,t:"F",tm:"Caída Libre",p:"Un objeto cae libremente desde una altura $h$ sin velocidad inicial. ¿Cuál es la fórmula de su <strong>velocidad al llegar al suelo</strong>?",o:["$v = g \\\\cdot h$","$v = \\\\sqrt{g \\\\cdot h}$","$v = \\\\sqrt{2 \\\\cdot g \\\\cdot h}$","$v = 2 \\\\cdot g \\\\cdot h$"],a:2,tip:"v² = 2·g·h, entonces v = √(2gh). El '2' SIEMPRE acompaña a g·h."},
-  {n:16,t:"F",tm:"Caída Libre",p:"Se lanza un objeto verticalmente hacia <strong>arriba</strong> con velocidad inicial $v_0$. ¿Cuál es la fórmula de la <strong>altura máxima</strong>?",o:["$h_{\\\\max} = v_0 \\\\cdot g$","$h_{\\\\max} = \\\\dfrac{v_0^2}{2g}$","$h_{\\\\max} = \\\\dfrac{2 \\\\cdot v_0}{g}$","$h_{\\\\max} = \\\\dfrac{v_0}{g^2}$"],a:1,tip:"En la altura máxima v = 0. Aplicando v² = v₀² − 2·g·h con v=0: h = v₀²/(2g)."},
+  {n:14,t:"F",tm:"Caída Libre",p:"Un objeto cae desde una altura $h$ partiendo del reposo. ¿Cuál es la fórmula para calcular el <strong>tiempo de caída</strong>?",o:["$t = \\dfrac{h}{g}$","$t = \\sqrt{\\dfrac{h}{2g}}$","$t = \\sqrt{\\dfrac{2h}{g}}$","$t = 2 \\cdot h \\cdot g$"],a:2,tip:"Se despeja t de h = ½·g·t². El '2' siempre va arriba. Ejemplo: h=20m, g=10 → t=√4=2s."},
+  {n:15,t:"F",tm:"Caída Libre",p:"Un objeto cae libremente desde una altura $h$ sin velocidad inicial. ¿Cuál es la fórmula de su <strong>velocidad al llegar al suelo</strong>?",o:["$v = g \\cdot h$","$v = \\sqrt{g \\cdot h}$","$v = \\sqrt{2 \\cdot g \\cdot h}$","$v = 2 \\cdot g \\cdot h$"],a:2,tip:"v² = 2·g·h, entonces v = √(2gh). El '2' SIEMPRE acompaña a g·h."},
+  {n:16,t:"F",tm:"Caída Libre",p:"Se lanza un objeto verticalmente hacia <strong>arriba</strong> con velocidad inicial $v_0$. ¿Cuál es la fórmula de la <strong>altura máxima</strong>?",o:["$h_{\\max} = v_0 \\cdot g$","$h_{\\max} = \\dfrac{v_0^2}{2g}$","$h_{\\max} = \\dfrac{2 \\cdot v_0}{g}$","$h_{\\max} = \\dfrac{v_0}{g^2}$"],a:1,tip:"En la altura máxima v = 0. Aplicando v² = v₀² − 2·g·h con v=0: h = v₀²/(2g)."},
   {n:17,t:"T",tm:"Caída Libre",p:"En el punto más alto de un lanzamiento vertical, ¿qué ocurre con la velocidad y con la aceleración?",o:["Ambas son cero","La velocidad es cero, pero la aceleración sigue siendo g = 9.8 m/s² hacia abajo","La velocidad es máxima y la aceleración es cero","La velocidad es igual a g"],a:1,tip:"¡Trampa clásica! En la cima v = 0, PERO la gravedad sigue actuando. g = 9.8 m/s² está presente siempre."},
   {n:18,t:"T",tm:"Movimiento Parabólico",p:"El movimiento parabólico se puede descomponer en dos movimientos independientes. ¿Cuáles son?",o:["Dos MRUV perpendiculares entre sí","MRU horizontal + MRUV vertical","MRU vertical + MRUV horizontal","Dos MRU paralelos"],a:1,tip:"Horizontal: velocidad constante (MRU). Vertical: actúa la gravedad (MRUV)."},
-  {n:19,t:"F",tm:"Movimiento Parabólico",p:"¿Cuál es la fórmula de la <strong>distancia horizontal total</strong> (alcance) de un proyectil lanzado con $v_0$ a un ángulo $\\\\theta$?",o:["$d_x = \\\\dfrac{v_0^2 \\\\cos(2\\\\theta)}{g}$","$d_x = \\\\dfrac{v_0 \\\\sin\\\\theta}{g}$","$d_x = \\\\dfrac{v_0^2 \\\\sin(2\\\\theta)}{g}$","$d_x = \\\\dfrac{v_0^2}{g \\\\cdot \\\\cos\\\\theta}$"],a:2,tip:"La clave es sen(2θ). Máximo alcance con 45°. Ángulos 30° y 60° tienen el MISMO alcance."},
-  {n:20,t:"F",tm:"Movimiento Parabólico",p:"¿Cuál es la fórmula de la <strong>altura máxima</strong> de un proyectil lanzado con $v_0$ a un ángulo $\\\\theta$?",o:["$h_{\\\\max} = \\\\dfrac{v_0^2}{2g}$","$h_{\\\\max} = \\\\dfrac{(v_0 \\\\cos\\\\theta)^2}{2g}$","$h_{\\\\max} = \\\\dfrac{(v_0 \\\\sin\\\\theta)^2}{2g}$","$h_{\\\\max} = \\\\dfrac{v_0^2 \\\\sin(2\\\\theta)}{g}$"],a:2,tip:"Solo la componente VERTICAL (v₀·senθ) determina la altura máxima."},
+  {n:19,t:"F",tm:"Movimiento Parabólico",p:"¿Cuál es la fórmula de la <strong>distancia horizontal total</strong> (alcance) de un proyectil lanzado con $v_0$ a un ángulo $\\theta$?",o:["$d_x = \\dfrac{v_0^2 \\cos(2\\theta)}{g}$","$d_x = \\dfrac{v_0 \\sin\\theta}{g}$","$d_x = \\dfrac{v_0^2 \\sin(2\\theta)}{g}$","$d_x = \\dfrac{v_0^2}{g \\cdot \\cos\\theta}$"],a:2,tip:"La clave es sen(2θ). Máximo alcance con 45°. Ángulos 30° y 60° tienen el MISMO alcance."},
+  {n:20,t:"F",tm:"Movimiento Parabólico",p:"¿Cuál es la fórmula de la <strong>altura máxima</strong> de un proyectil lanzado con $v_0$ a un ángulo $\\theta$?",o:["$h_{\\max} = \\dfrac{v_0^2}{2g}$","$h_{\\max} = \\dfrac{(v_0 \\cos\\theta)^2}{2g}$","$h_{\\max} = \\dfrac{(v_0 \\sin\\theta)^2}{2g}$","$h_{\\max} = \\dfrac{v_0^2 \\sin(2\\theta)}{g}$"],a:2,tip:"Solo la componente VERTICAL (v₀·senθ) determina la altura máxima."},
   {n:21,t:"T",tm:"Movimiento Parabólico",p:"En el punto más alto de la trayectoria parabólica, ¿cómo es la velocidad del proyectil?",o:["La velocidad es cero (el proyectil se detiene)","La velocidad es máxima","Solo tiene velocidad horizontal (la velocidad vertical es cero en ese punto)","Solo tiene velocidad vertical"],a:2,tip:"En la cima, la velocidad vertical es cero pero la horizontal se conserva. La velocidad total NO es cero."},
   {n:22,t:"U",tm:"Leyes de Newton",p:"¿Cuál es la unidad de la <strong>fuerza</strong> en el Sistema Internacional?",o:["Joule (J)","Watt (W)","Pascal (Pa)","Newton (N)"],a:3,tip:"1 Newton = 1 kg · m/s². J = energía, W = potencia, Pa = presión, N = fuerza."},
-  {n:23,t:"F",tm:"Leyes de Newton",p:"La Segunda Ley de Newton establece que la fuerza neta es igual a:",o:["$F_{neta} = \\\\dfrac{m}{a}$","$F_{neta} = m \\\\cdot v$","$F_{neta} = m \\\\cdot a$","$F_{neta} = \\\\dfrac{a}{m}$"],a:2,tip:"F = m · a es la ecuación fundamental de la Dinámica."},
-  {n:24,t:"F",tm:"Leyes de Newton",p:"¿Cuál es la fórmula correcta del <strong>peso</strong> ($P$) de un cuerpo de masa $m$?",o:["$P = \\\\dfrac{m}{g}$","$P = m + g$","$P = m \\\\cdot g$","$P = \\\\dfrac{g}{m}$"],a:2,tip:"Peso = m · g. La MASA no cambia, pero el PESO sí (en la Luna g = 1.6 m/s²)."},
+  {n:23,t:"F",tm:"Leyes de Newton",p:"La Segunda Ley de Newton establece que la fuerza neta es igual a:",o:["$F_{neta} = \\dfrac{m}{a}$","$F_{neta} = m \\cdot v$","$F_{neta} = m \\cdot a$","$F_{neta} = \\dfrac{a}{m}$"],a:2,tip:"F = m · a es la ecuación fundamental de la Dinámica."},
+  {n:24,t:"F",tm:"Leyes de Newton",p:"¿Cuál es la fórmula correcta del <strong>peso</strong> ($P$) de un cuerpo de masa $m$?",o:["$P = \\dfrac{m}{g}$","$P = m + g$","$P = m \\cdot g$","$P = \\dfrac{g}{m}$"],a:2,tip:"Peso = m · g. La MASA no cambia, pero el PESO sí (en la Luna g = 1.6 m/s²)."},
   {n:25,t:"T",tm:"Leyes de Newton",p:"La Primera Ley de Newton (Ley de Inercia) establece que un cuerpo:",o:["Siempre necesita una fuerza para poder moverse","Mantiene su estado de reposo o de MRU mientras la fuerza neta sea cero","Se acelera cuando su masa disminuye","Ejerce siempre una reacción igual y opuesta"],a:1,tip:"Sin fuerza neta → sin cambio de movimiento. La inercia es la resistencia a cambiar el estado."},
   {n:26,t:"T",tm:"Leyes de Newton",p:"La Tercera Ley de Newton: si el cuerpo A ejerce una fuerza sobre el cuerpo B, entonces:",o:["B ejerce una fuerza de mayor magnitud sobre A","B no reacciona si está en reposo","B ejerce sobre A una fuerza de igual magnitud pero en sentido contrario","La fuerza de B sobre A es la mitad de la de A sobre B"],a:2,tip:"Acción y Reacción: igual magnitud, sentido opuesto, actúan sobre cuerpos distintos."},
-  {n:27,t:"F",tm:"Estática",p:"¿Cuál es la condición matemática para el <strong>equilibrio estático</strong>?",o:["$\\\\Sigma F = m \\\\cdot a$","$\\\\Sigma F > 0$","$\\\\Sigma \\\\vec{F} = 0$ (la suma de todas las fuerzas en cada dirección es cero)","El cuerpo se mueve con velocidad constante distinta de cero"],a:2,tip:"Equilibrio: suma de fuerzas horizontales = 0 Y suma de fuerzas verticales = 0."},
-  {n:28,t:"F",tm:"Estática",p:"Un bloque sobre un plano inclinado a un ángulo $\\\\theta$. ¿Cuál es la <strong>fuerza normal</strong> $N$?",o:["$N = m \\\\cdot g$","$N = m \\\\cdot g \\\\cdot \\\\sin\\\\theta$","$N = m \\\\cdot g \\\\cdot \\\\tan\\\\theta$","$N = m \\\\cdot g \\\\cdot \\\\cos\\\\theta$"],a:3,tip:"En plano inclinado: N = mg·cosθ (perpendicular) y F∥ = mg·senθ (paralela). Cos para la normal, sen para el deslizamiento."},
-  {n:29,t:"F",tm:"Dinámica Lineal",p:"¿Cuál es la fórmula de la <strong>fuerza de rozamiento</strong> $f$?",o:["$f = \\\\mu \\\\cdot m$","$f = \\\\mu \\\\cdot g$","$f = m \\\\cdot \\\\mu^2$","$f = \\\\mu \\\\cdot N$"],a:3,tip:"Fricción = μ × Normal. Sin fuerza normal no hay fricción."},
-  {n:30,t:"U",tm:"Dinámica Lineal",p:"¿Cuál es la unidad del coeficiente de rozamiento $\\\\mu$?",o:["Newton (N)","kg/m","Es adimensional (no tiene unidades)","m/s²"],a:2,tip:"μ = f/N = N/N → sin unidades. Valores: hielo ≈ 0.03, madera ≈ 0.3, goma/asfalto ≈ 0.7."},
+  {n:27,t:"F",tm:"Estática",p:"¿Cuál es la condición matemática para el <strong>equilibrio estático</strong>?",o:["$\\Sigma F = m \\cdot a$","$\\Sigma F > 0$","$\\Sigma \\vec{F} = 0$ (la suma de todas las fuerzas en cada dirección es cero)","El cuerpo se mueve con velocidad constante distinta de cero"],a:2,tip:"Equilibrio: suma de fuerzas horizontales = 0 Y suma de fuerzas verticales = 0."},
+  {n:28,t:"F",tm:"Estática",p:"Un bloque sobre un plano inclinado a un ángulo $\\theta$. ¿Cuál es la <strong>fuerza normal</strong> $N$?",o:["$N = m \\cdot g$","$N = m \\cdot g \\cdot \\sin\\theta$","$N = m \\cdot g \\cdot \\tan\\theta$","$N = m \\cdot g \\cdot \\cos\\theta$"],a:3,tip:"En plano inclinado: N = mg·cosθ (perpendicular) y F∥ = mg·senθ (paralela). Cos para la normal, sen para el deslizamiento."},
+  {n:29,t:"F",tm:"Dinámica Lineal",p:"¿Cuál es la fórmula de la <strong>fuerza de rozamiento</strong> $f$?",o:["$f = \\mu \\cdot m$","$f = \\mu \\cdot g$","$f = m \\cdot \\mu^2$","$f = \\mu \\cdot N$"],a:3,tip:"Fricción = μ × Normal. Sin fuerza normal no hay fricción."},
+  {n:30,t:"U",tm:"Dinámica Lineal",p:"¿Cuál es la unidad del coeficiente de rozamiento $\\mu$?",o:["Newton (N)","kg/m","Es adimensional (no tiene unidades)","m/s²"],a:2,tip:"μ = f/N = N/N → sin unidades. Valores: hielo ≈ 0.03, madera ≈ 0.3, goma/asfalto ≈ 0.7."},
   {n:31,t:"T",tm:"Dinámica Lineal",p:"¿Por qué cuesta más trabajo <em>iniciar</em> el movimiento que <em>mantenerlo</em>?",o:["Porque la masa aumenta al empezar a moverse","Porque el coeficiente de rozamiento estático es mayor que el cinético","Porque la gravedad actúa con más intensidad al inicio","Porque la velocidad inicial genera inercia adicional"],a:1,tip:"μ_estático > μ_cinético siempre. Por eso cuesta más arrancar que mantener el movimiento."},
-  {n:32,t:"F",tm:"Trabajo Mecánico",p:"¿Cuál es la fórmula del <strong>trabajo mecánico</strong> $W$?",o:["$W = F \\\\cdot t$","$W = m \\\\cdot a \\\\cdot t$","$W = F \\\\cdot d \\\\cdot \\\\cos\\\\theta$","$W = \\\\dfrac{F}{d}$"],a:2,tip:"W = F · d · cosθ. Con θ=0°: W=F·d (máximo). Con θ=90°: W=0."},
+  {n:32,t:"F",tm:"Trabajo Mecánico",p:"¿Cuál es la fórmula del <strong>trabajo mecánico</strong> $W$?",o:["$W = F \\cdot t$","$W = m \\cdot a \\cdot t$","$W = F \\cdot d \\cdot \\cos\\theta$","$W = \\dfrac{F}{d}$"],a:2,tip:"W = F · d · cosθ. Con θ=0°: W=F·d (máximo). Con θ=90°: W=0."},
   {n:33,t:"U",tm:"Trabajo Mecánico",p:"¿Cuál es la unidad del <strong>trabajo mecánico</strong> en el SI?",o:["Newton (N)","Watt (W)","Pascal (Pa)","Joule (J)"],a:3,tip:"1 Joule = 1 N × 1 m. El Joule es unidad de trabajo Y energía."},
   {n:34,t:"T",tm:"Trabajo Mecánico",p:"¿Cuándo el trabajo de una fuerza es <strong>negativo</strong>?",o:["Cuando la fuerza es perpendicular al desplazamiento (θ=90°)","Cuando el ángulo entre fuerza y desplazamiento es mayor de 90°","Cuando el objeto acelera","El trabajo nunca puede ser negativo"],a:1,tip:"W = F·d·cosθ. Si θ>90°, cosθ<0, W<0. La fricción siempre hace trabajo negativo (θ=180°)."},
-  {n:35,t:"F",tm:"Potencia Mecánica",p:"¿Cuál es la fórmula de la <strong>potencia mecánica</strong> $P$?",o:["$P = F \\\\cdot d$","$P = m \\\\cdot a$","$P = W \\\\cdot t$","$P = \\\\dfrac{W}{t}$"],a:3,tip:"P = W/t (trabajo por unidad de tiempo). También P = F · v."},
+  {n:35,t:"F",tm:"Potencia Mecánica",p:"¿Cuál es la fórmula de la <strong>potencia mecánica</strong> $P$?",o:["$P = F \\cdot d$","$P = m \\cdot a$","$P = W \\cdot t$","$P = \\dfrac{W}{t}$"],a:3,tip:"P = W/t (trabajo por unidad de tiempo). También P = F · v."},
   {n:36,t:"U",tm:"Potencia Mecánica",p:"¿Cuál es la unidad de la <strong>potencia</strong> en el SI?",o:["Joule (J)","Watt (W)","Newton (N)","Volt (V)"],a:1,tip:"1 Watt = 1 J/s. 1 HP ≈ 746 W."},
-  {n:37,t:"F",tm:"Energía Mecánica",p:"¿Cuál es la fórmula de la <strong>energía cinética</strong> $E_c$?",o:["$E_c = m \\\\cdot v$","$E_c = m \\\\cdot v^2$","$E_c = \\\\dfrac{1}{2} m v^2$","$E_c = 2 m v^2$"],a:2,tip:"El factor ½ es ESENCIAL. Si la velocidad se duplica, la Ec se cuadruplica."},
-  {n:38,t:"F",tm:"Energía Mecánica",p:"¿Cuál es la fórmula de la <strong>energía potencial gravitatoria</strong> $E_p$?",o:["$E_p = m \\\\cdot h$","$E_p = m \\\\cdot g$","$E_p = g \\\\cdot h$","$E_p = m \\\\cdot g \\\\cdot h$"],a:3,tip:"Ep = m · g · h. Las tres variables son obligatorias. Unidad: Joule."},
-  {n:39,t:"F",tm:"Energía Mecánica",p:"La <strong>conservación de la energía mecánica</strong> (sin rozamiento) se expresa como:",o:["$E_{c1} + E_{p1} = E_{c2} + E_{p2}$","$E_{c1} = E_{p1}$","$E_c + E_p = m \\\\cdot g$","$E_{c1} - E_{p1} = 0$"],a:0,tip:"La energía mecánica total (Ec + Ep) se conserva sin rozamiento. Al bajar gana Ec y pierde Ep."},
+  {n:37,t:"F",tm:"Energía Mecánica",p:"¿Cuál es la fórmula de la <strong>energía cinética</strong> $E_c$?",o:["$E_c = m \\cdot v$","$E_c = m \\cdot v^2$","$E_c = \\dfrac{1}{2} m v^2$","$E_c = 2 m v^2$"],a:2,tip:"El factor ½ es ESENCIAL. Si la velocidad se duplica, la Ec se cuadruplica."},
+  {n:38,t:"F",tm:"Energía Mecánica",p:"¿Cuál es la fórmula de la <strong>energía potencial gravitatoria</strong> $E_p$?",o:["$E_p = m \\cdot h$","$E_p = m \\cdot g$","$E_p = g \\cdot h$","$E_p = m \\cdot g \\cdot h$"],a:3,tip:"Ep = m · g · h. Las tres variables son obligatorias. Unidad: Joule."},
+  {n:39,t:"F",tm:"Energía Mecánica",p:"La <strong>conservación de la energía mecánica</strong> (sin rozamiento) se expresa como:",o:["$E_{c1} + E_{p1} = E_{c2} + E_{p2}$","$E_{c1} = E_{p1}$","$E_c + E_p = m \\cdot g$","$E_{c1} - E_{p1} = 0$"],a:0,tip:"La energía mecánica total (Ec + Ep) se conserva sin rozamiento. Al bajar gana Ec y pierde Ep."},
   {n:40,t:"U",tm:"Energía Mecánica",p:"¿Cuál es la unidad de la <strong>energía mecánica</strong> en el SI?",o:["Watt (W)","Newton (N)","Joule (J)","Pascal (Pa)"],a:2,tip:"1 Joule = 1 kg · m²/s². El Watt es potencia, no energía."},
   {n:41,t:"T",tm:"Energía Mecánica",p:"Una pelota rueda y se detiene por rozamiento. ¿Qué ocurre con su energía mecánica?",o:["Se destruye completamente","Se transforma en energía térmica (calor) por el rozamiento","Se conserva porque la energía total siempre se conserva","Se convierte íntegramente en energía potencial"],a:1,tip:"La energía MECÁNICA NO se conserva con rozamiento. Se convierte en calor. La energía TOTAL sí se conserva."},
   {n:42,t:"C",tm:"Análisis Vectorial",p:"Una fuerza tiene componente horizontal de 6 N y componente vertical de 8 N. ¿Cuál es el módulo?",o:["14 N","48 N","10 N","7 N"],a:2,tip:"Módulo = √(6²+8²) = √100 = 10 N. Trío pitagórico 6-8-10 (múltiplo de 3-4-5)."},
@@ -362,7 +380,7 @@ const QS = [
   {n:52,t:"C",tm:"Movimiento Parabólico",p:"Proyectil con $v_0=20$ m/s a 30°. ¿Cuál es la altura máxima? ($g=10$, sen30°=0.5)",o:["2.5 m","5 m","10 m","20 m"],a:1,tip:"h = (20×0.5)²÷(2×10) = 100÷20 = 5 m."},
   {n:53,t:"C",tm:"Leyes de Newton",p:"¿Cuánto pesa un objeto de 12 kg? ($g=10$ m/s²)",o:["12 N","60 N","120 N","1200 N"],a:2,tip:"Peso = 12×10 = 120 N. La masa (12 kg) no varía; el peso sí según g."},
   {n:54,t:"C",tm:"Leyes de Newton",p:"Fuerza de 75 N sobre un objeto de 5 kg sin rozamiento. ¿Cuál es la aceleración?",o:["0.07 m/s²","15 m/s²","70 m/s²","375 m/s²"],a:1,tip:"a = 75÷5 = 15 m/s²."},
-  {n:55,t:"C",tm:"Dinámica Lineal",p:"Bloque de 6 kg con $\\\\mu_c=0.4$ ($g=10$). ¿Cuánto vale la fuerza de rozamiento?",o:["2.4 N","16 N","24 N","60 N"],a:2,tip:"N = 6×10 = 60 N. f = 0.4×60 = 24 N."},
+  {n:55,t:"C",tm:"Dinámica Lineal",p:"Bloque de 6 kg con $\\mu_c=0.4$ ($g=10$). ¿Cuánto vale la fuerza de rozamiento?",o:["2.4 N","16 N","24 N","60 N"],a:2,tip:"N = 6×10 = 60 N. f = 0.4×60 = 24 N."},
   {n:56,t:"C",tm:"Dinámica Lineal",p:"Caja de 8 kg empujada con 60 N y rozamiento de 20 N. ¿Cuál es la aceleración?",o:["3 m/s²","5 m/s²","7.5 m/s²","10 m/s²"],a:1,tip:"F_neta = 60−20 = 40 N. a = 40÷8 = 5 m/s²."},
   {n:57,t:"C",tm:"Estática",p:"Bloque de 5 kg en plano a 37°. ¿Componente del peso <strong>paralela al plano</strong>? (sen37°=0.6, $g=10$)",o:["20 N","30 N","40 N","50 N"],a:1,tip:"F∥ = 5×10×0.6 = 30 N. La normal sería: 5×10×0.8 = 40 N."},
   {n:58,t:"C",tm:"Trabajo Mecánico",p:"Caja arrastrada 10 m con 80 N a 60°. ¿Cuánto trabajo? (cos60°=0.5)",o:["200 J","400 J","692 J","800 J"],a:1,tip:"W = 80×10×0.5 = 400 J."},
@@ -379,208 +397,208 @@ const QS = [
   {n:69,t:"C",tm:"Estática",p:"Bloque de 4 kg en plano a 53°. ¿Cuál es la fuerza normal? (cos53°=0.6, $g=10$)",o:["16 N","24 N","32 N","40 N"],a:1,tip:"N = 4×10×0.6 = 24 N. En plano inclinado N ≠ m·g."},
   {n:70,t:"C",tm:"MRU",p:"Un auto circula a 108 km/h. ¿A cuántos m/s equivale?",o:["20 m/s","25 m/s","30 m/s","35 m/s"],a:2,tip:"108÷3.6 = 30 m/s. Factor: 1 km/h = 1/3.6 m/s."}
 ];
-const TSEC = 30, TOTAL = QS.length;
-let stu = {n:'', a:'', area:''};
-let idx = 0, ans = [], tmr = null, tLeft = 0, done = false, pickedArea = '', transitioning = false;
-const areaLbl = {biomedicas:'🧬 Biomédicas', ingenierias:'⚙️ Ingenierías', sociales:'🌐 Sociales'};
-const tipoLbl = {T:'Teoría', F:'Fórmula', U:'Unidad', C:'Cálculo'};
 
-function renderMath(el){
-  function doRender(){
-    if(typeof renderMathInElement==='undefined'){setTimeout(doRender,200);return;}
-    try{renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false,errorColor:'#ef4444',strict:false});}catch(e){console.warn('KaTeX error',e);}
-  }
-  doRender();
-}
+var TSEC=30, TOTAL=QS.length;
+var stu={n:'',a:'',area:''};
+var idx=0, ans=[], tmr=null, tLeft=0, done=false, pickedArea='', transitioning=false;
+var tipoLbl={T:'Teoría',F:'Fórmula',U:'Unidad',C:'Cálculo'};
 
 function selArea(ar,el){
-  pickedArea = ar;
-  document.querySelectorAll('.area-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  chk();
+  pickedArea=ar;
+  document.querySelectorAll('.area-card').forEach(function(c){c.classList.remove('selected');});
+  el.classList.add('selected'); chk();
 }
 function chk(){
-  let n = document.getElementById('inp-n').value.trim();
-  let a = document.getElementById('inp-a').value.trim();
-  let b = document.getElementById('btn-start');
-  if(n && a && pickedArea) b.classList.add('ready'); else b.classList.remove('ready');
+  var n=document.getElementById('inp-n').value.trim();
+  var a=document.getElementById('inp-a').value.trim();
+  var b=document.getElementById('btn-start');
+  if(n&&a&&pickedArea) b.classList.add('ready'); else b.classList.remove('ready');
 }
 function startExam(){
-  stu.n = document.getElementById('inp-n').value.trim();
-  stu.a = document.getElementById('inp-a').value.trim();
-  stu.area = pickedArea;
-  idx = 0; ans = []; transitioning = false;
-  sw('screen-exam');
-  renderQ();
+  stu.n=document.getElementById('inp-n').value.trim();
+  stu.a=document.getElementById('inp-a').value.trim();
+  stu.area=pickedArea;
+  idx=0; ans=[]; transitioning=false;
+  sw('screen-exam'); renderQ();
 }
 function sw(id){
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
 function renderQ(){
-  done = false; tLeft = TSEC; transitioning = false;
-  let q = QS[idx];
-  let pct = Math.round((idx/TOTAL)*100);
-  document.getElementById('bar-st').innerHTML = '<strong>'+stu.n+' '+stu.a+'</strong>';
-  document.getElementById('bar-ctr').textContent = (idx+1)+'/'+TOTAL;
-  document.getElementById('bar-fill').style.width = pct+'%';
-  document.getElementById('bar-pct').textContent = pct+'%';
-  document.getElementById('bar-ok').textContent = ans.filter(a => a.ok).length+' ✓';
-  document.getElementById('bar-err').textContent = ans.filter(a => !a.ok).length+' ✗';
-  document.getElementById('rst').className = 'result-stamp';
-  document.getElementById('rst').innerHTML = '';
-  let nxBtn = document.getElementById('btn-nx');
-  nxBtn.className = 'btn-next';
-  nxBtn.innerHTML = (idx < TOTAL-1 ? 'Siguiente' : 'Ver Resultado') + ' <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
-  let letters = ['A','B','C','D'];
-  let optHtml = '';
-  for(let oi=0; oi<q.o.length; oi++){
-    let optText = q.o[oi];
-    let isPureMath = /^\$[^$]/.test(optText.trim()) && /[^$]\$$/.test(optText.trim());
-    if(isPureMath){ optText = optText.replace(/^\$/,'$$$$').replace(/\$$/,'$$$$'); }
-    let hasF = q.o[oi].indexOf('$') !== -1;
-    optHtml += '<div class="opt '+(isPureMath?'opt-display':'')+'" id="o'+oi+'" onclick="pick('+oi+')"><span class="opt-lt">'+letters[oi]+'</span><span class="opt-tx'+(hasF?' is-formula':'')+'">'+optText+'</span></div>';
+  done=false; tLeft=TSEC; transitioning=false;
+  var q=QS[idx];
+  var pct=Math.round((idx/TOTAL)*100);
+  document.getElementById('bar-st').innerHTML='<strong>'+stu.n+' '+stu.a+'</strong>';
+  document.getElementById('bar-ctr').textContent=(idx+1)+'/'+TOTAL;
+  document.getElementById('bar-fill').style.width=pct+'%';
+  document.getElementById('bar-pct').textContent=pct+'%';
+  document.getElementById('bar-ok').textContent=ans.filter(function(a){return a.ok;}).length+' ✓';
+  document.getElementById('bar-err').textContent=ans.filter(function(a){return !a.ok;}).length+' ✗';
+  document.getElementById('rst').className='result-stamp';
+  document.getElementById('rst').innerHTML='';
+  var nxBtn=document.getElementById('btn-nx');
+  nxBtn.className='btn-next';
+  nxBtn.innerHTML=(idx<TOTAL-1?'Siguiente':'Ver Resultado')+' <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+  var letters=['A','B','C','D'];
+  var optHtml='';
+  for(var oi=0;oi<q.o.length;oi++){
+    var optText=q.o[oi];
+    var isPureMath=/^\$[^$]/.test(optText.trim())&&/[^$]\$$/.test(optText.trim());
+    if(isPureMath){optText=optText.replace(/^\$/,'$$$$').replace(/\$$/,'$$$$');}
+    var hasF=q.o[oi].indexOf('$')!==-1;
+    optHtml+='<div class="opt '+(isPureMath?'opt-display':'')+'" id="o'+oi+'" onclick="pick('+oi+')"><span class="opt-lt">'+letters[oi]+'</span><span class="opt-tx'+(hasF?' is-formula':'')+'">'+optText+'</span></div>';
   }
-  document.getElementById('qw').innerHTML =
+  document.getElementById('qw').innerHTML=
     '<div class="timer-row"><div class="timer-ring tr-ok" id="tr"><svg viewBox="0 0 52 52"><circle class="ring-bg" cx="26" cy="26" r="20"/><circle class="ring-bar" id="rb" cx="26" cy="26" r="20"/></svg><span class="ring-txt" id="rt">'+TSEC+'</span></div><div class="timer-meta"><span class="timer-strong">'+TSEC+' segundos</span><span class="timer-sub">'+tipoLbl[q.t]+' · '+q.tm+'</span></div></div>'+
     '<div class="q-card '+q.t+' q-anim" id="qc"><div class="q-meta"><span class="q-badge">'+tipoLbl[q.t]+'</span><span class="q-tema">'+q.tm+'</span></div><div class="q-text" id="qtext"></div><div class="options" id="opts">'+optHtml+'</div><div class="to-badge" id="tob">⏱ Tiempo agotado — la respuesta correcta está marcada</div><div class="tip-box" id="tipb"><div class="tip-lbl" id="tipl"></div><span id="tipt"></span></div></div>';
-  document.getElementById('qtext').innerHTML = q.p;
+  document.getElementById('qtext').innerHTML=q.p;
   renderMath(document.getElementById('qw'));
   window.scrollTo(0,0);
   startTmr();
 }
 function startTmr(){
   clearInterval(tmr);
-  let circ = 125.6;
-  tmr = setInterval(() => {
+  var circ=125.6;
+  tmr=setInterval(function(){
     tLeft--;
-    let rb = document.getElementById('rb'), rt = document.getElementById('rt'), tr = document.getElementById('tr');
-    if(!rb){ clearInterval(tmr); return; }
-    let p = tLeft/TSEC;
-    rb.style.strokeDashoffset = circ * (1 - p);
-    rt.textContent = tLeft;
-    tr.className = 'timer-ring ' + (p > .5 ? 'tr-ok' : p > .25 ? 'tr-mid' : 'tr-low');
-    if(tLeft <= 0){ clearInterval(tmr); if(!done) timeout(); }
-  }, 1000);
+    var rb=document.getElementById('rb'),rt=document.getElementById('rt'),tr=document.getElementById('tr');
+    if(!rb){clearInterval(tmr);return;}
+    var p=tLeft/TSEC;
+    rb.style.strokeDashoffset=circ*(1-p);
+    rt.textContent=tLeft;
+    tr.className='timer-ring '+(p>.5?'tr-ok':p>.25?'tr-mid':'tr-low');
+    if(tLeft<=0){clearInterval(tmr);if(!done)timeout();}
+  },1000);
 }
 function pick(i){
-  if(done) return; done = true; clearInterval(tmr);
-  let q = QS[idx], ok = i === q.a;
-  ans.push({q:q.n, sel:i, ok:ok, to:false});
-  document.querySelectorAll('.opt').forEach((el, j) => {
+  if(done)return; done=true; clearInterval(tmr);
+  var q=QS[idx],ok=i===q.a;
+  ans.push({q:q.n,sel:i,ok:ok,to:false});
+  document.querySelectorAll('.opt').forEach(function(el,j){
     el.classList.add('dis');
-    if(j === q.a) el.classList.add('c-ok');
-    else if(j === i) el.classList.add('c-err');
+    if(j===q.a)el.classList.add('c-ok');
+    else if(j===i)el.classList.add('c-err');
   });
-  document.getElementById('qc').classList.add(ok ? 'c-ok' : 'c-err');
-  showTip(ok ? '✓ Correcto' : '✗ Incorrecto', q.tip);
-  let rs = document.getElementById('rst');
-  rs.className = 'result-stamp ' + (ok ? 'rs-ok' : 'rs-err');
-  rs.innerHTML = ok ? '✦ Correcto' : '✦ Incorrecto';
+  document.getElementById('qc').classList.add(ok?'c-ok':'c-err');
+  showTip(ok?'✓ Correcto':'✗ Incorrecto',q.tip);
+  var rs=document.getElementById('rst');
+  rs.className='result-stamp '+(ok?'rs-ok':'rs-err');
+  rs.innerHTML=ok?'✦ Correcto':'✦ Incorrecto';
   document.getElementById('btn-nx').classList.add('show');
 }
 function timeout(){
-  done = true;
-  let q = QS[idx];
-  ans.push({q:q.n, sel:-1, ok:false, to:true});
-  document.querySelectorAll('.opt').forEach((el, j) => { el.classList.add('dis'); if(j === q.a) el.classList.add('c-ok'); });
+  done=true;
+  var q=QS[idx];
+  ans.push({q:q.n,sel:-1,ok:false,to:true});
+  document.querySelectorAll('.opt').forEach(function(el,j){el.classList.add('dis');if(j===q.a)el.classList.add('c-ok');});
   document.getElementById('tob').classList.add('show');
-  showTip('⏱ Tiempo agotado', q.tip);
-  let rs = document.getElementById('rst'); rs.className = 'result-stamp rs-to'; rs.innerHTML = '⏱ Tiempo agotado';
+  showTip('⏱ Tiempo agotado',q.tip);
+  var rs=document.getElementById('rst'); rs.className='result-stamp rs-to'; rs.innerHTML='⏱ Tiempo agotado';
   document.getElementById('btn-nx').classList.add('show');
 }
-function showTip(lbl, txt){
-  document.getElementById('tipl').textContent = lbl;
-  document.getElementById('tipt').textContent = txt;
+function showTip(lbl,txt){
+  document.getElementById('tipl').textContent=lbl;
+  document.getElementById('tipt').textContent=txt;
   document.getElementById('tipb').classList.add('show');
-  setTimeout(() => { let el = document.getElementById('tipb'); if(el) el.scrollIntoView({behavior:'smooth', block:'nearest'}); }, 200);
+  setTimeout(function(){var el=document.getElementById('tipb');if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},200);
 }
 function nxt(){
-  if(transitioning) return; transitioning = true; clearInterval(tmr);
+  if(transitioning)return; transitioning=true; clearInterval(tmr);
   idx++;
-  if(idx >= TOTAL){ showResults(); return; }
-  let qc = document.getElementById('qc');
-  if(qc) qc.classList.add('out');
-  setTimeout(() => { renderQ(); }, 160);
+  if(idx>=TOTAL){showResults();return;}
+  var qc=document.getElementById('qc');
+  if(qc)qc.classList.add('out');
+  setTimeout(function(){renderQ();},160);
 }
 function showResults(){
   clearInterval(tmr); sw('screen-results');
-  let ok = ans.filter(a => a.ok).length;
-  let to = ans.filter(a => a.to).length;
-  let err = TOTAL - ok;
-  let pct = Math.round((ok/TOTAL)*100);
-  let temas = {};
-  QS.forEach(q => {
-    if(!temas[q.tm]) temas[q.tm] = {tot:0, ok:0};
+  var ok=ans.filter(function(a){return a.ok;}).length;
+  var to=ans.filter(function(a){return a.to;}).length;
+  var err=TOTAL-ok;
+  var pct=Math.round((ok/TOTAL)*100);
+  var temas={};
+  QS.forEach(function(q){
+    if(!temas[q.tm])temas[q.tm]={tot:0,ok:0};
     temas[q.tm].tot++;
-    let a = ans.find(a => a.q === q.n);
-    if(a && a.ok) temas[q.tm].ok++;
+    var a=ans.find(function(a){return a.q===q.n;});
+    if(a&&a.ok)temas[q.tm].ok++;
   });
-  let record = { id: Date.now(), fecha: new Date().toLocaleString('es-PE'), nombre: stu.n, apellido: stu.a, area: stu.area, puntaje: pct, correctas: ok, incorrectas: err-to, sinTiempo: to, total: TOTAL, temas: temas };
-  dbSave(record); sendToSheets(record); showToast();
-  document.getElementById('r-st').innerHTML = '<strong>'+stu.n+' '+stu.a+'</strong> · '+areaLbl[stu.area];
-  let sc = document.getElementById('r-score');
-  sc.textContent = pct;
-  sc.className = 'big-score ' + (pct>=70 ? 'bg-great' : pct>=50 ? 'bg-mid' : 'bg-low');
-  document.getElementById('r-pct').textContent = ok+' de '+TOTAL+' correctas';
-  let bar = document.getElementById('r-bar');
-  bar.style.background = pct>=70 ? '#22c55e' : pct>=50 ? '#f59e0b' : '#ef4444';
-  setTimeout(() => { bar.style.width = pct+'%'; }, 200);
-  let msgs = [[85,'✦ Excelente, '+stu.n+'! Dominas los conceptos. Estás muy bien preparado para el examen.'],[70,'✦ Buen trabajo, '+stu.n+'! Tienes base sólida. Repasa los temas donde fallaste.'],[50,'✦ Resultado regular, '+stu.n+'. Enfócate en fórmulas y cálculo.'],[0,'✦ Tú puedes, '+stu.n+'! Este resultado es solo el punto de partida. Regresa más fuerte.']];
-  document.getElementById('r-msg').textContent = msgs.find(m => pct >= m[0])[1];
-  document.getElementById('r-ok').textContent = ok;
-  document.getElementById('r-err').textContent = err - to;
-  document.getElementById('r-to').textContent = to;
-  let temasArr = Object.entries(temas).map(([tm, d]) => ({tm, ok: d.ok, tot: d.tot, pct: d.tot ? Math.round((d.ok/d.tot)*100) : 0}));
-  temasArr.sort((a,b) => b.pct - a.pct);
-  let best = temasArr[0], worst = temasArr[temasArr.length-1];
-  let hlEl = document.getElementById('r-highlights');
-  if(hlEl && best && worst){
-    hlEl.innerHTML = '<div class="r-hl-box"><div class="r-hl-tag up">↑ PUNTO FUERTE</div><div class="r-hl-lbl">Mejor tema</div><div class="r-hl-tema">'+best.tm+'</div><div class="r-hl-score">'+best.ok+'/'+best.tot+' — '+best.pct+'%</div></div><div class="r-hl-box"><div class="r-hl-tag dn">↓ A MEJORAR</div><div class="r-hl-lbl">Tema difícil</div><div class="r-hl-tema">'+worst.tm+'</div><div class="r-hl-score">'+worst.ok+'/'+worst.tot+' — '+worst.pct+'%</div></div>';
+  var record={fecha:new Date().toLocaleString('es-PE'),nombre:stu.n,apellido:stu.a,area:stu.area,puntaje:pct,correctas:ok,incorrectas:err-to,sinTiempo:to,total:TOTAL};
+  sendToSheets(record);
+  showToast();
+  document.getElementById('r-st').innerHTML='<strong>'+stu.n+' '+stu.a+'</strong> · '+stu.area;
+  var sc=document.getElementById('r-score');
+  sc.textContent=pct;
+  sc.className='big-score '+(pct>=70?'bg-great':pct>=50?'bg-mid':'bg-low');
+  document.getElementById('r-pct').textContent=ok+' de '+TOTAL+' correctas';
+  var bar=document.getElementById('r-bar');
+  bar.style.background=pct>=70?'#22c55e':pct>=50?'#f59e0b':'#ef4444';
+  setTimeout(function(){bar.style.width=pct+'%';},200);
+  var msgs=[[85,'✦ Excelente, '+stu.n+'! Dominas los conceptos. Estás muy bien preparado para el examen.'],[70,'✦ Buen trabajo, '+stu.n+'! Tienes base sólida. Repasa los temas donde fallaste.'],[50,'✦ Resultado regular, '+stu.n+'. Enfócate en fórmulas y cálculo.'],[0,'✦ Tú puedes, '+stu.n+'! Este resultado es solo el punto de partida. Regresa más fuerte.']];
+  document.getElementById('r-msg').textContent=msgs.find(function(m){return pct>=m[0];})[1];
+  document.getElementById('r-ok').textContent=ok;
+  document.getElementById('r-err').textContent=err-to;
+  document.getElementById('r-to').textContent=to;
+  var temasArr=Object.entries(temas).map(function(e){return{tm:e[0],ok:e[1].ok,tot:e[1].tot,pct:e[1].tot?Math.round((e[1].ok/e[1].tot)*100):0};});
+  temasArr.sort(function(a,b){return b.pct-a.pct;});
+  var best=temasArr[0],worst=temasArr[temasArr.length-1];
+  var hlEl=document.getElementById('r-highlights');
+  if(hlEl&&best&&worst){
+    hlEl.innerHTML='<div class="r-hl-box"><div class="r-hl-tag up">↑ PUNTO FUERTE</div><div class="r-hl-lbl">Mejor tema</div><div class="r-hl-tema">'+best.tm+'</div><div class="r-hl-score">'+best.ok+'/'+best.tot+' — '+best.pct+'%</div></div><div class="r-hl-box"><div class="r-hl-tag dn">↓ A MEJORAR</div><div class="r-hl-lbl">Tema difícil</div><div class="r-hl-tema">'+worst.tm+'</div><div class="r-hl-score">'+worst.ok+'/'+worst.tot+' — '+worst.pct+'%</div></div>';
   }
-  let vibrant = ['#22d3ee','#22c55e','#a855f7','#f59e0b','#ef4444','#3b82f6','#10b981','#f472b6','#84cc16','#fb923c'];
-  let bkHtml = '';
-  Object.entries(temas).forEach(([tm, d], i) => {
-    let p = d.tot ? Math.round((d.ok/d.tot)*100) : 0;
-    let col = vibrant[i % vibrant.length];
-    bkHtml += '<div class="bd-row"><span class="bd-lbl">'+tm+'</span><div class="bd-track"><div class="bd-bar" style="width:0%;background:'+col+'" data-w="'+p+'"></div></div><span class="bd-sc">'+d.ok+'/'+d.tot+'</span></div>';
+  var vibrant=['#22d3ee','#22c55e','#a855f7','#f59e0b','#ef4444','#3b82f6','#10b981','#f472b6','#84cc16','#fb923c'];
+  var bkHtml='';
+  Object.entries(temas).forEach(function(entry,i){
+    var tm=entry[0],d=entry[1];
+    var p=d.tot?Math.round((d.ok/d.tot)*100):0;
+    var col=vibrant[i%vibrant.length];
+    bkHtml+='<div class="bd-row"><span class="bd-lbl">'+tm+'</span><div class="bd-track"><div class="bd-bar" style="width:0%;background:'+col+'" data-w="'+p+'"></div></div><span class="bd-sc">'+d.ok+'/'+d.tot+'</span></div>';
   });
-  document.getElementById('r-bk').innerHTML = bkHtml;
-  setTimeout(() => { document.querySelectorAll('.bd-bar').forEach(b => { b.style.transition = 'width .9s ease'; b.style.width = b.dataset.w+'%'; }); }, 200);
+  document.getElementById('r-bk').innerHTML=bkHtml;
+  setTimeout(function(){document.querySelectorAll('.bd-bar').forEach(function(b){b.style.transition='width .9s ease';b.style.width=b.dataset.w+'%';});},200);
 }
 function retry(){
-  clearInterval(tmr); idx = 0; ans = []; transitioning = false;
-  stu = {n:'', a:'', area:''};
+  clearInterval(tmr); idx=0; ans=[]; transitioning=false;
+  stu={n:'',a:'',area:''};
   sw('screen-register');
-  document.getElementById('inp-n').value = '';
-  document.getElementById('inp-a').value = '';
-  document.querySelectorAll('.area-card').forEach(c => c.classList.remove('selected'));
-  pickedArea = '';
+  document.getElementById('inp-n').value='';
+  document.getElementById('inp-a').value='';
+  document.querySelectorAll('.area-card').forEach(function(c){c.classList.remove('selected');});
+  pickedArea='';
   document.getElementById('btn-start').classList.remove('ready');
 }
-const DB_KEY = 'simulacro_resultados';
-function dbSave(r){ try{ let d = dbLoad(); d.push(r); localStorage.setItem(DB_KEY, JSON.stringify(d)); } catch(e){} }
-function dbLoad(){ try{ let raw = localStorage.getItem(DB_KEY); return raw ? JSON.parse(raw) : []; } catch(e){ return []; } }
-function showToast(){ let t = document.getElementById('toast'); if(t){ t.classList.add('show'); setTimeout(() => { t.classList.remove('show'); }, 2500); } }
-function sendToSheets(record){
-  let el = document.getElementById('sheets-status');
-  if(!el) return;
-  el.style.display = 'block';
-  el.className = 'sheets-status sheets-saving';
-  el.textContent = '⏳ Guardando en Google Sheets...';
-  if(typeof google !== 'undefined' && google.script && google.script.run){
-    google.script.run
-      .withSuccessHandler(() => { el.className = 'sheets-status sheets-ok'; el.textContent = '✓ Guardado en Google Sheets'; })
-      .withFailureHandler(err => { el.className = 'sheets-status sheets-err'; el.textContent = '✗ Error: ' + (err.message || err); })
-      .guardarResultado(record.fecha, record.nombre, record.apellido, record.area, record.puntaje, record.correctas, record.incorrectas, record.sinTiempo, record.total);
-  } else {
-    el.style.display = 'none';
-  }
+function showToast(){
+  var t=document.getElementById('toast');
+  if(t){t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
 }
-window.onload = function(){
-  renderMath(document.body);
-};
+function sendToSheets(record){
+  var el=document.getElementById('sheets-status');
+  if(!el)return;
+  el.style.display='block';
+  el.className='sheets-status sheets-saving';
+  el.textContent='⏳ Guardando en Google Sheets...';
+  var url=APPS_SCRIPT_URL
+    +'?fecha='+encodeURIComponent(record.fecha)
+    +'&nombre='+encodeURIComponent(record.nombre)
+    +'&apellido='+encodeURIComponent(record.apellido)
+    +'&area='+encodeURIComponent(record.area)
+    +'&puntaje='+encodeURIComponent(record.puntaje)
+    +'&correctas='+encodeURIComponent(record.correctas)
+    +'&incorrectas='+encodeURIComponent(record.incorrectas)
+    +'&sinTiempo='+encodeURIComponent(record.sinTiempo)
+    +'&total='+encodeURIComponent(record.total);
+  fetch(url,{method:'GET',mode:'no-cors'})
+    .then(function(){
+      el.className='sheets-status sheets-ok';
+      el.textContent='✓ Resultado guardado en Google Sheets';
+    })
+    .catch(function(){
+      el.className='sheets-status sheets-err';
+      el.textContent='✗ Error al guardar. Verifica la conexión.';
+    });
+}
 </script>
 </body>
 </html>
