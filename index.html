@@ -3,229 +3,300 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Física — Simulacro</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Física — Simulacro UNSA</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 :root{
-  --bg:#0D0D0B;--surface:#1A1A16;--s2:#222218;--border:#2E2E26;--border2:#3D3D30;
-  --text:#F2EDD7;--text2:#C9C1A4;--muted:#8A8268;--gold:#C9A84C;--gold2:#E8C96B;
-  --gold3:#8B6914;--cream:#F2EDD7;--green:#1D4032;--green2:#2A5C47;--green3:#3D7A5F;
-  --ok2:#5AAF87;--err:#C04040;--warn:#C9A84C;--base:4.5vw;
+  --obsidian:#07070A;--obsidian2:#0D0D12;--obsidian3:#13131B;--obsidian4:#1A1A26;--obsidian5:#212133;
+  --emerald:#0A5C40;--emerald2:#0D7A55;--emerald3:#10A070;--emerald4:#14C088;--emerald-glow:rgba(10,92,64,.22);--emerald-soft:rgba(16,160,112,.07);
+  --champagne:#EAD8AC;--gold:#C4A044;--gold2:#DDB85C;--gold3:#F0D07A;--gold4:#F8E8AA;--gold-dark:#7A5818;--gold-glow:rgba(196,160,68,.18);
+  --mauve:#5C3A7A;--mauve2:#7A56A0;--mauve3:#9A78C8;--mauve4:#B89EDE;--mauve-glow:rgba(92,58,122,.25);
+  --sapphire:#1A3A6A;--sapphire2:#2A5A9A;--sapphire3:#4A88D0;--sapphire-glow:rgba(26,58,106,.2);
+  --ruby:#7A1428;--ruby2:#A81E3C;--ruby-glow:rgba(122,20,40,.2);
+  --cream:#F6EFDC;--text2:#CBBF9E;--muted:#7C7260;--muted2:#5C5448;
+  --border:#20202E;--border2:#2E2E40;--border3:#3C3C52;
+  --lux-line:linear-gradient(90deg,transparent 0%,rgba(196,160,68,.4) 30%,rgba(196,160,68,.8) 50%,rgba(196,160,68,.4) 70%,transparent 100%);
+  --lux-line-v:linear-gradient(180deg,transparent 0%,rgba(196,160,68,.5) 40%,rgba(196,160,68,.5) 60%,transparent 100%);
 }
-html,body{width:100%;background:var(--bg);color:var(--text);font-family:'EB Garamond',Georgia,serif;font-size:var(--base);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
-.screen{display:none;width:100%;background:var(--bg);}
+@keyframes luxShimmer{0%{background-position:200% center;}100%{background-position:-200% center;}}
+@keyframes goldPulse{0%,100%{box-shadow:0 0 0 0 rgba(196,160,68,0);}50%{box-shadow:0 0 18px 2px rgba(196,160,68,.12);}}
+html,body{width:100%;background:var(--obsidian);color:var(--cream);font-family:'Cormorant Garamond',Georgia,serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+.screen{display:none;width:100%;}
 .screen.active{display:block;}
-#screen-register{padding-bottom:10vw;background-image:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(201,168,76,.07) 0%,transparent 60%);}
-.reg-topbar{display:flex;align-items:center;gap:2.5vw;padding:4vw 5vw 3.5vw;border-bottom:1px solid var(--border);background:rgba(13,13,11,.92);}
-.reg-brand{font-family:'Cormorant Garamond',serif;font-size:2.8vw;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);}
-.reg-dot{width:2px;height:2px;background:var(--gold3);border-radius:50%;}
-.reg-brand-sub{font-size:2.8vw;color:var(--muted);font-family:'DM Mono',monospace;}
-.reg-hero{padding:7vw 5vw 6vw;border-bottom:1px solid var(--border);}
-.reg-h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:14vw;line-height:1.02;letter-spacing:-.01em;color:var(--cream);margin-bottom:2vw;}
-.reg-h1 em{font-style:italic;color:var(--gold2);}
-.reg-sub{font-size:3.8vw;color:var(--muted);line-height:1.55;font-style:italic;margin-bottom:4vw;}
-.reg-sub strong{color:var(--text2);font-style:normal;}
-.pills-row{display:flex;gap:2vw;flex-wrap:wrap;}
-.pill{padding:1.5vw 3.5vw;border-radius:999px;border:1px solid var(--border);font-size:3vw;color:var(--muted);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:1.5vw;}
-.pill-dot{width:1.2vw;height:1.2vw;background:var(--gold3);border-radius:50%;}
-.reg-form{padding:6vw 5vw 0;}
-.field{margin-bottom:4vw;}
-.field label{display:block;font-size:3vw;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:2vw;font-family:'Cormorant Garamond',serif;}
-.field input{width:100%;padding:4vw 4.5vw;background:var(--s2);border:1px solid var(--border);border-bottom:2px solid var(--border2);border-radius:2px;color:var(--text);font-family:'EB Garamond',serif;font-size:4.5vw;outline:none;-webkit-appearance:none;transition:border-color .2s;}
-.field input:focus{border-bottom-color:var(--gold);}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:3vw;}
-.area-label{font-size:3vw;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:3vw;margin-top:2vw;font-family:'Cormorant Garamond',serif;}
-.areas-list{display:flex;flex-direction:column;gap:2.5vw;margin-bottom:6vw;}
-.area-card{display:flex;align-items:center;gap:4vw;padding:4.5vw 5vw;border:1px solid var(--border);border-radius:2px;cursor:pointer;background:var(--s2);transition:border-color .15s,background .15s;min-height:18vw;}
-.area-card.selected{border-color:var(--gold);background:rgba(201,168,76,.07);}
-.area-card:active{background:rgba(201,168,76,.05);}
-.ac-radio{width:5.5vw;height:5.5vw;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .15s;}
-.area-card.selected .ac-radio{border-color:var(--gold);}
-.ac-radio-dot{width:2.2vw;height:2.2vw;border-radius:50%;background:var(--gold);transform:scale(0);transition:transform .15s;}
+
+/* REGISTER */
+#screen-register{padding-bottom:14vw;background:radial-gradient(ellipse 70% 40% at 50% -8%,rgba(196,160,68,.10) 0%,transparent 55%),radial-gradient(ellipse 50% 35% at 92% 65%,rgba(10,92,64,.09) 0%,transparent 50%),radial-gradient(ellipse 40% 30% at 5% 80%,rgba(92,58,122,.07) 0%,transparent 50%),var(--obsidian);}
+.reg-topbar{display:flex;align-items:center;justify-content:space-between;padding:5vw 6vw 4vw;border-bottom:1px solid var(--border);background:rgba(7,7,10,.92);position:relative;}
+.reg-topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--lux-line);}
+.reg-brand{font-family:'Playfair Display',serif;font-size:3.2vw;letter-spacing:.32em;text-transform:uppercase;color:var(--gold2);font-weight:400;text-shadow:0 0 20px rgba(196,160,68,.15);}
+.reg-badge{font-family:'DM Mono',monospace;font-size:2.4vw;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;padding:.8vw 2.5vw;border:1px solid var(--border2);border-radius:999px;background:rgba(28,28,40,.6);}
+.reg-hero{padding:8vw 6vw 7vw;border-bottom:1px solid var(--border);position:relative;}
+.reg-hero::before{content:'';position:absolute;top:0;left:6vw;right:6vw;height:1px;background:var(--lux-line);}
+.reg-eyebrow{font-family:'DM Mono',monospace;font-size:2.6vw;color:var(--emerald4);letter-spacing:.35em;text-transform:uppercase;margin-bottom:3vw;display:flex;align-items:center;gap:2vw;}
+.reg-eyebrow::before{content:'';display:block;width:6vw;height:1px;background:linear-gradient(90deg,var(--emerald2),var(--emerald4));}
+.reg-h1{font-family:'Playfair Display',serif;font-weight:400;font-size:15vw;line-height:.95;letter-spacing:-.02em;color:var(--cream);margin-bottom:1.5vw;}
+.reg-h1 em{font-style:italic;color:var(--gold3);text-shadow:0 0 30px rgba(196,160,68,.2);}
+.reg-h1 span{display:block;font-size:8vw;color:var(--champagne);font-weight:300;}
+.reg-desc{font-size:4.2vw;color:var(--muted);line-height:1.6;font-style:italic;margin-bottom:5vw;border-left:2px solid var(--gold-dark);padding-left:4vw;background:rgba(196,160,68,.02);padding-top:2vw;padding-bottom:2vw;}
+.reg-desc strong{color:var(--champagne);font-style:normal;}
+.rank-pills{display:flex;gap:2.5vw;flex-wrap:wrap;margin-bottom:2vw;}
+.rank-pill{display:flex;align-items:center;gap:1.8vw;padding:1.8vw 3.5vw;border-radius:999px;font-family:'DM Mono',monospace;font-size:2.8vw;border:1px solid;letter-spacing:.05em;}
+.rp-diamond{background:rgba(165,225,255,.06);border-color:rgba(165,225,255,.25);color:#B8E8FF;}
+.rp-emerald{background:rgba(16,160,112,.08);border-color:rgba(16,160,112,.25);color:var(--emerald4);}
+.rp-gold{background:rgba(196,160,68,.08);border-color:rgba(196,160,68,.25);color:var(--gold3);}
+.rp-mauve{background:rgba(92,58,122,.1);border-color:rgba(154,120,200,.25);color:var(--mauve4);}
+.rp-silver{background:rgba(180,180,200,.05);border-color:rgba(180,180,200,.18);color:#C0C0D8;}
+.rp-dot{width:1.5vw;height:1.5vw;border-radius:50%;}
+.rp-diamond .rp-dot{background:#B8E8FF;box-shadow:0 0 5px #B8E8FF;}
+.rp-emerald .rp-dot{background:var(--emerald4);box-shadow:0 0 5px var(--emerald3);}
+.rp-gold .rp-dot{background:var(--gold3);box-shadow:0 0 5px var(--gold2);}
+.rp-mauve .rp-dot{background:var(--mauve3);box-shadow:0 0 5px var(--mauve2);}
+.rp-silver .rp-dot{background:#C0C0D8;}
+.reg-form{padding:6vw 6vw 0;}
+.field{margin-bottom:4.5vw;}
+.field label{display:block;font-family:'DM Mono',monospace;font-size:2.6vw;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);margin-bottom:2vw;}
+.field input{width:100%;padding:4.2vw 4.5vw;background:var(--obsidian3);border:1px solid var(--border2);border-bottom:2px solid var(--border3);border-radius:2px;color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:5vw;outline:none;-webkit-appearance:none;transition:border-color .25s,background .25s,box-shadow .25s;}
+.field input:focus{border-bottom-color:var(--emerald4);background:var(--obsidian4);box-shadow:0 2px 12px rgba(16,160,112,.08);}
+.field input::placeholder{color:var(--muted2);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:3.5vw;}
+.area-section-title{font-family:'DM Mono',monospace;font-size:2.6vw;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);margin-bottom:3.5vw;margin-top:1vw;}
+.areas-list{display:flex;flex-direction:column;gap:3vw;margin-bottom:7vw;}
+.area-card{display:flex;align-items:center;gap:4vw;padding:4.5vw 5vw;border:1px solid var(--border2);border-radius:2px;cursor:pointer;background:var(--obsidian3);transition:border-color .2s,background .2s,box-shadow .2s;min-height:18vw;position:relative;overflow:hidden;}
+.area-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:transparent;transition:background .2s;}
+.area-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:transparent;transition:background .2s;}
+.area-card.selected{border-color:var(--emerald3);background:rgba(16,160,112,.06);box-shadow:0 0 20px rgba(16,160,112,.06);}
+.area-card.selected::after{background:linear-gradient(180deg,var(--emerald4),var(--emerald));}
+.area-card.selected::before{background:linear-gradient(90deg,transparent,var(--emerald3),transparent);}
+.ac-radio{width:5.5vw;height:5.5vw;border-radius:50%;border:1.5px solid var(--border3);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s,box-shadow .2s;}
+.area-card.selected .ac-radio{border-color:var(--emerald4);box-shadow:0 0 8px rgba(16,160,112,.3);}
+.ac-radio-dot{width:2.2vw;height:2.2vw;border-radius:50%;background:var(--emerald4);transform:scale(0);transition:transform .2s;}
 .area-card.selected .ac-radio-dot{transform:scale(1);}
 .ac-icon{font-size:7vw;flex-shrink:0;line-height:1;}
 .ac-info{flex:1;}
-.ac-name{font-size:4.8vw;font-weight:600;color:var(--text);font-family:'Cormorant Garamond',serif;margin-bottom:0.8vw;}
-.ac-sub{font-size:3.2vw;color:var(--muted);line-height:1.3;}
-.btn-start{width:100%;padding:5vw;background:transparent;border:1px solid var(--gold3);border-radius:2px;color:var(--gold);font-family:'Cormorant Garamond',serif;font-weight:600;font-size:4vw;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .22s;opacity:.25;pointer-events:none;}
-.btn-start.ready{opacity:1;pointer-events:all;}
-.btn-start.ready:active{background:var(--gold);color:var(--bg);}
+.ac-name{font-family:'Playfair Display',serif;font-size:5vw;font-weight:500;color:var(--cream);margin-bottom:1vw;}
+.ac-sub{font-size:3.2vw;color:var(--muted);line-height:1.3;font-style:italic;}
+.btn-start{width:100%;padding:5.5vw;background:transparent;border:1px solid var(--border3);border-radius:2px;color:var(--muted);font-family:'Playfair Display',serif;font-weight:500;font-size:4.2vw;letter-spacing:.25em;text-transform:uppercase;cursor:pointer;transition:all .3s;opacity:.25;pointer-events:none;position:relative;overflow:hidden;}
+.btn-start.ready{opacity:1;pointer-events:all;border-color:var(--gold-dark);color:var(--gold2);animation:goldPulse 3s ease infinite;}
+.btn-start.ready::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);}
+.btn-start.ready:active{background:var(--gold);color:var(--obsidian);animation:none;}
+
+/* EXAM */
 #screen-exam{display:none;}
-#screen-exam.active{display:block;padding-bottom:20vw;}
-.top-bar{position:sticky;top:0;z-index:100;background:rgba(13,13,11,.98);border-bottom:1px solid var(--border);padding:3vw 4.5vw 2.5vw;}
+#screen-exam.active{display:block;padding-bottom:22vw;background:var(--obsidian);}
+.top-bar{position:sticky;top:0;z-index:100;background:rgba(7,7,10,.98);border-bottom:1px solid var(--border);padding:3vw 5vw 2.5vw;position:relative;}
+.top-bar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--lux-line);opacity:.5;}
 .bar-r1{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5vw;}
-.bar-name{font-family:'DM Mono',monospace;font-size:3vw;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%;}
-.bar-name strong{color:var(--gold);}
+.bar-name{font-family:'DM Mono',monospace;font-size:2.8vw;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%;}
+.bar-name strong{color:var(--champagne);font-family:'Playfair Display',serif;font-size:3.2vw;}
 .bar-scores{display:flex;gap:3vw;}
-.s-ok{font-family:'DM Mono',monospace;font-size:3.2vw;color:var(--ok2);}
-.s-err{font-family:'DM Mono',monospace;font-size:3.2vw;color:var(--err);}
+.s-ok{font-family:'DM Mono',monospace;font-size:3vw;color:var(--emerald4);}
+.s-err{font-family:'DM Mono',monospace;font-size:3vw;color:var(--ruby2);}
 .bar-r2{display:flex;align-items:center;gap:2.5vw;}
-.bar-qnum{font-family:'DM Mono',monospace;font-size:3vw;color:var(--muted);white-space:nowrap;min-width:10vw;}
-.prog-track{flex:1;height:2px;background:var(--border);border-radius:999px;overflow:hidden;}
-.prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold3),var(--gold));border-radius:999px;transition:width .35s ease;}
+.bar-qnum{font-family:'DM Mono',monospace;font-size:2.8vw;color:var(--muted);white-space:nowrap;min-width:10vw;}
+.prog-track{flex:1;height:1.5px;background:var(--border2);border-radius:999px;overflow:hidden;}
+.prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--emerald2),var(--emerald4),var(--gold2));border-radius:999px;transition:width .4s ease;}
 .bar-pct{font-family:'DM Mono',monospace;font-size:2.8vw;color:var(--muted);min-width:7vw;text-align:right;}
-.stage{padding:4vw 4.5vw;}
-.timer-row{display:flex;align-items:center;gap:3.5vw;padding:3.5vw 4vw;background:var(--surface);border:1px solid var(--border);border-radius:2px;margin-bottom:3.5vw;}
-.timer-ring{position:relative;width:14vw;height:14vw;flex-shrink:0;}
+.stage{padding:4vw 5vw;}
+.timer-row{display:flex;align-items:center;gap:4vw;padding:3.5vw 4.5vw;background:var(--obsidian3);border:1px solid var(--border2);border-radius:2px;margin-bottom:4vw;position:relative;overflow:hidden;}
+.timer-row::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);opacity:.4;}
+.timer-ring{position:relative;width:13vw;height:13vw;flex-shrink:0;}
 .timer-ring svg{transform:rotate(-90deg);width:100%;height:100%;}
-.ring-bg{stroke:var(--border);fill:none;stroke-width:2.5;}
-.ring-bar{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:125.6;stroke-dashoffset:0;transition:stroke-dashoffset .9s linear,stroke .5s;}
-.ring-txt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'DM Mono',monospace;font-weight:500;font-size:3.8vw;color:var(--text);}
-.tr-ok .ring-bar{stroke:var(--gold);}
-.tr-mid .ring-bar{stroke:var(--warn);}
-.tr-low .ring-bar{stroke:var(--err);}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.2;}}
-.tr-low .ring-txt{color:var(--err);animation:pulse 1s infinite;}
+.ring-bg{stroke:var(--border2);fill:none;stroke-width:2;}
+.ring-bar{fill:none;stroke-width:2;stroke-linecap:round;stroke-dasharray:125.6;stroke-dashoffset:0;transition:stroke-dashoffset .9s linear,stroke .5s;}
+.ring-txt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'DM Mono',monospace;font-weight:500;font-size:3.5vw;color:var(--cream);}
+.tr-ok .ring-bar{stroke:var(--emerald4);}
+.tr-mid .ring-bar{stroke:var(--gold2);}
+.tr-low .ring-bar{stroke:var(--ruby2);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.15;}}
+.tr-low .ring-txt{color:var(--ruby2);animation:pulse 1s infinite;}
 .timer-meta{flex:1;}
-.timer-strong{font-size:4vw;color:var(--text2);display:block;margin-bottom:0.8vw;font-family:'EB Garamond',serif;font-weight:600;}
-.timer-sub{font-size:3.2vw;color:var(--muted);font-style:italic;}
-.q-card{background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:5vw 4.5vw;position:relative;overflow:hidden;margin-bottom:3vw;}
-.q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:2px 2px 0 0;}
-.q-card.T::before{background:linear-gradient(90deg,var(--gold3),var(--gold));}
-.q-card.F::before{background:linear-gradient(90deg,var(--green),var(--green3));}
-.q-card.U::before{background:linear-gradient(90deg,var(--gold3),#B8860B);}
-.q-card.C::before{background:linear-gradient(90deg,var(--green),var(--green2));}
-.q-card.c-ok{border-color:rgba(90,175,135,.4);}
-.q-card.c-err{border-color:rgba(192,64,64,.4);}
-@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-3px);}75%{transform:translateX(3px);}}
-.c-err{animation:shake .25s ease;}
-.q-meta{display:flex;align-items:center;gap:2vw;margin-bottom:3.5vw;}
-.q-badge{padding:0.8vw 3vw;border-radius:2px;font-size:2.5vw;letter-spacing:.14em;text-transform:uppercase;font-family:'Cormorant Garamond',serif;border:1px solid;}
-.T .q-badge{color:var(--gold);border-color:rgba(201,168,76,.3);background:rgba(201,168,76,.06);}
-.F .q-badge{color:var(--ok2);border-color:rgba(61,122,95,.3);background:rgba(61,122,95,.06);}
-.U .q-badge{color:var(--gold2);border-color:rgba(139,105,20,.3);background:rgba(139,105,20,.06);}
-.C .q-badge{color:var(--green3);border-color:rgba(29,64,50,.4);background:rgba(29,64,50,.1);}
-.q-tema{font-size:3.2vw;color:var(--muted);font-style:italic;}
-.q-text{font-size:4.8vw;line-height:1.65;color:var(--text);margin-bottom:5vw;font-family:'EB Garamond',serif;}
-.opt.opt-display{align-items:center;min-height:16vw;}
+.timer-strong{font-family:'Playfair Display',serif;font-size:4.2vw;color:var(--champagne);display:block;margin-bottom:.8vw;}
+.timer-sub{font-size:3vw;color:var(--muted);font-style:italic;}
+.q-card{background:var(--obsidian3);border:1px solid var(--border2);border-radius:2px;padding:5.5vw 5vw;position:relative;overflow:hidden;margin-bottom:3vw;}
+.q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.q-card.T::before{background:linear-gradient(90deg,var(--gold-dark),var(--gold3));}
+.q-card.F::before{background:linear-gradient(90deg,var(--emerald),var(--emerald4));}
+.q-card.U::before{background:linear-gradient(90deg,var(--mauve),var(--mauve4));}
+.q-card.C::before{background:linear-gradient(90deg,var(--sapphire),var(--sapphire3));}
+.q-card.c-ok{border-color:rgba(16,160,112,.4);}
+.q-card.c-err{border-color:rgba(168,30,60,.4);}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}}
+.q-card.c-err{animation:shake .22s ease;}
+.q-meta{display:flex;align-items:center;gap:2.5vw;margin-bottom:4vw;}
+.q-badge{padding:.9vw 3vw;border-radius:2px;font-family:'DM Mono',monospace;font-size:2.3vw;letter-spacing:.15em;text-transform:uppercase;border:1px solid;}
+.T .q-badge{color:var(--gold3);border-color:rgba(196,160,68,.28);background:rgba(196,160,68,.06);}
+.F .q-badge{color:var(--emerald4);border-color:rgba(16,160,112,.22);background:rgba(16,160,112,.05);}
+.U .q-badge{color:var(--mauve4);border-color:rgba(92,58,122,.28);background:rgba(92,58,122,.07);}
+.C .q-badge{color:var(--sapphire3);border-color:rgba(42,90,154,.22);background:rgba(42,90,154,.06);}
+.q-tema{font-size:3vw;color:var(--muted);font-style:italic;}
+.q-text{font-family:'Playfair Display',serif;font-size:4.8vw;line-height:1.6;color:var(--cream);margin-bottom:5vw;font-weight:400;}
+.katex{font-size:.95em !important;}
+.katex .frac-line{border-bottom-width:.07em;}
+.q-text .katex{font-size:1em !important;}
+.options{display:flex;flex-direction:column;gap:2.5vw;}
+.opt{display:flex;align-items:flex-start;gap:3.5vw;padding:4vw 4.5vw;border:1px solid var(--border2);border-radius:2px;cursor:pointer;background:var(--obsidian4);transition:all .15s;user-select:none;min-height:13vw;}
+.opt:active:not(.dis){border-color:var(--emerald3);background:rgba(16,160,112,.06);}
+.opt-lt{font-family:'Playfair Display',serif;font-size:3.8vw;font-weight:700;min-width:5vw;padding-top:.5vw;color:var(--muted);flex-shrink:0;}
+.opt-tx{font-family:'Cormorant Garamond',serif;font-size:4.2vw;line-height:1.55;color:var(--cream);}
+.opt.opt-display{align-items:center;}
 .opt.opt-display .opt-tx{display:flex;align-items:center;}
 .opt-tx .katex-display{margin:0;}
 .opt-tx .katex{font-size:1em !important;}
-.katex{font-size:1em !important;}
-.katex .frac-line{border-bottom-width:0.08em;}
-.q-text .katex{font-size:1.05em !important;}
-.options{display:flex;flex-direction:column;gap:2.5vw;}
-.opt{display:flex;align-items:flex-start;gap:3.5vw;padding:3.8vw 4vw;border:1px solid var(--border);border-radius:2px;cursor:pointer;background:var(--s2);transition:all .14s;user-select:none;min-height:13vw;}
-.opt:active:not(.dis){background:rgba(201,168,76,.06);border-color:var(--gold3);}
-.opt-lt{font-family:'Cormorant Garamond',serif;font-size:3.8vw;font-weight:700;min-width:5vw;padding-top:0.5vw;color:var(--muted);flex-shrink:0;}
-.opt-tx{font-size:4.2vw;line-height:1.55;color:var(--text);font-family:'EB Garamond',serif;}
-.opt-tx.is-formula{font-family:'DM Mono',monospace;font-size:3.8vw;color:var(--text2);}
-.opt.c-ok{background:rgba(61,122,95,.1);border-color:rgba(90,175,135,.45);}
-.opt.c-ok .opt-lt{color:var(--ok2);}
-.opt.c-err{background:rgba(192,64,64,.08);border-color:rgba(192,64,64,.45);}
-.opt.c-err .opt-lt{color:var(--err);}
+.opt.c-ok{background:rgba(10,92,64,.14);border-color:rgba(16,160,112,.45);}
+.opt.c-ok .opt-lt{color:var(--emerald4);}
+.opt.c-err{background:rgba(122,20,40,.1);border-color:rgba(168,30,60,.45);}
+.opt.c-err .opt-lt{color:var(--ruby2);}
 .opt.dis{cursor:default;pointer-events:none;}
-.tip-box{display:none;margin-top:3.5vw;padding:3.5vw 4vw;border-radius:2px;border-left:3px solid;font-size:3.8vw;line-height:1.65;color:var(--text2);background:rgba(13,13,11,.6);font-style:italic;}
+.tip-box{display:none;margin-top:4vw;padding:4vw 4.5vw;border-radius:2px;border-left:2px solid;font-size:3.8vw;line-height:1.65;color:var(--text2);background:rgba(7,7,10,.7);font-style:italic;}
 .tip-box.show{display:block;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-.tip-box.show{animation:fadeUp .22s ease;}
-.T .tip-box{border-color:var(--gold);}
-.F .tip-box{border-color:var(--ok2);}
-.U .tip-box{border-color:var(--gold3);}
-.C .tip-box{border-color:var(--green3);}
-.c-ok .tip-box{border-color:var(--ok2) !important;}
-.c-err .tip-box{border-color:var(--err) !important;}
-.tip-lbl{font-family:'Cormorant Garamond',serif;font-size:2.8vw;font-weight:700;letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.5vw;font-style:normal;}
-.c-ok .tip-lbl{color:var(--ok2);}
-.c-err .tip-lbl{color:var(--err);}
-.to-badge{display:none;margin-top:3vw;padding:3vw 3.5vw;border-radius:2px;background:rgba(192,64,64,.08);border:1px solid rgba(192,64,64,.25);font-size:3.5vw;color:var(--err);text-align:center;font-style:italic;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+.tip-box.show{animation:fadeUp .2s ease;}
+.T .tip-box{border-color:var(--gold2);}
+.F .tip-box{border-color:var(--emerald4);}
+.U .tip-box{border-color:var(--mauve3);}
+.C .tip-box{border-color:var(--sapphire3);}
+.c-ok .tip-box{border-color:var(--emerald4) !important;}
+.c-err .tip-box{border-color:var(--ruby2) !important;}
+.tip-lbl{font-family:'DM Mono',monospace;font-size:2.6vw;font-weight:500;letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.5vw;font-style:normal;}
+.c-ok .tip-lbl{color:var(--emerald4);}
+.c-err .tip-lbl{color:var(--ruby2);}
+.to-badge{display:none;margin-top:3vw;padding:3vw 4vw;border-radius:2px;background:rgba(122,20,40,.08);border:1px solid rgba(168,30,60,.2);font-size:3.5vw;color:var(--ruby2);text-align:center;font-style:italic;}
 .to-badge.show{display:block;}
-.bottom-nav{position:sticky;bottom:0;z-index:100;background:rgba(13,13,11,.98);border-top:1px solid var(--border);padding:3.5vw 4.5vw;display:flex;align-items:center;justify-content:space-between;min-height:16vw;}
-.result-stamp{font-family:'Cormorant Garamond',serif;font-size:4vw;font-weight:600;letter-spacing:.03em;}
-.rs-ok{color:var(--ok2);}
-.rs-err{color:var(--err);}
-.rs-to{color:var(--warn);}
-.btn-next{display:none;align-items:center;gap:2vw;padding:3.5vw 7vw;border:1px solid var(--gold3);border-radius:2px;cursor:pointer;background:transparent;color:var(--gold);font-family:'Cormorant Garamond',serif;font-weight:600;font-size:3.8vw;letter-spacing:.12em;text-transform:uppercase;min-height:13vw;}
+.bottom-nav{position:sticky;bottom:0;z-index:100;background:rgba(7,7,10,.98);border-top:1px solid var(--border);padding:3.5vw 5vw;display:flex;align-items:center;justify-content:space-between;min-height:16vw;position:relative;}
+.bottom-nav::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);opacity:.4;}
+.result-stamp{font-family:'Playfair Display',serif;font-size:4vw;font-weight:500;letter-spacing:.03em;}
+.rs-ok{color:var(--emerald4);}
+.rs-err{color:var(--ruby2);}
+.rs-to{color:var(--gold2);}
+.btn-next{display:none;align-items:center;gap:2.5vw;padding:3.5vw 7vw;border:1px solid var(--gold-dark);border-radius:2px;cursor:pointer;background:transparent;color:var(--gold2);font-family:'Playfair Display',serif;font-weight:500;font-size:3.8vw;letter-spacing:.15em;text-transform:uppercase;min-height:13vw;transition:all .2s;}
 .btn-next.show{display:flex;}
-.btn-next:active{background:var(--gold);color:var(--bg);}
-#screen-results{background:#0e0e10;padding-bottom:12vw;}
-.r-topbar{padding:6vw 5vw 5vw;border-bottom:1px solid #2a2a35;background:rgba(14,14,16,.98);position:sticky;top:0;z-index:10;}
-.r-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:8vw;color:#f2edd7;margin-bottom:1vw;}
-.r-student{font-size:3.2vw;color:#6b7280;font-style:italic;}
-.r-student strong{color:#c9a84c;font-style:normal;}
-.r-body{padding:5vw 4.5vw 0;}
-.r-score-hero{background:#13131a;border:1px solid #2a2a35;border-radius:3vw;padding:6vw 5vw;margin-bottom:4vw;display:flex;align-items:center;gap:5vw;}
-.big-score{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:22vw;line-height:1;letter-spacing:-.03em;flex-shrink:0;}
-.bg-great{color:#22c55e;}
-.bg-mid{color:#f59e0b;}
-.bg-low{color:#ef4444;}
+.btn-next:active{background:var(--gold);color:var(--obsidian);}
+
+/* RESULTS */
+#screen-results{background:radial-gradient(ellipse 55% 28% at 50% 0%,rgba(10,92,64,.09) 0%,transparent 50%),radial-gradient(ellipse 40% 25% at 100% 100%,rgba(92,58,122,.06) 0%,transparent 50%),var(--obsidian);padding-bottom:14vw;}
+.r-topbar{padding:6vw 6vw 5vw;border-bottom:1px solid var(--border);background:rgba(7,7,10,.92);position:sticky;top:0;z-index:10;position:relative;}
+.r-topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--lux-line);}
+.r-eyebrow{font-family:'DM Mono',monospace;font-size:2.4vw;color:var(--emerald4);letter-spacing:.35em;text-transform:uppercase;margin-bottom:1.5vw;}
+.r-title{font-family:'Playfair Display',serif;font-weight:400;font-size:7.5vw;color:var(--cream);margin-bottom:1vw;}
+.r-student{font-size:3.2vw;color:var(--muted);font-style:italic;}
+.r-student strong{color:var(--champagne);font-style:normal;font-family:'Playfair Display',serif;}
+.r-body{padding:5vw 5.5vw 0;}
+
+/* RANK BADGE */
+.rank-hero{margin-bottom:5vw;padding:6vw 5vw;border-radius:2px;border:1px solid;position:relative;overflow:hidden;}
+.rank-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);}
+.rank-diamond{background:rgba(165,225,255,.04);border-color:rgba(165,225,255,.28);}
+.rank-emerald{background:rgba(16,160,112,.06);border-color:rgba(16,160,112,.28);}
+.rank-gold{background:rgba(196,160,68,.07);border-color:rgba(196,160,68,.28);}
+.rank-mauve{background:rgba(92,58,122,.08);border-color:rgba(154,120,200,.25);}
+.rank-silver{background:rgba(180,180,200,.04);border-color:rgba(180,180,200,.2);}
+.rank-bronze{background:rgba(140,90,50,.05);border-color:rgba(180,120,70,.2);}
+.rank-inner{display:flex;align-items:center;gap:5vw;}
+.rank-icon{font-size:14vw;line-height:1;flex-shrink:0;}
+.rank-info{flex:1;}
+.rank-label{font-family:'DM Mono',monospace;font-size:2.4vw;letter-spacing:.35em;text-transform:uppercase;margin-bottom:1vw;}
+.rank-title{font-family:'Playfair Display',serif;font-size:8vw;font-weight:700;line-height:1;margin-bottom:1.5vw;}
+.rank-sub{font-size:3.5vw;color:var(--text2);font-style:italic;line-height:1.4;}
+.rank-diamond .rank-label,.rank-diamond .rank-title{color:#C8EEFF;}
+.rank-emerald .rank-label,.rank-emerald .rank-title{color:var(--emerald4);}
+.rank-gold .rank-label,.rank-gold .rank-title{color:var(--gold3);}
+.rank-mauve .rank-label,.rank-mauve .rank-title{color:var(--mauve4);}
+.rank-silver .rank-label,.rank-silver .rank-title{color:#C8C8DE;}
+.rank-bronze .rank-label,.rank-bronze .rank-title{color:#D0986A;}
+
+/* SCORE */
+.r-score-hero{background:var(--obsidian3);border:1px solid var(--border2);border-radius:2px;padding:6vw 5vw;margin-bottom:4vw;display:flex;align-items:center;gap:5vw;position:relative;overflow:hidden;}
+.r-score-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);opacity:.5;}
+.big-score{font-family:'Playfair Display',serif;font-weight:300;font-size:22vw;line-height:1;letter-spacing:-.03em;flex-shrink:0;}
+.bg-diamond{color:#C8EEFF;text-shadow:0 0 30px rgba(180,220,255,.25);}
+.bg-emerald{color:var(--emerald4);text-shadow:0 0 30px rgba(16,160,112,.2);}
+.bg-gold{color:var(--gold3);text-shadow:0 0 30px rgba(196,160,68,.2);}
+.bg-mauve{color:var(--mauve4);text-shadow:0 0 30px rgba(92,58,122,.25);}
+.bg-silver{color:#C8C8DE;}
+.bg-bronze{color:#D0986A;}
 .score-right{flex:1;}
-.score-label{font-size:2.5vw;color:#4b5563;letter-spacing:.15em;text-transform:uppercase;font-family:'Cormorant Garamond',serif;margin-bottom:1.5vw;}
-.score-detail{font-size:3.5vw;color:#9ca3af;font-style:italic;margin-bottom:2.5vw;line-height:1.4;}
-.score-bar-track{width:100%;height:1.2vw;background:#1e1e28;border-radius:999px;overflow:hidden;}
-.score-bar-fill{height:100%;border-radius:999px;width:0%;transition:width 1s ease .3s;}
-.r-msg{font-size:3.8vw;border:1px solid #2a2a35;border-left:3px solid #3d3d30;border-radius:1vw;padding:4vw 4.5vw;margin-bottom:4vw;line-height:1.65;color:#9ca3af;font-style:italic;background:#13131a;}
-.r-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5vw;margin-bottom:4vw;}
-.r-stat-box{background:#13131a;border:1px solid #2a2a35;border-radius:2.5vw;padding:5vw 2vw 4vw;text-align:center;}
-.r-stat-num{font-family:'Cormorant Garamond',serif;font-size:10vw;font-weight:300;line-height:1;margin-bottom:1vw;}
-.r-stat-lbl{font-size:2.5vw;color:#4b5563;letter-spacing:.1em;text-transform:uppercase;font-family:'Cormorant Garamond',serif;}
-.r-stat-green .r-stat-num{color:#22c55e;}
-.r-stat-red .r-stat-num{color:#ef4444;}
-.r-stat-yellow .r-stat-num{color:#f59e0b;}
-.r-highlights{display:grid;grid-template-columns:1fr 1fr;gap:2.5vw;margin-bottom:4vw;}
-.r-hl-box{background:#13131a;border:1px solid #2a2a35;border-radius:2.5vw;padding:4vw 4.5vw;}
-.r-hl-tag{font-size:2.8vw;font-weight:700;letter-spacing:.06em;margin-bottom:2vw;display:flex;align-items:center;gap:1.5vw;}
-.r-hl-tag.up{color:#22c55e;}
-.r-hl-tag.dn{color:#ef4444;}
-.r-hl-lbl{font-size:2.5vw;color:#6b7280;text-transform:uppercase;letter-spacing:.1em;font-family:'Cormorant Garamond',serif;margin-bottom:1vw;}
-.r-hl-tema{font-size:3.8vw;color:#e5e7eb;font-style:italic;margin-bottom:1.5vw;font-family:'EB Garamond',serif;line-height:1.3;}
-.r-hl-score{font-size:2.8vw;color:#6b7280;font-family:'DM Mono',monospace;}
-.r-breakdown-box{background:#13131a;border:1px solid #2a2a35;border-radius:2.5vw;padding:5vw 4.5vw 3vw;margin-bottom:5vw;}
-.r-breakdown-title{font-family:'Cormorant Garamond',serif;font-size:2.8vw;font-weight:600;color:#4b5563;letter-spacing:.2em;text-transform:uppercase;margin-bottom:4vw;}
-.bd-row{display:flex;align-items:center;gap:2.5vw;margin-bottom:3vw;}
-.bd-lbl{font-size:3.2vw;color:#9ca3af;min-width:30vw;font-style:italic;font-family:'EB Garamond',serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.bd-track{flex:1;height:1.2vw;background:#1e1e28;border-radius:999px;overflow:hidden;}
+.score-label{font-family:'DM Mono',monospace;font-size:2.3vw;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.5vw;}
+.score-detail{font-size:3.5vw;color:var(--text2);font-style:italic;margin-bottom:3vw;line-height:1.4;}
+.score-bar-track{width:100%;height:1px;background:var(--border2);border-radius:999px;overflow:hidden;}
+.score-bar-fill{height:100%;border-radius:999px;width:0%;transition:width 1.2s cubic-bezier(.16,1,.3,1) .4s;}
+.r-msg{font-family:'Playfair Display',serif;font-size:4vw;font-style:italic;border:1px solid var(--border2);border-left:2px solid var(--gold-dark);border-radius:1vw;padding:4.5vw 5vw;margin-bottom:4.5vw;line-height:1.7;color:var(--text2);background:var(--obsidian3);position:relative;overflow:hidden;}
+.r-msg::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);opacity:.3;}
+.r-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:3vw;margin-bottom:4.5vw;}
+.r-stat-box{background:var(--obsidian3);border:1px solid var(--border2);border-radius:2px;padding:5.5vw 2vw 4.5vw;text-align:center;position:relative;overflow:hidden;}
+.r-stat-box::before{content:'';position:absolute;top:0;left:20%;right:20%;height:1px;background:var(--lux-line);opacity:.4;}
+.r-stat-num{font-family:'Playfair Display',serif;font-size:10vw;font-weight:300;line-height:1;margin-bottom:1.5vw;}
+.r-stat-lbl{font-family:'DM Mono',monospace;font-size:2.3vw;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
+.r-stat-green .r-stat-num{color:var(--emerald4);}
+.r-stat-red .r-stat-num{color:var(--ruby2);}
+.r-stat-yellow .r-stat-num{color:var(--gold2);}
+.r-highlights{display:grid;grid-template-columns:1fr 1fr;gap:3vw;margin-bottom:4.5vw;}
+.r-hl-box{background:var(--obsidian3);border:1px solid var(--border2);border-radius:2px;padding:4.5vw 4.5vw;}
+.r-hl-tag{font-family:'DM Mono',monospace;font-size:2.5vw;font-weight:500;letter-spacing:.1em;margin-bottom:2.5vw;display:flex;align-items:center;gap:1.5vw;}
+.r-hl-tag.up{color:var(--emerald4);}
+.r-hl-tag.dn{color:var(--ruby2);}
+.r-hl-lbl{font-family:'DM Mono',monospace;font-size:2.2vw;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1vw;}
+.r-hl-tema{font-family:'Playfair Display',serif;font-size:3.8vw;color:var(--cream);font-style:italic;margin-bottom:1.5vw;line-height:1.3;}
+.r-hl-score{font-family:'DM Mono',monospace;font-size:2.8vw;color:var(--muted);}
+.r-breakdown-box{background:var(--obsidian3);border:1px solid var(--border2);border-radius:2px;padding:5.5vw 5vw 4vw;margin-bottom:5vw;position:relative;overflow:hidden;}
+.r-breakdown-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);opacity:.5;}
+.r-breakdown-title{font-family:'DM Mono',monospace;font-size:2.4vw;font-weight:500;color:var(--gold2);letter-spacing:.25em;text-transform:uppercase;margin-bottom:5vw;}
+.bd-row{display:flex;align-items:center;gap:3vw;margin-bottom:3.5vw;}
+.bd-lbl{font-family:'Cormorant Garamond',serif;font-size:3.2vw;color:var(--text2);min-width:32vw;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bd-track{flex:1;height:1px;background:var(--border2);border-radius:999px;overflow:hidden;}
 .bd-bar{height:100%;border-radius:999px;}
-.bd-sc{font-family:'DM Mono',monospace;font-size:2.8vw;color:#6b7280;min-width:8vw;text-align:right;}
-.sheets-status{margin-bottom:4vw;padding:3vw 4vw;border-radius:2vw;font-size:3.5vw;font-family:'EB Garamond',serif;font-style:italic;text-align:center;}
-.sheets-ok{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);color:#22c55e;}
-.sheets-err{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);color:#ef4444;}
-.sheets-saving{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.18);color:#f59e0b;}
+.bd-sc{font-family:'DM Mono',monospace;font-size:2.6vw;min-width:8vw;text-align:right;}
+.sheets-status{margin-bottom:4.5vw;padding:3.5vw 4.5vw;border-radius:2px;font-family:'DM Mono',monospace;font-size:3vw;text-align:center;letter-spacing:.08em;}
+.sheets-ok{background:rgba(10,92,64,.08);border:1px solid rgba(16,160,112,.2);color:var(--emerald4);}
+.sheets-err{background:rgba(122,20,40,.06);border:1px solid rgba(168,30,60,.18);color:var(--ruby2);}
+.sheets-saving{background:rgba(196,160,68,.05);border:1px solid rgba(196,160,68,.18);color:var(--gold2);}
 .r-actions{display:flex;justify-content:center;}
-.btn-retry{display:inline-flex;align-items:center;gap:2.5vw;padding:4.5vw 10vw;border:1px solid #5a4a1c;border-radius:2px;cursor:pointer;background:transparent;color:#c9a84c;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:4vw;letter-spacing:.14em;text-transform:uppercase;min-height:14vw;}
-.btn-retry:active{background:#c9a84c;color:#0d0d0b;}
-.saving-toast{position:fixed;bottom:5vw;left:50%;transform:translateX(-50%) translateY(4vw);padding:2.5vw 6vw;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);border-radius:999px;color:#22c55e;font-size:3.2vw;opacity:0;transition:all .3s;z-index:999;pointer-events:none;white-space:nowrap;}
+.btn-retry{display:inline-flex;align-items:center;gap:3vw;padding:4.5vw 10vw;border:1px solid var(--gold-dark);border-radius:2px;cursor:pointer;background:transparent;color:var(--gold2);font-family:'Playfair Display',serif;font-weight:500;font-size:4vw;letter-spacing:.2em;text-transform:uppercase;min-height:14vw;transition:all .25s;position:relative;overflow:hidden;}
+.btn-retry::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);opacity:.6;}
+.btn-retry:active{background:var(--gold);color:var(--obsidian);}
+.saving-toast{position:fixed;bottom:6vw;left:50%;transform:translateX(-50%) translateY(5vw);padding:3vw 7vw;background:rgba(10,92,64,.15);border:1px solid rgba(16,160,112,.3);border-radius:999px;color:var(--emerald4);font-family:'DM Mono',monospace;font-size:3vw;opacity:0;transition:all .35s;z-index:999;pointer-events:none;white-space:nowrap;letter-spacing:.1em;}
 .saving-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-@keyframes slideIn{from{opacity:0;transform:translateX(5vw);}to{opacity:1;transform:translateX(0);}}
-@keyframes slideOut{from{opacity:1;transform:translateX(0);}to{opacity:0;transform:translateX(-5vw);}}
+/* Luxury color legend in breakdown */
+.bd-legend{display:flex;flex-wrap:wrap;gap:2vw 4vw;margin-bottom:4vw;padding-bottom:4vw;border-bottom:1px solid var(--border);}
+.bd-leg-item{display:flex;align-items:center;gap:1.5vw;font-family:'DM Mono',monospace;font-size:2.2vw;color:var(--muted);letter-spacing:.08em;}
+.bd-leg-dot{width:2vw;height:2vw;border-radius:50%;flex-shrink:0;}
+@keyframes slideIn{from{opacity:0;transform:translateX(6vw);}to{opacity:1;transform:translateX(0);}}
+@keyframes slideOut{from{opacity:1;transform:translateX(0);}to{opacity:0;transform:translateX(-6vw);}}
 .q-anim{animation:slideIn .25s ease;}
 .q-anim.out{animation:slideOut .16s ease forwards;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.rank-hero{animation:fadeIn .5s ease .1s both;}
 </style>
 </head>
 <body>
 
-<!-- ══ REGISTER ══ -->
+<!-- REGISTRO -->
 <div class="screen active" id="screen-register">
   <div class="reg-topbar">
-    <span class="reg-brand">Física 1</span>
-    <div class="reg-dot"></div>
-    <span class="reg-brand-sub">Admisión Universitaria</span>
+    <span class="reg-brand">Física · UNSA</span>
+    <span class="reg-badge">Admisión 2025</span>
   </div>
   <div class="reg-hero">
-    <h1 class="reg-h1">Simulacro<br>de <em>Examen</em></h1>
-    <p class="reg-sub"><strong>70 preguntas</strong> · 100 puntos · corrección instantánea con tips</p>
-    <div class="pills-row">
-      <div class="pill"><div class="pill-dot"></div>30 seg / pregunta</div>
-      <div class="pill"><div class="pill-dot"></div>70 preguntas</div>
-      <div class="pill"><div class="pill-dot"></div>100 pts</div>
+    <div class="reg-eyebrow">Simulacro Oficial</div>
+    <h1 class="reg-h1"><em>Examen</em><span>de Física</span></h1>
+    <p class="reg-desc"><strong>70 preguntas</strong> · Corrección instantánea · Tips de resolución</p>
+    <div class="rank-pills">
+      <div class="rank-pill rp-diamond"><div class="rp-dot"></div>Diamond 95–100</div>
+      <div class="rank-pill rp-emerald"><div class="rp-dot"></div>Esmeralda 85–94</div>
+      <div class="rank-pill rp-gold"><div class="rp-dot"></div>Oro 70–84</div>
+      <div class="rank-pill rp-mauve"><div class="rp-dot"></div>Amatista 50–69</div>
+      <div class="rank-pill rp-silver"><div class="rp-dot"></div>Plata 30–49</div>
     </div>
   </div>
   <div class="reg-form">
     <div class="field-row">
-      <div class="field">
-        <label>Nombre</label>
-        <input id="inp-n" type="text" placeholder="Tu nombre" autocomplete="given-name" oninput="chk()">
-      </div>
-      <div class="field">
-        <label>Apellido</label>
-        <input id="inp-a" type="text" placeholder="Tu apellido" autocomplete="family-name" oninput="chk()">
-      </div>
+      <div class="field"><label>Nombre</label><input id="inp-n" type="text" placeholder="Ing. David" autocomplete="given-name" oninput="chk()"></div>
+      <div class="field"><label>Apellido</label><input id="inp-a" type="text" placeholder="Samuel" autocomplete="family-name" oninput="chk()"></div>
     </div>
-    <div class="area-label">Área de postulación</div>
+    <div class="area-section-title">Área de postulación</div>
     <div class="areas-list">
       <div class="area-card" onclick="selArea('Biomédicas',this)">
         <div class="ac-radio"><div class="ac-radio-dot"></div></div>
@@ -247,7 +318,7 @@ html,body{width:100%;background:var(--bg);color:var(--text);font-family:'EB Gara
   </div>
 </div>
 
-<!-- ══ EXAM ══ -->
+<!-- EXAMEN -->
 <div class="screen" id="screen-exam">
   <div class="top-bar">
     <div class="bar-r1">
@@ -261,22 +332,21 @@ html,body{width:100%;background:var(--bg);color:var(--text);font-family:'EB Gara
     </div>
   </div>
   <div class="stage"><div id="qw"></div></div>
-  <div class="bottom-nav" id="bottom-nav">
+  <div class="bottom-nav">
     <div class="result-stamp" id="rst"></div>
-    <button class="btn-next" id="btn-nx" onclick="nxt()">
-      Siguiente
-      <svg width="3.5vw" height="3.5vw" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-    </button>
+    <button class="btn-next" id="btn-nx" onclick="nxt()">Siguiente <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
   </div>
 </div>
 
-<!-- ══ RESULTS ══ -->
+<!-- RESULTADOS -->
 <div class="screen" id="screen-results">
   <div class="r-topbar">
+    <div class="r-eyebrow">Resultado Final</div>
     <div class="r-title">Examen Completado</div>
     <div class="r-student" id="r-st">—</div>
   </div>
   <div class="r-body">
+    <div id="rank-hero-box"></div>
     <div class="r-score-hero">
       <div class="big-score" id="r-score">—</div>
       <div class="score-right">
@@ -293,254 +363,230 @@ html,body{width:100%;background:var(--bg);color:var(--text);font-family:'EB Gara
     </div>
     <div class="r-highlights" id="r-highlights"></div>
     <div class="r-breakdown-box">
-      <div class="r-breakdown-title">Resultado por tema</div>
+      <div class="r-breakdown-title">Rendimiento por tema</div>
+      <div class="bd-legend">
+        <div class="bd-leg-item"><div class="bd-leg-dot" style="background:#10A070;box-shadow:0 0 4px #10A07060;"></div>Esmeralda ≥85%</div>
+        <div class="bd-leg-item"><div class="bd-leg-dot" style="background:#DDB85C;box-shadow:0 0 4px #DDB85C60;"></div>Oro ≥70%</div>
+        <div class="bd-leg-item"><div class="bd-leg-dot" style="background:#9A78C8;box-shadow:0 0 4px #9A78C860;"></div>Amatista ≥50%</div>
+        <div class="bd-leg-item"><div class="bd-leg-dot" style="background:#4A88D0;box-shadow:0 0 4px #4A88D060;"></div>Zafiro ≥30%</div>
+        <div class="bd-leg-item"><div class="bd-leg-dot" style="background:#A81E3C;"></div>Rubí &lt;30%</div>
+      </div>
       <div id="r-bk"></div>
     </div>
     <div id="sheets-status" class="sheets-status" style="display:none"></div>
-    <div class="r-actions">
-      <button class="btn-retry" onclick="retry()">↺ Nuevo intento</button>
-    </div>
+    <div class="r-actions"><button class="btn-retry" onclick="retry()">↺ Nuevo intento</button></div>
   </div>
 </div>
 
-<div class="saving-toast" id="toast">✓ Guardado</div>
+<div class="saving-toast" id="toast">✓ Guardado en Sheets</div>
 
 <script>
-// ══════════════════════════════════════════
-// URL DEL WEB APP (Apps Script)
-// ══════════════════════════════════════════
-var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwrVJ6YWfMGxJS-EckL1sHe-AEXP5mSlu4RhhVyyvmycOy_CRoh7KSNYPbehFWUHcsq/exec';
+var APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwrVJ6YWfMGxJS-EckL1sHe-AEXP5mSlu4RhhVyyvmycOy_CRoh7KSNYPbehFWUHcsq/exec';
 
-// ══════════════════════════════════════════
-// KaTeX
-// ══════════════════════════════════════════
+var RANKS=[
+  {min:95,max:100,cls:'rank-diamond',scoreCls:'bg-diamond',icon:'💎',label:'Diamond',title:'Maestro',sub:'Rendimiento excepcional. Dominio absoluto de la Física.',barColor:'#C8EEFF',sheetColor:'#BDD7EE'},
+  {min:85,max:94, cls:'rank-emerald',scoreCls:'bg-emerald',icon:'🟢',label:'Esmeralda',title:'Experto', sub:'Conocimiento sólido y preciso. Listo para el examen real.',barColor:'#10A070',sheetColor:'#C6EFCE'},
+  {min:70,max:84, cls:'rank-gold',   scoreCls:'bg-gold',   icon:'🥇',label:'Oro',     title:'Avanzado',sub:'Base muy buena. Refuerza los temas donde fallaste.',barColor:'#DDB85C',sheetColor:'#FFEB9C'},
+  {min:50,max:69, cls:'rank-mauve',  scoreCls:'bg-mauve',  icon:'🔮',label:'Amatista', title:'Intermedio',sub:'Progreso notable. Profundiza en fórmulas y cálculo.',barColor:'#9A78C8',sheetColor:'#E2CFED'},
+  {min:30,max:49, cls:'rank-silver', scoreCls:'bg-silver', icon:'🥈',label:'Plata',   title:'En Progreso',sub:'Sigue practicando. Cada intento te acerca más.',barColor:'#C8C8DE',sheetColor:'#EDEDED'},
+  {min:0, max:29, cls:'rank-bronze', scoreCls:'bg-bronze', icon:'🥉',label:'Bronce',  title:'Iniciando',sub:'Este resultado es el punto de partida. ¡Vuelve más fuerte!',barColor:'#D0986A',sheetColor:'#FFCCBB'}
+];
+function getRank(p){return RANKS.find(function(r){return p>=r.min&&p<=r.max;})||RANKS[RANKS.length-1];}
+
 function renderMath(el){
-  function doRender(){
-    if(typeof renderMathInElement==='undefined'){setTimeout(doRender,200);return;}
-    try{renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false,errorColor:'#ef4444',strict:false});}catch(e){console.warn('KaTeX error',e);}
-  }
-  doRender();
+  function d(){if(typeof renderMathInElement==='undefined'){setTimeout(d,200);return;}
+  try{renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false,errorColor:'#ef4444',strict:false});}catch(e){}}d();
 }
 
-// ══════════════════════════════════════════
-// PREGUNTAS
-// ══════════════════════════════════════════
 var QS=[
   {n:1,t:"T",tm:"Análisis Vectorial",p:"¿Cuál es la diferencia entre magnitud <em>escalar</em> y magnitud <em>vectorial</em>?",o:["El escalar tiene dirección; el vector no","El vector tiene módulo, dirección y sentido; el escalar solo tiene módulo","Ambos se representan con flechas","El escalar siempre es positivo"],a:1,tip:"VECTOR = Módulo + Dirección + Sentido. Escalar = solo número. Ejemplos escalares: temperatura, masa, tiempo. Ejemplos vectoriales: fuerza, velocidad, aceleración."},
-  {n:2,t:"F",tm:"Análisis Vectorial",p:"¿Cuál es la fórmula correcta para calcular el <strong>módulo</strong> de un vector que tiene componente horizontal $A_x$ y componente vertical $A_y$?",o:["$|\\vec{A}| = A_x + A_y$","$|\\vec{A}| = A_x \\cdot A_y$","$|\\vec{A}| = \\sqrt{A_x^2 + A_y^2}$","$|\\vec{A}| = A_x^2 + A_y^2$"],a:2,tip:"Es el teorema de Pitágoras: el módulo es la hipotenusa del triángulo que forman las componentes. Raíz cuadrada SIEMPRE. Tríos útiles: 3-4-5, 6-8-10, 5-12-13, 8-15-17."},
-  {n:3,t:"F",tm:"Análisis Vectorial",p:"Un vector tiene módulo $|\\vec{A}|$ y forma un ángulo $\\theta$ con el eje horizontal. ¿Cuál es su <strong>componente horizontal</strong>?",o:["Componente horizontal $= |\\vec{A}| \\cdot \\sin\\theta$","Componente horizontal $= \\dfrac{|\\vec{A}|}{\\cos\\theta}$","Componente horizontal $= |\\vec{A}| \\cdot \\tan\\theta$","Componente horizontal $= |\\vec{A}| \\cdot \\cos\\theta$"],a:3,tip:"Regla de oro: componente HORIZONTAL → coseno del ángulo. Componente VERTICAL → seno del ángulo."},
-  {n:4,t:"U",tm:"Análisis Vectorial",p:"¿En qué unidad del SI se expresa el módulo de un vector de <strong>posición</strong>?",o:["m/s²","Newton (N)","Metro (m)","Joule (J)"],a:2,tip:"El módulo tiene las MISMAS unidades que el vector original. Posición → metro (m). Velocidad → m/s. Fuerza → Newton (N)."},
-  {n:5,t:"F",tm:"MRU",p:"Un objeto se mueve en MRU (velocidad constante). ¿Qué fórmula relaciona la posición $x$, la velocidad $v$ y el tiempo $t$?",o:["$x = x_0 + v_0 t + \\dfrac{1}{2}at^2$","$x = x_0 + v \\cdot t$","$v = v_0 + a \\cdot t$","$x = \\dfrac{1}{2} g t^2$"],a:1,tip:"En MRU no hay aceleración. La fórmula es lineal: posición = posición inicial + velocidad × tiempo."},
-  {n:6,t:"T",tm:"MRU",p:"En el Movimiento Rectilíneo Uniforme (MRU), ¿qué magnitud permanece <strong>constante</strong>?",o:["La posición","La aceleración (a > 0)","La velocidad","La fuerza neta"],a:2,tip:"MRU = Movimiento Rectilíneo UNIFORME. 'Uniforme' significa que la velocidad NO cambia. Por eso la aceleración es CERO."},
-  {n:7,t:"U",tm:"MRU",p:"¿Cuál es la unidad de la <strong>velocidad</strong> en el Sistema Internacional (SI)?",o:["km/h","m · s","m/s²","m/s"],a:3,tip:"Velocidad = distancia ÷ tiempo = metros ÷ segundos = m/s. Para convertir km/h a m/s: divide entre 3.6."},
-  {n:8,t:"F",tm:"MRUV",p:"En el MRUV, ¿cuál es la ecuación que relaciona la velocidad final $v$, la velocidad inicial $v_0$, la aceleración $a$ y el tiempo $t$?",o:["$v = \\dfrac{x}{t}$","$v = v_0 + a \\cdot t$","$v = \\dfrac{1}{2} a t^2$","$v = \\sqrt{2gh}$"],a:1,tip:"Primera ecuación del MRUV. Si parte del reposo, v₀ = 0 y queda: v = a · t."},
-  {n:9,t:"F",tm:"MRUV",p:"¿Cuál es la fórmula de la <strong>posición</strong> en MRUV cuando el cuerpo parte de la posición inicial $x_0 = 0$?",o:["$x = v \\cdot t$","$x = \\dfrac{v^2}{2a}$","$x = v_0 t + \\dfrac{1}{2}at^2$","$x = \\dfrac{1}{2} g t$"],a:2,tip:"Segunda ecuación del MRUV. Tiene un término cuadrático (t²). Si parte del reposo (v₀ = 0): x = ½ · a · t²."},
-  {n:10,t:"F",tm:"MRUV",p:"¿Qué ecuación del MRUV usas cuando el problema <strong>no da el tiempo</strong> pero pide la velocidad final?",o:["$v = v_0 + a \\cdot t$","$x = v_0 t + \\dfrac{1}{2}at^2$","$v^2 = v_0^2 + 2 \\cdot a \\cdot x$","$v = \\dfrac{x}{t}$"],a:2,tip:"Ecuación sin tiempo. Relaciona velocidad, aceleración y distancia sin necesitar el tiempo."},
-  {n:11,t:"U",tm:"MRUV",p:"¿Cuál es la unidad de la <strong>aceleración</strong> en el Sistema Internacional?",o:["m/s","N · m","m/s²","kg · m/s"],a:2,tip:"Aceleración = cambio de velocidad ÷ tiempo = (m/s) ÷ s = m/s²."},
-  {n:12,t:"T",tm:"MRUV",p:"La gráfica de velocidad versus tiempo (v-t) de un MRUV tiene la forma de:",o:["Una parábola","Una curva exponencial","Una línea horizontal","Una línea recta inclinada"],a:3,tip:"La pendiente de esa recta inclinada es igual a la aceleración."},
-  {n:13,t:"U",tm:"Caída Libre",p:"¿Cuál es el valor estándar de la aceleración de la gravedad ($g$) en la superficie terrestre?",o:["8.0 m/s²","9.8 m/s²","10.8 m/s²","12.0 m/s²"],a:1,tip:"g = 9.8 m/s² (en exámenes peruanos se usa g = 10 m/s²)."},
-  {n:14,t:"F",tm:"Caída Libre",p:"Un objeto cae desde una altura $h$ partiendo del reposo. ¿Cuál es la fórmula para calcular el <strong>tiempo de caída</strong>?",o:["$t = \\dfrac{h}{g}$","$t = \\sqrt{\\dfrac{h}{2g}}$","$t = \\sqrt{\\dfrac{2h}{g}}$","$t = 2 \\cdot h \\cdot g$"],a:2,tip:"Se despeja t de h = ½·g·t². El '2' siempre va arriba. Ejemplo: h=20m, g=10 → t=√4=2s."},
-  {n:15,t:"F",tm:"Caída Libre",p:"Un objeto cae libremente desde una altura $h$ sin velocidad inicial. ¿Cuál es la fórmula de su <strong>velocidad al llegar al suelo</strong>?",o:["$v = g \\cdot h$","$v = \\sqrt{g \\cdot h}$","$v = \\sqrt{2 \\cdot g \\cdot h}$","$v = 2 \\cdot g \\cdot h$"],a:2,tip:"v² = 2·g·h, entonces v = √(2gh). El '2' SIEMPRE acompaña a g·h."},
-  {n:16,t:"F",tm:"Caída Libre",p:"Se lanza un objeto verticalmente hacia <strong>arriba</strong> con velocidad inicial $v_0$. ¿Cuál es la fórmula de la <strong>altura máxima</strong>?",o:["$h_{\\max} = v_0 \\cdot g$","$h_{\\max} = \\dfrac{v_0^2}{2g}$","$h_{\\max} = \\dfrac{2 \\cdot v_0}{g}$","$h_{\\max} = \\dfrac{v_0}{g^2}$"],a:1,tip:"En la altura máxima v = 0. Aplicando v² = v₀² − 2·g·h con v=0: h = v₀²/(2g)."},
-  {n:17,t:"T",tm:"Caída Libre",p:"En el punto más alto de un lanzamiento vertical, ¿qué ocurre con la velocidad y con la aceleración?",o:["Ambas son cero","La velocidad es cero, pero la aceleración sigue siendo g = 9.8 m/s² hacia abajo","La velocidad es máxima y la aceleración es cero","La velocidad es igual a g"],a:1,tip:"¡Trampa clásica! En la cima v = 0, PERO la gravedad sigue actuando. g = 9.8 m/s² está presente siempre."},
-  {n:18,t:"T",tm:"Movimiento Parabólico",p:"El movimiento parabólico se puede descomponer en dos movimientos independientes. ¿Cuáles son?",o:["Dos MRUV perpendiculares entre sí","MRU horizontal + MRUV vertical","MRU vertical + MRUV horizontal","Dos MRU paralelos"],a:1,tip:"Horizontal: velocidad constante (MRU). Vertical: actúa la gravedad (MRUV)."},
-  {n:19,t:"F",tm:"Movimiento Parabólico",p:"¿Cuál es la fórmula de la <strong>distancia horizontal total</strong> (alcance) de un proyectil lanzado con $v_0$ a un ángulo $\\theta$?",o:["$d_x = \\dfrac{v_0^2 \\cos(2\\theta)}{g}$","$d_x = \\dfrac{v_0 \\sin\\theta}{g}$","$d_x = \\dfrac{v_0^2 \\sin(2\\theta)}{g}$","$d_x = \\dfrac{v_0^2}{g \\cdot \\cos\\theta}$"],a:2,tip:"La clave es sen(2θ). Máximo alcance con 45°. Ángulos 30° y 60° tienen el MISMO alcance."},
-  {n:20,t:"F",tm:"Movimiento Parabólico",p:"¿Cuál es la fórmula de la <strong>altura máxima</strong> de un proyectil lanzado con $v_0$ a un ángulo $\\theta$?",o:["$h_{\\max} = \\dfrac{v_0^2}{2g}$","$h_{\\max} = \\dfrac{(v_0 \\cos\\theta)^2}{2g}$","$h_{\\max} = \\dfrac{(v_0 \\sin\\theta)^2}{2g}$","$h_{\\max} = \\dfrac{v_0^2 \\sin(2\\theta)}{g}$"],a:2,tip:"Solo la componente VERTICAL (v₀·senθ) determina la altura máxima."},
-  {n:21,t:"T",tm:"Movimiento Parabólico",p:"En el punto más alto de la trayectoria parabólica, ¿cómo es la velocidad del proyectil?",o:["La velocidad es cero (el proyectil se detiene)","La velocidad es máxima","Solo tiene velocidad horizontal (la velocidad vertical es cero en ese punto)","Solo tiene velocidad vertical"],a:2,tip:"En la cima, la velocidad vertical es cero pero la horizontal se conserva. La velocidad total NO es cero."},
-  {n:22,t:"U",tm:"Leyes de Newton",p:"¿Cuál es la unidad de la <strong>fuerza</strong> en el Sistema Internacional?",o:["Joule (J)","Watt (W)","Pascal (Pa)","Newton (N)"],a:3,tip:"1 Newton = 1 kg · m/s². J = energía, W = potencia, Pa = presión, N = fuerza."},
-  {n:23,t:"F",tm:"Leyes de Newton",p:"La Segunda Ley de Newton establece que la fuerza neta es igual a:",o:["$F_{neta} = \\dfrac{m}{a}$","$F_{neta} = m \\cdot v$","$F_{neta} = m \\cdot a$","$F_{neta} = \\dfrac{a}{m}$"],a:2,tip:"F = m · a es la ecuación fundamental de la Dinámica."},
-  {n:24,t:"F",tm:"Leyes de Newton",p:"¿Cuál es la fórmula correcta del <strong>peso</strong> ($P$) de un cuerpo de masa $m$?",o:["$P = \\dfrac{m}{g}$","$P = m + g$","$P = m \\cdot g$","$P = \\dfrac{g}{m}$"],a:2,tip:"Peso = m · g. La MASA no cambia, pero el PESO sí (en la Luna g = 1.6 m/s²)."},
-  {n:25,t:"T",tm:"Leyes de Newton",p:"La Primera Ley de Newton (Ley de Inercia) establece que un cuerpo:",o:["Siempre necesita una fuerza para poder moverse","Mantiene su estado de reposo o de MRU mientras la fuerza neta sea cero","Se acelera cuando su masa disminuye","Ejerce siempre una reacción igual y opuesta"],a:1,tip:"Sin fuerza neta → sin cambio de movimiento. La inercia es la resistencia a cambiar el estado."},
-  {n:26,t:"T",tm:"Leyes de Newton",p:"La Tercera Ley de Newton: si el cuerpo A ejerce una fuerza sobre el cuerpo B, entonces:",o:["B ejerce una fuerza de mayor magnitud sobre A","B no reacciona si está en reposo","B ejerce sobre A una fuerza de igual magnitud pero en sentido contrario","La fuerza de B sobre A es la mitad de la de A sobre B"],a:2,tip:"Acción y Reacción: igual magnitud, sentido opuesto, actúan sobre cuerpos distintos."},
-  {n:27,t:"F",tm:"Estática",p:"¿Cuál es la condición matemática para el <strong>equilibrio estático</strong>?",o:["$\\Sigma F = m \\cdot a$","$\\Sigma F > 0$","$\\Sigma \\vec{F} = 0$ (la suma de todas las fuerzas en cada dirección es cero)","El cuerpo se mueve con velocidad constante distinta de cero"],a:2,tip:"Equilibrio: suma de fuerzas horizontales = 0 Y suma de fuerzas verticales = 0."},
-  {n:28,t:"F",tm:"Estática",p:"Un bloque sobre un plano inclinado a un ángulo $\\theta$. ¿Cuál es la <strong>fuerza normal</strong> $N$?",o:["$N = m \\cdot g$","$N = m \\cdot g \\cdot \\sin\\theta$","$N = m \\cdot g \\cdot \\tan\\theta$","$N = m \\cdot g \\cdot \\cos\\theta$"],a:3,tip:"En plano inclinado: N = mg·cosθ (perpendicular) y F∥ = mg·senθ (paralela). Cos para la normal, sen para el deslizamiento."},
+  {n:2,t:"F",tm:"Análisis Vectorial",p:"¿Cuál es la fórmula correcta para calcular el <strong>módulo</strong> de un vector con componente horizontal $A_x$ y vertical $A_y$?",o:["$|\\vec{A}| = A_x + A_y$","$|\\vec{A}| = A_x \\cdot A_y$","$|\\vec{A}| = \\sqrt{A_x^2 + A_y^2}$","$|\\vec{A}| = A_x^2 + A_y^2$"],a:2,tip:"Es el teorema de Pitágoras. Raíz cuadrada SIEMPRE. Tríos útiles: 3-4-5, 6-8-10, 5-12-13."},
+  {n:3,t:"F",tm:"Análisis Vectorial",p:"Un vector $|\\vec{A}|$ forma un ángulo $\\theta$ con el eje horizontal. ¿Cuál es su <strong>componente horizontal</strong>?",o:["$= |\\vec{A}| \\cdot \\sin\\theta$","$= \\dfrac{|\\vec{A}|}{\\cos\\theta}$","$= |\\vec{A}| \\cdot \\tan\\theta$","$= |\\vec{A}| \\cdot \\cos\\theta$"],a:3,tip:"Regla de oro: HORIZONTAL → coseno. VERTICAL → seno."},
+  {n:4,t:"U",tm:"Análisis Vectorial",p:"¿En qué unidad del SI se expresa el módulo de un vector de <strong>posición</strong>?",o:["m/s²","Newton (N)","Metro (m)","Joule (J)"],a:2,tip:"El módulo tiene las MISMAS unidades que el vector. Posición → metro (m)."},
+  {n:5,t:"F",tm:"MRU",p:"Un objeto se mueve en MRU. ¿Qué fórmula relaciona posición $x$, velocidad $v$ y tiempo $t$?",o:["$x = x_0 + v_0 t + \\dfrac{1}{2}at^2$","$x = x_0 + v \\cdot t$","$v = v_0 + a \\cdot t$","$x = \\dfrac{1}{2} g t^2$"],a:1,tip:"En MRU no hay aceleración. Fórmula lineal: posición = posición inicial + velocidad × tiempo."},
+  {n:6,t:"T",tm:"MRU",p:"En el MRU, ¿qué magnitud permanece <strong>constante</strong>?",o:["La posición","La aceleración (a > 0)","La velocidad","La fuerza neta"],a:2,tip:"MRU = Movimiento Rectilíneo UNIFORME. La velocidad NO cambia. La aceleración es CERO."},
+  {n:7,t:"U",tm:"MRU",p:"¿Cuál es la unidad de la <strong>velocidad</strong> en el SI?",o:["km/h","m · s","m/s²","m/s"],a:3,tip:"Velocidad = metros ÷ segundos = m/s. Para convertir km/h a m/s: divide entre 3.6."},
+  {n:8,t:"F",tm:"MRUV",p:"En el MRUV, ¿cuál es la ecuación que relaciona $v$, $v_0$, $a$ y $t$?",o:["$v = \\dfrac{x}{t}$","$v = v_0 + a \\cdot t$","$v = \\dfrac{1}{2} a t^2$","$v = \\sqrt{2gh}$"],a:1,tip:"Primera ecuación del MRUV. Si parte del reposo: v = a · t."},
+  {n:9,t:"F",tm:"MRUV",p:"¿Cuál es la fórmula de la <strong>posición</strong> en MRUV desde $x_0 = 0$?",o:["$x = v \\cdot t$","$x = \\dfrac{v^2}{2a}$","$x = v_0 t + \\dfrac{1}{2}at^2$","$x = \\dfrac{1}{2} g t$"],a:2,tip:"Segunda ecuación del MRUV. Tiene término cuadrático (t²). Si v₀ = 0: x = ½ · a · t²."},
+  {n:10,t:"F",tm:"MRUV",p:"¿Qué ecuación del MRUV usas cuando el problema <strong>no da el tiempo</strong>?",o:["$v = v_0 + a \\cdot t$","$x = v_0 t + \\dfrac{1}{2}at^2$","$v^2 = v_0^2 + 2 \\cdot a \\cdot x$","$v = \\dfrac{x}{t}$"],a:2,tip:"Ecuación sin tiempo. Relaciona velocidad, aceleración y distancia."},
+  {n:11,t:"U",tm:"MRUV",p:"¿Cuál es la unidad de la <strong>aceleración</strong> en el SI?",o:["m/s","N · m","m/s²","kg · m/s"],a:2,tip:"Aceleración = cambio de velocidad ÷ tiempo = (m/s) ÷ s = m/s²."},
+  {n:12,t:"T",tm:"MRUV",p:"La gráfica v-t de un MRUV tiene la forma de:",o:["Una parábola","Una curva exponencial","Una línea horizontal","Una línea recta inclinada"],a:3,tip:"La pendiente de esa recta inclinada es igual a la aceleración."},
+  {n:13,t:"U",tm:"Caída Libre",p:"¿Cuál es el valor estándar de $g$ en la superficie terrestre?",o:["8.0 m/s²","9.8 m/s²","10.8 m/s²","12.0 m/s²"],a:1,tip:"g = 9.8 m/s² (en exámenes peruanos se usa g = 10 m/s²)."},
+  {n:14,t:"F",tm:"Caída Libre",p:"Un objeto cae desde $h$ partiendo del reposo. ¿Cuál es el <strong>tiempo de caída</strong>?",o:["$t = \\dfrac{h}{g}$","$t = \\sqrt{\\dfrac{h}{2g}}$","$t = \\sqrt{\\dfrac{2h}{g}}$","$t = 2 \\cdot h \\cdot g$"],a:2,tip:"Se despeja t de h = ½·g·t². El '2' siempre va arriba."},
+  {n:15,t:"F",tm:"Caída Libre",p:"Un objeto cae desde $h$ sin velocidad inicial. ¿Cuál es su <strong>velocidad al llegar</strong>?",o:["$v = g \\cdot h$","$v = \\sqrt{g \\cdot h}$","$v = \\sqrt{2 \\cdot g \\cdot h}$","$v = 2 \\cdot g \\cdot h$"],a:2,tip:"v² = 2·g·h, entonces v = √(2gh). El '2' SIEMPRE acompaña a g·h."},
+  {n:16,t:"F",tm:"Caída Libre",p:"Se lanza hacia <strong>arriba</strong> con $v_0$. ¿Cuál es la fórmula de la <strong>altura máxima</strong>?",o:["$h_{\\max} = v_0 \\cdot g$","$h_{\\max} = \\dfrac{v_0^2}{2g}$","$h_{\\max} = \\dfrac{2 \\cdot v_0}{g}$","$h_{\\max} = \\dfrac{v_0}{g^2}$"],a:1,tip:"En la altura máxima v = 0. Aplicando v² = v₀² − 2·g·h: h = v₀²/(2g)."},
+  {n:17,t:"T",tm:"Caída Libre",p:"En el punto más alto de un lanzamiento vertical, ¿qué ocurre con la velocidad y la aceleración?",o:["Ambas son cero","La velocidad es cero, pero la aceleración sigue siendo g = 9.8 m/s² hacia abajo","La velocidad es máxima y la aceleración es cero","La velocidad es igual a g"],a:1,tip:"¡Trampa clásica! En la cima v = 0, PERO la gravedad sigue actuando siempre."},
+  {n:18,t:"T",tm:"Movimiento Parabólico",p:"El movimiento parabólico se descompone en:",o:["Dos MRUV perpendiculares","MRU horizontal + MRUV vertical","MRU vertical + MRUV horizontal","Dos MRU paralelos"],a:1,tip:"Horizontal: velocidad constante (MRU). Vertical: actúa la gravedad (MRUV)."},
+  {n:19,t:"F",tm:"Movimiento Parabólico",p:"¿Cuál es la fórmula del <strong>alcance horizontal</strong> de un proyectil con $v_0$ a $\\theta$?",o:["$d_x = \\dfrac{v_0^2 \\cos(2\\theta)}{g}$","$d_x = \\dfrac{v_0 \\sin\\theta}{g}$","$d_x = \\dfrac{v_0^2 \\sin(2\\theta)}{g}$","$d_x = \\dfrac{v_0^2}{g \\cdot \\cos\\theta}$"],a:2,tip:"La clave es sen(2θ). Máximo alcance con 45°. Ángulos 30° y 60° tienen el MISMO alcance."},
+  {n:20,t:"F",tm:"Movimiento Parabólico",p:"¿Cuál es la fórmula de la <strong>altura máxima</strong> de un proyectil con $v_0$ a $\\theta$?",o:["$h_{\\max} = \\dfrac{v_0^2}{2g}$","$h_{\\max} = \\dfrac{(v_0 \\cos\\theta)^2}{2g}$","$h_{\\max} = \\dfrac{(v_0 \\sin\\theta)^2}{2g}$","$h_{\\max} = \\dfrac{v_0^2 \\sin(2\\theta)}{g}$"],a:2,tip:"Solo la componente VERTICAL (v₀·senθ) determina la altura máxima."},
+  {n:21,t:"T",tm:"Movimiento Parabólico",p:"En el punto más alto de la trayectoria parabólica, ¿cómo es la velocidad?",o:["La velocidad es cero","La velocidad es máxima","Solo tiene velocidad horizontal (la vertical es cero)","Solo tiene velocidad vertical"],a:2,tip:"En la cima, la velocidad vertical es cero pero la horizontal se conserva. La velocidad total NO es cero."},
+  {n:22,t:"U",tm:"Leyes de Newton",p:"¿Cuál es la unidad de la <strong>fuerza</strong> en el SI?",o:["Joule (J)","Watt (W)","Pascal (Pa)","Newton (N)"],a:3,tip:"1 Newton = 1 kg · m/s². J = energía, W = potencia, Pa = presión, N = fuerza."},
+  {n:23,t:"F",tm:"Leyes de Newton",p:"La Segunda Ley de Newton: la fuerza neta es igual a:",o:["$F_{neta} = \\dfrac{m}{a}$","$F_{neta} = m \\cdot v$","$F_{neta} = m \\cdot a$","$F_{neta} = \\dfrac{a}{m}$"],a:2,tip:"F = m · a es la ecuación fundamental de la Dinámica."},
+  {n:24,t:"F",tm:"Leyes de Newton",p:"¿Cuál es la fórmula del <strong>peso</strong> ($P$) de un cuerpo de masa $m$?",o:["$P = \\dfrac{m}{g}$","$P = m + g$","$P = m \\cdot g$","$P = \\dfrac{g}{m}$"],a:2,tip:"Peso = m · g. La MASA no cambia, pero el PESO sí (en la Luna g = 1.6 m/s²)."},
+  {n:25,t:"T",tm:"Leyes de Newton",p:"La Primera Ley de Newton (Ley de Inercia): un cuerpo:",o:["Siempre necesita una fuerza para moverse","Mantiene su estado de reposo o MRU mientras la fuerza neta sea cero","Se acelera cuando su masa disminuye","Ejerce siempre una reacción igual y opuesta"],a:1,tip:"Sin fuerza neta → sin cambio de movimiento. La inercia es la resistencia a cambiar el estado."},
+  {n:26,t:"T",tm:"Leyes de Newton",p:"La Tercera Ley de Newton: si A ejerce fuerza sobre B, entonces:",o:["B ejerce una fuerza mayor sobre A","B no reacciona si está en reposo","B ejerce sobre A una fuerza igual en magnitud pero sentido contrario","La fuerza de B sobre A es la mitad"],a:2,tip:"Acción y Reacción: igual magnitud, sentido opuesto, actúan sobre cuerpos distintos."},
+  {n:27,t:"F",tm:"Estática",p:"Condición matemática del <strong>equilibrio estático</strong>:",o:["$\\Sigma F = m \\cdot a$","$\\Sigma F > 0$","$\\Sigma \\vec{F} = 0$","El cuerpo se mueve con velocidad constante distinta de cero"],a:2,tip:"Equilibrio: suma de fuerzas horizontales = 0 Y suma de fuerzas verticales = 0."},
+  {n:28,t:"F",tm:"Estática",p:"Bloque en plano inclinado a $\\theta$. ¿Cuál es la <strong>fuerza normal</strong> $N$?",o:["$N = m \\cdot g$","$N = m \\cdot g \\cdot \\sin\\theta$","$N = m \\cdot g \\cdot \\tan\\theta$","$N = m \\cdot g \\cdot \\cos\\theta$"],a:3,tip:"En plano inclinado: N = mg·cosθ (perpendicular) y F∥ = mg·senθ (paralela)."},
   {n:29,t:"F",tm:"Dinámica Lineal",p:"¿Cuál es la fórmula de la <strong>fuerza de rozamiento</strong> $f$?",o:["$f = \\mu \\cdot m$","$f = \\mu \\cdot g$","$f = m \\cdot \\mu^2$","$f = \\mu \\cdot N$"],a:3,tip:"Fricción = μ × Normal. Sin fuerza normal no hay fricción."},
-  {n:30,t:"U",tm:"Dinámica Lineal",p:"¿Cuál es la unidad del coeficiente de rozamiento $\\mu$?",o:["Newton (N)","kg/m","Es adimensional (no tiene unidades)","m/s²"],a:2,tip:"μ = f/N = N/N → sin unidades. Valores: hielo ≈ 0.03, madera ≈ 0.3, goma/asfalto ≈ 0.7."},
-  {n:31,t:"T",tm:"Dinámica Lineal",p:"¿Por qué cuesta más trabajo <em>iniciar</em> el movimiento que <em>mantenerlo</em>?",o:["Porque la masa aumenta al empezar a moverse","Porque el coeficiente de rozamiento estático es mayor que el cinético","Porque la gravedad actúa con más intensidad al inicio","Porque la velocidad inicial genera inercia adicional"],a:1,tip:"μ_estático > μ_cinético siempre. Por eso cuesta más arrancar que mantener el movimiento."},
+  {n:30,t:"U",tm:"Dinámica Lineal",p:"¿Cuál es la unidad del coeficiente de rozamiento $\\mu$?",o:["Newton (N)","kg/m","Adimensional (sin unidades)","m/s²"],a:2,tip:"μ = f/N = N/N → sin unidades. Valores: hielo ≈ 0.03, madera ≈ 0.3, goma/asfalto ≈ 0.7."},
+  {n:31,t:"T",tm:"Dinámica Lineal",p:"¿Por qué cuesta más <em>iniciar</em> el movimiento que <em>mantenerlo</em>?",o:["Porque la masa aumenta al empezar","Porque el coeficiente estático es mayor que el cinético","Porque la gravedad actúa con más intensidad al inicio","Porque la velocidad inicial genera inercia adicional"],a:1,tip:"μ_estático > μ_cinético siempre. Por eso cuesta más arrancar que mantener el movimiento."},
   {n:32,t:"F",tm:"Trabajo Mecánico",p:"¿Cuál es la fórmula del <strong>trabajo mecánico</strong> $W$?",o:["$W = F \\cdot t$","$W = m \\cdot a \\cdot t$","$W = F \\cdot d \\cdot \\cos\\theta$","$W = \\dfrac{F}{d}$"],a:2,tip:"W = F · d · cosθ. Con θ=0°: W=F·d (máximo). Con θ=90°: W=0."},
   {n:33,t:"U",tm:"Trabajo Mecánico",p:"¿Cuál es la unidad del <strong>trabajo mecánico</strong> en el SI?",o:["Newton (N)","Watt (W)","Pascal (Pa)","Joule (J)"],a:3,tip:"1 Joule = 1 N × 1 m. El Joule es unidad de trabajo Y energía."},
-  {n:34,t:"T",tm:"Trabajo Mecánico",p:"¿Cuándo el trabajo de una fuerza es <strong>negativo</strong>?",o:["Cuando la fuerza es perpendicular al desplazamiento (θ=90°)","Cuando el ángulo entre fuerza y desplazamiento es mayor de 90°","Cuando el objeto acelera","El trabajo nunca puede ser negativo"],a:1,tip:"W = F·d·cosθ. Si θ>90°, cosθ<0, W<0. La fricción siempre hace trabajo negativo (θ=180°)."},
+  {n:34,t:"T",tm:"Trabajo Mecánico",p:"¿Cuándo el trabajo de una fuerza es <strong>negativo</strong>?",o:["Cuando la fuerza es perpendicular al desplazamiento (θ=90°)","Cuando el ángulo entre fuerza y desplazamiento es mayor de 90°","Cuando el objeto acelera","El trabajo nunca puede ser negativo"],a:1,tip:"W = F·d·cosθ. Si θ>90°, cosθ<0, W<0. La fricción siempre hace trabajo negativo."},
   {n:35,t:"F",tm:"Potencia Mecánica",p:"¿Cuál es la fórmula de la <strong>potencia mecánica</strong> $P$?",o:["$P = F \\cdot d$","$P = m \\cdot a$","$P = W \\cdot t$","$P = \\dfrac{W}{t}$"],a:3,tip:"P = W/t (trabajo por unidad de tiempo). También P = F · v."},
   {n:36,t:"U",tm:"Potencia Mecánica",p:"¿Cuál es la unidad de la <strong>potencia</strong> en el SI?",o:["Joule (J)","Watt (W)","Newton (N)","Volt (V)"],a:1,tip:"1 Watt = 1 J/s. 1 HP ≈ 746 W."},
   {n:37,t:"F",tm:"Energía Mecánica",p:"¿Cuál es la fórmula de la <strong>energía cinética</strong> $E_c$?",o:["$E_c = m \\cdot v$","$E_c = m \\cdot v^2$","$E_c = \\dfrac{1}{2} m v^2$","$E_c = 2 m v^2$"],a:2,tip:"El factor ½ es ESENCIAL. Si la velocidad se duplica, la Ec se cuadruplica."},
   {n:38,t:"F",tm:"Energía Mecánica",p:"¿Cuál es la fórmula de la <strong>energía potencial gravitatoria</strong> $E_p$?",o:["$E_p = m \\cdot h$","$E_p = m \\cdot g$","$E_p = g \\cdot h$","$E_p = m \\cdot g \\cdot h$"],a:3,tip:"Ep = m · g · h. Las tres variables son obligatorias. Unidad: Joule."},
-  {n:39,t:"F",tm:"Energía Mecánica",p:"La <strong>conservación de la energía mecánica</strong> (sin rozamiento) se expresa como:",o:["$E_{c1} + E_{p1} = E_{c2} + E_{p2}$","$E_{c1} = E_{p1}$","$E_c + E_p = m \\cdot g$","$E_{c1} - E_{p1} = 0$"],a:0,tip:"La energía mecánica total (Ec + Ep) se conserva sin rozamiento. Al bajar gana Ec y pierde Ep."},
+  {n:39,t:"F",tm:"Energía Mecánica",p:"La <strong>conservación de la energía mecánica</strong> (sin rozamiento):",o:["$E_{c1} + E_{p1} = E_{c2} + E_{p2}$","$E_{c1} = E_{p1}$","$E_c + E_p = m \\cdot g$","$E_{c1} - E_{p1} = 0$"],a:0,tip:"La energía mecánica total (Ec + Ep) se conserva sin rozamiento."},
   {n:40,t:"U",tm:"Energía Mecánica",p:"¿Cuál es la unidad de la <strong>energía mecánica</strong> en el SI?",o:["Watt (W)","Newton (N)","Joule (J)","Pascal (Pa)"],a:2,tip:"1 Joule = 1 kg · m²/s². El Watt es potencia, no energía."},
-  {n:41,t:"T",tm:"Energía Mecánica",p:"Una pelota rueda y se detiene por rozamiento. ¿Qué ocurre con su energía mecánica?",o:["Se destruye completamente","Se transforma en energía térmica (calor) por el rozamiento","Se conserva porque la energía total siempre se conserva","Se convierte íntegramente en energía potencial"],a:1,tip:"La energía MECÁNICA NO se conserva con rozamiento. Se convierte en calor. La energía TOTAL sí se conserva."},
-  {n:42,t:"C",tm:"Análisis Vectorial",p:"Una fuerza tiene componente horizontal de 6 N y componente vertical de 8 N. ¿Cuál es el módulo?",o:["14 N","48 N","10 N","7 N"],a:2,tip:"Módulo = √(6²+8²) = √100 = 10 N. Trío pitagórico 6-8-10 (múltiplo de 3-4-5)."},
-  {n:43,t:"C",tm:"Análisis Vectorial",p:"Un vector de 20 m/s forma 30° con el eje horizontal. ¿Cuánto vale su <strong>componente vertical</strong>? (sen 30°=0.5)",o:["17.4 m/s","20 m/s","10 m/s","5 m/s"],a:2,tip:"Comp. vertical = 20 × sen(30°) = 20 × 0.5 = 10 m/s. VERTICAL → seno."},
+  {n:41,t:"T",tm:"Energía Mecánica",p:"Una pelota rueda y se detiene por rozamiento. ¿Qué ocurre con su energía mecánica?",o:["Se destruye completamente","Se transforma en energía térmica (calor)","Se conserva siempre","Se convierte íntegramente en energía potencial"],a:1,tip:"La energía MECÁNICA NO se conserva con rozamiento. Se convierte en calor."},
+  {n:42,t:"C",tm:"Análisis Vectorial",p:"Una fuerza tiene componente horizontal de 6 N y vertical de 8 N. ¿Cuál es el módulo?",o:["14 N","48 N","10 N","7 N"],a:2,tip:"Módulo = √(6²+8²) = √100 = 10 N. Trío pitagórico 6-8-10."},
+  {n:43,t:"C",tm:"Análisis Vectorial",p:"Un vector de 20 m/s forma 30° con el eje horizontal. ¿Componente vertical? (sen 30°=0.5)",o:["17.4 m/s","20 m/s","10 m/s","5 m/s"],a:2,tip:"Comp. vertical = 20 × sen(30°) = 20 × 0.5 = 10 m/s. VERTICAL → seno."},
   {n:44,t:"C",tm:"MRU",p:"Un tren recorre 450 m en 30 s. ¿Cuál es su velocidad?",o:["10 m/s","15 m/s","20 m/s","25 m/s"],a:1,tip:"v = 450 ÷ 30 = 15 m/s (= 54 km/h)."},
-  {n:45,t:"C",tm:"MRUV",p:"Un auto parte del reposo con $a = 5$ m/s². ¿Cuál es su velocidad a los 6 segundos?",o:["11 m/s","25 m/s","30 m/s","150 m/s"],a:2,tip:"v = 0 + 5×6 = 30 m/s (= 108 km/h)."},
-  {n:46,t:"C",tm:"MRUV",p:"Un objeto parte del reposo con $a = 4$ m/s². ¿Qué distancia recorre en 5 segundos?",o:["20 m","40 m","50 m","100 m"],a:2,tip:"x = ½×4×25 = 50 m. El factor ½ es OBLIGATORIO. Sin él obtendrías 100 m (trampa D)."},
+  {n:45,t:"C",tm:"MRUV",p:"Un auto parte del reposo con $a = 5$ m/s². ¿Velocidad a los 6 segundos?",o:["11 m/s","25 m/s","30 m/s","150 m/s"],a:2,tip:"v = 0 + 5×6 = 30 m/s (= 108 km/h)."},
+  {n:46,t:"C",tm:"MRUV",p:"Un objeto parte del reposo con $a = 4$ m/s². ¿Distancia en 5 segundos?",o:["20 m","40 m","50 m","100 m"],a:2,tip:"x = ½×4×25 = 50 m. El factor ½ es OBLIGATORIO."},
   {n:47,t:"C",tm:"MRUV",p:"Un auto a 36 m/s frena hasta detenerse en 9 s. ¿Cuál es su desaceleración?",o:["−2 m/s²","−4 m/s²","−5 m/s²","−9 m/s²"],a:1,tip:"a = (0−36)÷9 = −4 m/s². El signo negativo indica frenado."},
-  {n:48,t:"C",tm:"Caída Libre",p:"Un objeto cae desde 125 m ($g=10$ m/s²). ¿Cuántos segundos tarda?",o:["3 s","4 s","5 s","6 s"],a:2,tip:"t = √(2×125/10) = √25 = 5 s. Verificación: ½×10×25 = 125 m ✓"},
-  {n:49,t:"C",tm:"Caída Libre",p:"Un objeto cae libremente 4 segundos ($g=10$ m/s²). ¿Con qué velocidad impacta?",o:["20 m/s","40 m/s","80 m/s","160 m/s"],a:1,tip:"v = 10×4 = 40 m/s (= 144 km/h)."},
-  {n:50,t:"C",tm:"Caída Libre",p:"Se lanza una piedra hacia arriba con $v_0=30$ m/s ($g=10$ m/s²). ¿Qué altura máxima alcanza?",o:["15 m","30 m","45 m","60 m"],a:2,tip:"h = 30²÷(2×10) = 900÷20 = 45 m."},
-  {n:51,t:"C",tm:"Movimiento Parabólico",p:"Proyectil con $v_0=40$ m/s a 45°. ¿Cuál es la distancia horizontal? ($g=10$, sen90°=1)",o:["80 m","120 m","160 m","200 m"],a:2,tip:"d = 1600×1÷10 = 160 m. Con 45° se obtiene el MÁXIMO alcance."},
-  {n:52,t:"C",tm:"Movimiento Parabólico",p:"Proyectil con $v_0=20$ m/s a 30°. ¿Cuál es la altura máxima? ($g=10$, sen30°=0.5)",o:["2.5 m","5 m","10 m","20 m"],a:1,tip:"h = (20×0.5)²÷(2×10) = 100÷20 = 5 m."},
-  {n:53,t:"C",tm:"Leyes de Newton",p:"¿Cuánto pesa un objeto de 12 kg? ($g=10$ m/s²)",o:["12 N","60 N","120 N","1200 N"],a:2,tip:"Peso = 12×10 = 120 N. La masa (12 kg) no varía; el peso sí según g."},
-  {n:54,t:"C",tm:"Leyes de Newton",p:"Fuerza de 75 N sobre un objeto de 5 kg sin rozamiento. ¿Cuál es la aceleración?",o:["0.07 m/s²","15 m/s²","70 m/s²","375 m/s²"],a:1,tip:"a = 75÷5 = 15 m/s²."},
-  {n:55,t:"C",tm:"Dinámica Lineal",p:"Bloque de 6 kg con $\\mu_c=0.4$ ($g=10$). ¿Cuánto vale la fuerza de rozamiento?",o:["2.4 N","16 N","24 N","60 N"],a:2,tip:"N = 6×10 = 60 N. f = 0.4×60 = 24 N."},
-  {n:56,t:"C",tm:"Dinámica Lineal",p:"Caja de 8 kg empujada con 60 N y rozamiento de 20 N. ¿Cuál es la aceleración?",o:["3 m/s²","5 m/s²","7.5 m/s²","10 m/s²"],a:1,tip:"F_neta = 60−20 = 40 N. a = 40÷8 = 5 m/s²."},
-  {n:57,t:"C",tm:"Estática",p:"Bloque de 5 kg en plano a 37°. ¿Componente del peso <strong>paralela al plano</strong>? (sen37°=0.6, $g=10$)",o:["20 N","30 N","40 N","50 N"],a:1,tip:"F∥ = 5×10×0.6 = 30 N. La normal sería: 5×10×0.8 = 40 N."},
+  {n:48,t:"C",tm:"Caída Libre",p:"Un objeto cae desde 125 m ($g=10$ m/s²). ¿Cuántos segundos tarda?",o:["3 s","4 s","5 s","6 s"],a:2,tip:"t = √(2×125/10) = √25 = 5 s."},
+  {n:49,t:"C",tm:"Caída Libre",p:"Un objeto cae 4 segundos ($g=10$ m/s²). ¿Con qué velocidad impacta?",o:["20 m/s","40 m/s","80 m/s","160 m/s"],a:1,tip:"v = 10×4 = 40 m/s (= 144 km/h)."},
+  {n:50,t:"C",tm:"Caída Libre",p:"Se lanza una piedra hacia arriba con $v_0=30$ m/s ($g=10$). ¿Altura máxima?",o:["15 m","30 m","45 m","60 m"],a:2,tip:"h = 30²÷(2×10) = 900÷20 = 45 m."},
+  {n:51,t:"C",tm:"Movimiento Parabólico",p:"Proyectil con $v_0=40$ m/s a 45°. ¿Distancia horizontal? ($g=10$, sen90°=1)",o:["80 m","120 m","160 m","200 m"],a:2,tip:"d = 1600×1÷10 = 160 m. Con 45° se obtiene el MÁXIMO alcance."},
+  {n:52,t:"C",tm:"Movimiento Parabólico",p:"Proyectil con $v_0=20$ m/s a 30°. ¿Altura máxima? ($g=10$, sen30°=0.5)",o:["2.5 m","5 m","10 m","20 m"],a:1,tip:"h = (20×0.5)²÷(2×10) = 100÷20 = 5 m."},
+  {n:53,t:"C",tm:"Leyes de Newton",p:"¿Cuánto pesa un objeto de 12 kg? ($g=10$ m/s²)",o:["12 N","60 N","120 N","1200 N"],a:2,tip:"Peso = 12×10 = 120 N."},
+  {n:54,t:"C",tm:"Leyes de Newton",p:"Fuerza de 75 N sobre un objeto de 5 kg sin rozamiento. ¿Aceleración?",o:["0.07 m/s²","15 m/s²","70 m/s²","375 m/s²"],a:1,tip:"a = 75÷5 = 15 m/s²."},
+  {n:55,t:"C",tm:"Dinámica Lineal",p:"Bloque de 6 kg con $\\mu_c=0.4$ ($g=10$). ¿Fuerza de rozamiento?",o:["2.4 N","16 N","24 N","60 N"],a:2,tip:"N = 6×10 = 60 N. f = 0.4×60 = 24 N."},
+  {n:56,t:"C",tm:"Dinámica Lineal",p:"Caja de 8 kg empujada con 60 N y rozamiento de 20 N. ¿Aceleración?",o:["3 m/s²","5 m/s²","7.5 m/s²","10 m/s²"],a:1,tip:"F_neta = 60−20 = 40 N. a = 40÷8 = 5 m/s²."},
+  {n:57,t:"C",tm:"Estática",p:"Bloque de 5 kg en plano a 37°. ¿Componente del peso <strong>paralela al plano</strong>? (sen37°=0.6, $g=10$)",o:["20 N","30 N","40 N","50 N"],a:1,tip:"F∥ = 5×10×0.6 = 30 N."},
   {n:58,t:"C",tm:"Trabajo Mecánico",p:"Caja arrastrada 10 m con 80 N a 60°. ¿Cuánto trabajo? (cos60°=0.5)",o:["200 J","400 J","692 J","800 J"],a:1,tip:"W = 80×10×0.5 = 400 J."},
-  {n:59,t:"C",tm:"Potencia Mecánica",p:"Grúa eleva 400 kg hasta 15 m en 20 s ($g=10$). ¿Cuál es la potencia?",o:["1500 W","3000 W","6000 W","30000 W"],a:1,tip:"W = 400×10×15 = 60000 J. P = 60000÷20 = 3000 W."},
-  {n:60,t:"C",tm:"Potencia Mecánica",p:"Motor aplica 600 N a 25 m/s. ¿Cuál es la potencia?",o:["24 W","625 W","6 000 W","15 000 W"],a:3,tip:"P = F·v = 600×25 = 15000 W = 15 kW."},
-  {n:61,t:"C",tm:"Energía Mecánica",p:"¿Cuál es la energía cinética de un auto de 1200 kg a 20 m/s?",o:["24 000 J","120 000 J","240 000 J","480 000 J"],a:2,tip:"Ec = ½×1200×400 = 240000 J. Sin el ½ obtendrías 480000 J (trampa D)."},
-  {n:62,t:"C",tm:"Energía Mecánica",p:"¿Cuál es la energía potencial de 6 kg a 12 m? ($g=10$)",o:["72 J","360 J","720 J","1 440 J"],a:2,tip:"Ep = 6×10×12 = 720 J."},
-  {n:63,t:"C",tm:"Energía Mecánica",p:"Objeto cae desde 45 m sin rozamiento. ¿Con qué velocidad llega? ($g=10$)",o:["15 m/s","20 m/s","30 m/s","45 m/s"],a:2,tip:"v = √(2×10×45) = √900 = 30 m/s. La masa no influye."},
-  {n:64,t:"C",tm:"Energía Mecánica",p:"Pelota de 3 kg cae desde 8 m. ¿Cuál es su Ec antes de llegar? ($g=10$, sin rozamiento)",o:["30 J","120 J","240 J","720 J"],a:2,tip:"Ec = Ep_inicial = 3×10×8 = 240 J. No es necesario calcular la velocidad."},
-  {n:65,t:"C",tm:"Energía Mecánica",p:"Cuerpo de 4 kg a 5 m de altura moviéndose a 6 m/s. ¿Cuál es su energía mecánica total? ($g=10$)",o:["72 J","200 J","272 J","400 J"],a:2,tip:"Ec = ½×4×36 = 72 J. Ep = 4×10×5 = 200 J. Total = 272 J."},
-  {n:66,t:"C",tm:"Leyes de Newton",p:"¿Cuánto pesa un astronauta de 80 kg en la Luna? ($g_{Luna}=1.6$ m/s²)",o:["12.8 N","50 N","128 N","784 N"],a:2,tip:"P = 80×1.6 = 128 N. En la Tierra sería 784 N (≈6 veces más)."},
-  {n:67,t:"C",tm:"Trabajo Mecánico",p:"Auto de 1000 kg a 30 m/s se detiene en 150 m. ¿Cuál fue la fuerza de frenado?",o:["1 500 N","3 000 N","6 000 N","9 000 N"],a:1,tip:"F = (m·v²)÷(2·d) = (1000×900)÷300 = 3000 N."},
-  {n:68,t:"C",tm:"MRUV",p:"Objeto a 10 m/s con $a=3$ m/s² durante 4 s. ¿Qué distancia recorre?",o:["28 m","40 m","64 m","128 m"],a:2,tip:"x = 10×4 + ½×3×16 = 40+24 = 64 m."},
-  {n:69,t:"C",tm:"Estática",p:"Bloque de 4 kg en plano a 53°. ¿Cuál es la fuerza normal? (cos53°=0.6, $g=10$)",o:["16 N","24 N","32 N","40 N"],a:1,tip:"N = 4×10×0.6 = 24 N. En plano inclinado N ≠ m·g."},
-  {n:70,t:"C",tm:"MRU",p:"Un auto circula a 108 km/h. ¿A cuántos m/s equivale?",o:["20 m/s","25 m/s","30 m/s","35 m/s"],a:2,tip:"108÷3.6 = 30 m/s. Factor: 1 km/h = 1/3.6 m/s."}
+  {n:59,t:"C",tm:"Potencia Mecánica",p:"Grúa eleva 400 kg hasta 15 m en 20 s ($g=10$). ¿Potencia?",o:["1500 W","3000 W","6000 W","30000 W"],a:1,tip:"W = 400×10×15 = 60000 J. P = 60000÷20 = 3000 W."},
+  {n:60,t:"C",tm:"Potencia Mecánica",p:"Motor aplica 600 N a 25 m/s. ¿Potencia?",o:["24 W","625 W","6 000 W","15 000 W"],a:3,tip:"P = F·v = 600×25 = 15000 W = 15 kW."},
+  {n:61,t:"C",tm:"Energía Mecánica",p:"¿Energía cinética de un auto de 1200 kg a 20 m/s?",o:["24 000 J","120 000 J","240 000 J","480 000 J"],a:2,tip:"Ec = ½×1200×400 = 240000 J."},
+  {n:62,t:"C",tm:"Energía Mecánica",p:"¿Energía potencial de 6 kg a 12 m? ($g=10$)",o:["72 J","360 J","720 J","1 440 J"],a:2,tip:"Ep = 6×10×12 = 720 J."},
+  {n:63,t:"C",tm:"Energía Mecánica",p:"Objeto cae desde 45 m sin rozamiento. ¿Velocidad al llegar? ($g=10$)",o:["15 m/s","20 m/s","30 m/s","45 m/s"],a:2,tip:"v = √(2×10×45) = √900 = 30 m/s."},
+  {n:64,t:"C",tm:"Energía Mecánica",p:"Pelota de 3 kg cae desde 8 m. ¿Ec al llegar? ($g=10$, sin rozamiento)",o:["30 J","120 J","240 J","720 J"],a:2,tip:"Ec = Ep_inicial = 3×10×8 = 240 J."},
+  {n:65,t:"C",tm:"Energía Mecánica",p:"Cuerpo de 4 kg a 5 m de altura moviéndose a 6 m/s. ¿Energía mecánica total? ($g=10$)",o:["72 J","200 J","272 J","400 J"],a:2,tip:"Ec = ½×4×36 = 72 J. Ep = 4×10×5 = 200 J. Total = 272 J."},
+  {n:66,t:"C",tm:"Leyes de Newton",p:"¿Cuánto pesa un astronauta de 80 kg en la Luna? ($g_{Luna}=1.6$ m/s²)",o:["12.8 N","50 N","128 N","784 N"],a:2,tip:"P = 80×1.6 = 128 N. En la Tierra sería 784 N."},
+  {n:67,t:"C",tm:"Trabajo Mecánico",p:"Auto de 1000 kg a 30 m/s se detiene en 150 m. ¿Fuerza de frenado?",o:["1 500 N","3 000 N","6 000 N","9 000 N"],a:1,tip:"F = (m·v²)÷(2·d) = (1000×900)÷300 = 3000 N."},
+  {n:68,t:"C",tm:"MRUV",p:"Objeto a 10 m/s con $a=3$ m/s² durante 4 s. ¿Distancia?",o:["28 m","40 m","64 m","128 m"],a:2,tip:"x = 10×4 + ½×3×16 = 40+24 = 64 m."},
+  {n:69,t:"C",tm:"Estática",p:"Bloque de 4 kg en plano a 53°. ¿Fuerza normal? (cos53°=0.6, $g=10$)",o:["16 N","24 N","32 N","40 N"],a:1,tip:"N = 4×10×0.6 = 24 N."},
+  {n:70,t:"C",tm:"MRU",p:"Un auto circula a 108 km/h. ¿Cuántos m/s equivale?",o:["20 m/s","25 m/s","30 m/s","35 m/s"],a:2,tip:"108÷3.6 = 30 m/s. Factor: 1 km/h = 1/3.6 m/s."}
 ];
 
-var TSEC=30, TOTAL=QS.length;
+var TSEC=30,TOTAL=QS.length;
 var stu={n:'',a:'',area:''};
-var idx=0, ans=[], tmr=null, tLeft=0, done=false, pickedArea='', transitioning=false;
+var idx=0,ans=[],tmr=null,tLeft=0,done=false,pickedArea='',transitioning=false;
 var tipoLbl={T:'Teoría',F:'Fórmula',U:'Unidad',C:'Cálculo'};
 
-function selArea(ar,el){
-  pickedArea=ar;
-  document.querySelectorAll('.area-card').forEach(function(c){c.classList.remove('selected');});
-  el.classList.add('selected'); chk();
-}
-function chk(){
-  var n=document.getElementById('inp-n').value.trim();
-  var a=document.getElementById('inp-a').value.trim();
-  var b=document.getElementById('btn-start');
-  if(n&&a&&pickedArea) b.classList.add('ready'); else b.classList.remove('ready');
-}
-function startExam(){
-  stu.n=document.getElementById('inp-n').value.trim();
-  stu.a=document.getElementById('inp-a').value.trim();
-  stu.area=pickedArea;
-  idx=0; ans=[]; transitioning=false;
-  sw('screen-exam'); renderQ();
-}
-function sw(id){
-  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
+function selArea(ar,el){pickedArea=ar;document.querySelectorAll('.area-card').forEach(function(c){c.classList.remove('selected');});el.classList.add('selected');chk();}
+function chk(){var n=document.getElementById('inp-n').value.trim();var a=document.getElementById('inp-a').value.trim();var b=document.getElementById('btn-start');if(n&&a&&pickedArea)b.classList.add('ready');else b.classList.remove('ready');}
+function startExam(){stu.n=document.getElementById('inp-n').value.trim();stu.a=document.getElementById('inp-a').value.trim();stu.area=pickedArea;idx=0;ans=[];transitioning=false;sw('screen-exam');renderQ();}
+function sw(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+
 function renderQ(){
-  done=false; tLeft=TSEC; transitioning=false;
-  var q=QS[idx];
-  var pct=Math.round((idx/TOTAL)*100);
+  done=false;tLeft=TSEC;transitioning=false;
+  var q=QS[idx];var pct=Math.round((idx/TOTAL)*100);
   document.getElementById('bar-st').innerHTML='<strong>'+stu.n+' '+stu.a+'</strong>';
   document.getElementById('bar-ctr').textContent=(idx+1)+'/'+TOTAL;
   document.getElementById('bar-fill').style.width=pct+'%';
   document.getElementById('bar-pct').textContent=pct+'%';
   document.getElementById('bar-ok').textContent=ans.filter(function(a){return a.ok;}).length+' ✓';
   document.getElementById('bar-err').textContent=ans.filter(function(a){return !a.ok;}).length+' ✗';
-  document.getElementById('rst').className='result-stamp';
-  document.getElementById('rst').innerHTML='';
-  var nxBtn=document.getElementById('btn-nx');
-  nxBtn.className='btn-next';
-  nxBtn.innerHTML=(idx<TOTAL-1?'Siguiente':'Ver Resultado')+' <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
-  var letters=['A','B','C','D'];
-  var optHtml='';
+  document.getElementById('rst').className='result-stamp';document.getElementById('rst').innerHTML='';
+  var nxBtn=document.getElementById('btn-nx');nxBtn.className='btn-next';
+  nxBtn.innerHTML=(idx<TOTAL-1?'Siguiente':'Ver Resultado')+' <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+  var letters=['A','B','C','D'];var optHtml='';
   for(var oi=0;oi<q.o.length;oi++){
     var optText=q.o[oi];
     var isPureMath=/^\$[^$]/.test(optText.trim())&&/[^$]\$$/.test(optText.trim());
     if(isPureMath){optText=optText.replace(/^\$/,'$$$$').replace(/\$$/,'$$$$');}
-    var hasF=q.o[oi].indexOf('$')!==-1;
-    optHtml+='<div class="opt '+(isPureMath?'opt-display':'')+'" id="o'+oi+'" onclick="pick('+oi+')"><span class="opt-lt">'+letters[oi]+'</span><span class="opt-tx'+(hasF?' is-formula':'')+'">'+optText+'</span></div>';
+    optHtml+='<div class="opt '+(isPureMath?'opt-display':'')+'" id="o'+oi+'" onclick="pick('+oi+')"><span class="opt-lt">'+letters[oi]+'</span><span class="opt-tx">'+optText+'</span></div>';
   }
   document.getElementById('qw').innerHTML=
     '<div class="timer-row"><div class="timer-ring tr-ok" id="tr"><svg viewBox="0 0 52 52"><circle class="ring-bg" cx="26" cy="26" r="20"/><circle class="ring-bar" id="rb" cx="26" cy="26" r="20"/></svg><span class="ring-txt" id="rt">'+TSEC+'</span></div><div class="timer-meta"><span class="timer-strong">'+TSEC+' segundos</span><span class="timer-sub">'+tipoLbl[q.t]+' · '+q.tm+'</span></div></div>'+
     '<div class="q-card '+q.t+' q-anim" id="qc"><div class="q-meta"><span class="q-badge">'+tipoLbl[q.t]+'</span><span class="q-tema">'+q.tm+'</span></div><div class="q-text" id="qtext"></div><div class="options" id="opts">'+optHtml+'</div><div class="to-badge" id="tob">⏱ Tiempo agotado — la respuesta correcta está marcada</div><div class="tip-box" id="tipb"><div class="tip-lbl" id="tipl"></div><span id="tipt"></span></div></div>';
   document.getElementById('qtext').innerHTML=q.p;
-  renderMath(document.getElementById('qw'));
-  window.scrollTo(0,0);
-  startTmr();
+  renderMath(document.getElementById('qw'));window.scrollTo(0,0);startTmr();
 }
+
 function startTmr(){
-  clearInterval(tmr);
-  var circ=125.6;
+  clearInterval(tmr);var circ=125.6;
   tmr=setInterval(function(){
-    tLeft--;
-    var rb=document.getElementById('rb'),rt=document.getElementById('rt'),tr=document.getElementById('tr');
+    tLeft--;var rb=document.getElementById('rb'),rt=document.getElementById('rt'),tr=document.getElementById('tr');
     if(!rb){clearInterval(tmr);return;}
-    var p=tLeft/TSEC;
-    rb.style.strokeDashoffset=circ*(1-p);
-    rt.textContent=tLeft;
+    var p=tLeft/TSEC;rb.style.strokeDashoffset=circ*(1-p);rt.textContent=tLeft;
     tr.className='timer-ring '+(p>.5?'tr-ok':p>.25?'tr-mid':'tr-low');
     if(tLeft<=0){clearInterval(tmr);if(!done)timeout();}
   },1000);
 }
+
 function pick(i){
-  if(done)return; done=true; clearInterval(tmr);
+  if(done)return;done=true;clearInterval(tmr);
   var q=QS[idx],ok=i===q.a;
   ans.push({q:q.n,sel:i,ok:ok,to:false});
-  document.querySelectorAll('.opt').forEach(function(el,j){
-    el.classList.add('dis');
-    if(j===q.a)el.classList.add('c-ok');
-    else if(j===i)el.classList.add('c-err');
-  });
+  document.querySelectorAll('.opt').forEach(function(el,j){el.classList.add('dis');if(j===q.a)el.classList.add('c-ok');else if(j===i)el.classList.add('c-err');});
   document.getElementById('qc').classList.add(ok?'c-ok':'c-err');
   showTip(ok?'✓ Correcto':'✗ Incorrecto',q.tip);
-  var rs=document.getElementById('rst');
-  rs.className='result-stamp '+(ok?'rs-ok':'rs-err');
-  rs.innerHTML=ok?'✦ Correcto':'✦ Incorrecto';
+  var rs=document.getElementById('rst');rs.className='result-stamp '+(ok?'rs-ok':'rs-err');rs.innerHTML=ok?'✦ Correcto':'✦ Incorrecto';
   document.getElementById('btn-nx').classList.add('show');
 }
+
 function timeout(){
-  done=true;
-  var q=QS[idx];
-  ans.push({q:q.n,sel:-1,ok:false,to:true});
+  done=true;var q=QS[idx];ans.push({q:q.n,sel:-1,ok:false,to:true});
   document.querySelectorAll('.opt').forEach(function(el,j){el.classList.add('dis');if(j===q.a)el.classList.add('c-ok');});
-  document.getElementById('tob').classList.add('show');
-  showTip('⏱ Tiempo agotado',q.tip);
-  var rs=document.getElementById('rst'); rs.className='result-stamp rs-to'; rs.innerHTML='⏱ Tiempo agotado';
+  document.getElementById('tob').classList.add('show');showTip('⏱ Tiempo agotado',q.tip);
+  var rs=document.getElementById('rst');rs.className='result-stamp rs-to';rs.innerHTML='⏱ Tiempo agotado';
   document.getElementById('btn-nx').classList.add('show');
 }
+
 function showTip(lbl,txt){
-  document.getElementById('tipl').textContent=lbl;
-  document.getElementById('tipt').textContent=txt;
+  document.getElementById('tipl').textContent=lbl;document.getElementById('tipt').textContent=txt;
   document.getElementById('tipb').classList.add('show');
   setTimeout(function(){var el=document.getElementById('tipb');if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});},200);
 }
+
 function nxt(){
-  if(transitioning)return; transitioning=true; clearInterval(tmr);
-  idx++;
+  if(transitioning)return;transitioning=true;clearInterval(tmr);idx++;
   if(idx>=TOTAL){showResults();return;}
-  var qc=document.getElementById('qc');
-  if(qc)qc.classList.add('out');
+  var qc=document.getElementById('qc');if(qc)qc.classList.add('out');
   setTimeout(function(){renderQ();},160);
 }
+
 function showResults(){
-  clearInterval(tmr); sw('screen-results');
+  clearInterval(tmr);sw('screen-results');
   var ok=ans.filter(function(a){return a.ok;}).length;
   var to=ans.filter(function(a){return a.to;}).length;
-  var err=TOTAL-ok;
-  var pct=Math.round((ok/TOTAL)*100);
+  var err=TOTAL-ok;var pct=Math.round((ok/TOTAL)*100);
+  var rank=getRank(pct);
   var temas={};
   QS.forEach(function(q){
-    if(!temas[q.tm])temas[q.tm]={tot:0,ok:0};
-    temas[q.tm].tot++;
-    var a=ans.find(function(a){return a.q===q.n;});
-    if(a&&a.ok)temas[q.tm].ok++;
+    if(!temas[q.tm])temas[q.tm]={tot:0,ok:0};temas[q.tm].tot++;
+    var a=ans.find(function(a){return a.q===q.n;});if(a&&a.ok)temas[q.tm].ok++;
   });
   var record={fecha:new Date().toLocaleString('es-PE'),nombre:stu.n,apellido:stu.a,area:stu.area,puntaje:pct,correctas:ok,incorrectas:err-to,sinTiempo:to,total:TOTAL};
-  sendToSheets(record);
-  showToast();
+  sendToSheets(record);showToast();
+
+  // Rank badge
+  document.getElementById('rank-hero-box').innerHTML=
+    '<div class="rank-hero '+rank.cls+'"><div class="rank-inner"><div class="rank-icon">'+rank.icon+'</div><div class="rank-info"><div class="rank-label">'+rank.label+'</div><div class="rank-title">'+rank.title+'</div><div class="rank-sub">'+rank.sub+'</div></div></div></div>';
+
   document.getElementById('r-st').innerHTML='<strong>'+stu.n+' '+stu.a+'</strong> · '+stu.area;
-  var sc=document.getElementById('r-score');
-  sc.textContent=pct;
-  sc.className='big-score '+(pct>=70?'bg-great':pct>=50?'bg-mid':'bg-low');
+  var sc=document.getElementById('r-score');sc.textContent=pct;sc.className='big-score '+rank.scoreCls;
   document.getElementById('r-pct').textContent=ok+' de '+TOTAL+' correctas';
-  var bar=document.getElementById('r-bar');
-  bar.style.background=pct>=70?'#22c55e':pct>=50?'#f59e0b':'#ef4444';
-  setTimeout(function(){bar.style.width=pct+'%';},200);
-  var msgs=[[85,'✦ Excelente, '+stu.n+'! Dominas los conceptos. Estás muy bien preparado para el examen.'],[70,'✦ Buen trabajo, '+stu.n+'! Tienes base sólida. Repasa los temas donde fallaste.'],[50,'✦ Resultado regular, '+stu.n+'. Enfócate en fórmulas y cálculo.'],[0,'✦ Tú puedes, '+stu.n+'! Este resultado es solo el punto de partida. Regresa más fuerte.']];
+  var bar=document.getElementById('r-bar');bar.style.background=rank.barColor;
+  setTimeout(function(){bar.style.width=pct+'%';},300);
+
+  var msgs=[
+    [95,'✦ Nivel Diamond, '+stu.n+'. Rendimiento excepcional. Eres candidato al primer puesto.'],
+    [85,'✦ Nivel Esmeralda, '+stu.n+'. Dominio sólido. Estás muy bien preparado.'],
+    [70,'✦ Nivel Oro, '+stu.n+'. Excelente base. Refuerza los temas donde fallaste.'],
+    [50,'✦ Nivel Amatista, '+stu.n+'. Progreso notable. Profundiza en fórmulas y cálculo.'],
+    [30,'✦ Nivel Plata, '+stu.n+'. Sigue practicando. Cada intento te acerca más.'],
+    [0, '✦ Nivel Bronce, '+stu.n+'. Este resultado es el punto de partida. ¡Vuelve más fuerte!']
+  ];
   document.getElementById('r-msg').textContent=msgs.find(function(m){return pct>=m[0];})[1];
   document.getElementById('r-ok').textContent=ok;
   document.getElementById('r-err').textContent=err-to;
   document.getElementById('r-to').textContent=to;
+
   var temasArr=Object.entries(temas).map(function(e){return{tm:e[0],ok:e[1].ok,tot:e[1].tot,pct:e[1].tot?Math.round((e[1].ok/e[1].tot)*100):0};});
   temasArr.sort(function(a,b){return b.pct-a.pct;});
   var best=temasArr[0],worst=temasArr[temasArr.length-1];
@@ -548,56 +594,36 @@ function showResults(){
   if(hlEl&&best&&worst){
     hlEl.innerHTML='<div class="r-hl-box"><div class="r-hl-tag up">↑ PUNTO FUERTE</div><div class="r-hl-lbl">Mejor tema</div><div class="r-hl-tema">'+best.tm+'</div><div class="r-hl-score">'+best.ok+'/'+best.tot+' — '+best.pct+'%</div></div><div class="r-hl-box"><div class="r-hl-tag dn">↓ A MEJORAR</div><div class="r-hl-lbl">Tema difícil</div><div class="r-hl-tema">'+worst.tm+'</div><div class="r-hl-score">'+worst.ok+'/'+worst.tot+' — '+worst.pct+'%</div></div>';
   }
-  var vibrant=['#22d3ee','#22c55e','#a855f7','#f59e0b','#ef4444','#3b82f6','#10b981','#f472b6','#84cc16','#fb923c'];
+
+  // Breakdown con colores por rendimiento
   var bkHtml='';
-  Object.entries(temas).forEach(function(entry,i){
+  Object.entries(temas).forEach(function(entry){
     var tm=entry[0],d=entry[1];
     var p=d.tot?Math.round((d.ok/d.tot)*100):0;
-    var col=vibrant[i%vibrant.length];
-    bkHtml+='<div class="bd-row"><span class="bd-lbl">'+tm+'</span><div class="bd-track"><div class="bd-bar" style="width:0%;background:'+col+'" data-w="'+p+'"></div></div><span class="bd-sc">'+d.ok+'/'+d.tot+'</span></div>';
+    var col=p>=85?'#10A070':p>=70?'#DDB85C':p>=50?'#9A78C8':p>=30?'#4A88D0':'#A81E3C';
+    bkHtml+='<div class="bd-row"><span class="bd-lbl">'+tm+'</span><div class="bd-track"><div class="bd-bar" style="width:0%;background:'+col+'" data-w="'+p+'"></div></div><span class="bd-sc" style="color:'+col+'">'+d.ok+'/'+d.tot+'</span></div>';
   });
   document.getElementById('r-bk').innerHTML=bkHtml;
-  setTimeout(function(){document.querySelectorAll('.bd-bar').forEach(function(b){b.style.transition='width .9s ease';b.style.width=b.dataset.w+'%';});},200);
+  setTimeout(function(){document.querySelectorAll('.bd-bar').forEach(function(b){b.style.transition='width 1s cubic-bezier(.16,1,.3,1)';b.style.width=b.dataset.w+'%';});},300);
 }
+
 function retry(){
-  clearInterval(tmr); idx=0; ans=[]; transitioning=false;
-  stu={n:'',a:'',area:''};
-  sw('screen-register');
-  document.getElementById('inp-n').value='';
-  document.getElementById('inp-a').value='';
+  clearInterval(tmr);idx=0;ans=[];transitioning=false;stu={n:'',a:'',area:''};
+  sw('screen-register');document.getElementById('inp-n').value='';document.getElementById('inp-a').value='';
   document.querySelectorAll('.area-card').forEach(function(c){c.classList.remove('selected');});
-  pickedArea='';
-  document.getElementById('btn-start').classList.remove('ready');
+  pickedArea='';document.getElementById('btn-start').classList.remove('ready');
 }
-function showToast(){
-  var t=document.getElementById('toast');
-  if(t){t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
-}
+
+function showToast(){var t=document.getElementById('toast');if(t){t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2800);}}
+
 function sendToSheets(record){
-  var el=document.getElementById('sheets-status');
-  if(!el)return;
-  el.style.display='block';
-  el.className='sheets-status sheets-saving';
-  el.textContent='⏳ Guardando en Google Sheets...';
-  var url=APPS_SCRIPT_URL
-    +'?fecha='+encodeURIComponent(record.fecha)
-    +'&nombre='+encodeURIComponent(record.nombre)
-    +'&apellido='+encodeURIComponent(record.apellido)
-    +'&area='+encodeURIComponent(record.area)
-    +'&puntaje='+encodeURIComponent(record.puntaje)
-    +'&correctas='+encodeURIComponent(record.correctas)
-    +'&incorrectas='+encodeURIComponent(record.incorrectas)
-    +'&sinTiempo='+encodeURIComponent(record.sinTiempo)
-    +'&total='+encodeURIComponent(record.total);
+  var el=document.getElementById('sheets-status');if(!el)return;
+  el.style.display='block';el.className='sheets-status sheets-saving';el.textContent='⏳ Guardando resultado...';
+  var rank=getRank(record.puntaje);
+  var url=APPS_SCRIPT_URL+'?fecha='+encodeURIComponent(record.fecha)+'&nombre='+encodeURIComponent(record.nombre)+'&apellido='+encodeURIComponent(record.apellido)+'&area='+encodeURIComponent(record.area)+'&puntaje='+encodeURIComponent(record.puntaje)+'&correctas='+encodeURIComponent(record.correctas)+'&incorrectas='+encodeURIComponent(record.incorrectas)+'&sinTiempo='+encodeURIComponent(record.sinTiempo)+'&total='+encodeURIComponent(record.total)+'&nivel='+encodeURIComponent(rank.label)+'&colorFila='+encodeURIComponent(rank.sheetColor)+'&ordenar=true';
   fetch(url,{method:'GET',mode:'no-cors'})
-    .then(function(){
-      el.className='sheets-status sheets-ok';
-      el.textContent='✓ Resultado guardado en Google Sheets';
-    })
-    .catch(function(){
-      el.className='sheets-status sheets-err';
-      el.textContent='✗ Error al guardar. Verifica la conexión.';
-    });
+    .then(function(){el.className='sheets-status sheets-ok';el.textContent='✓ Resultado guardado en Google Sheets';})
+    .catch(function(){el.className='sheets-status sheets-err';el.textContent='✗ Error al guardar. Verifica la conexión.';});
 }
 </script>
 </body>
