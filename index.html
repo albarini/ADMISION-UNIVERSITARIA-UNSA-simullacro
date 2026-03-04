@@ -197,10 +197,27 @@ html,body{width:100%;background:var(--obsidian);color:var(--cream);font-family:'
 .rank-bronze{background:rgba(140,90,50,.05);border-color:rgba(180,120,70,.2);}
 .rank-inner{display:flex;align-items:center;gap:5vw;}
 .rank-icon{font-size:14vw;line-height:1;flex-shrink:0;}
+.rank-badge-box{display:flex;flex-direction:column;align-items:center;justify-content:center;width:20vw;height:20vw;border-radius:50%;border:1.5px solid currentColor;flex-shrink:0;position:relative;background:rgba(0,0,0,.25);}
+.rank-badge-box::before{content:'';position:absolute;inset:3px;border-radius:50%;border:0.5px solid currentColor;opacity:.4;}
+.rank-badge-pct{font-family:'Playfair Display',serif;font-size:7vw;font-weight:300;line-height:1;letter-spacing:-.02em;}
+.rank-badge-label{font-family:'DM Mono',monospace;font-size:2.2vw;letter-spacing:.25em;text-transform:uppercase;opacity:.7;margin-top:.5vw;}
+.rank-diamond .rank-badge-box{color:#C8EEFF;box-shadow:0 0 20px rgba(200,238,255,.15);}
+.rank-emerald .rank-badge-box{color:var(--emerald4);box-shadow:0 0 20px rgba(16,160,112,.15);}
+.rank-gold .rank-badge-box{color:var(--gold3);box-shadow:0 0 20px rgba(196,160,68,.18);}
+.rank-mauve .rank-badge-box{color:var(--mauve4);box-shadow:0 0 20px rgba(92,58,122,.2);}
+.rank-silver .rank-badge-box{color:#C8C8DE;box-shadow:0 0 12px rgba(200,200,220,.1);}
+.rank-bronze .rank-badge-box{color:#D0986A;box-shadow:0 0 12px rgba(208,152,106,.1);}
 .rank-info{flex:1;}
 .rank-label{font-family:'DM Mono',monospace;font-size:2.4vw;letter-spacing:.35em;text-transform:uppercase;margin-bottom:1vw;}
+.rank-accent{font-family:'Playfair Display',serif;font-size:7vw;font-weight:700;line-height:1.1;margin-bottom:2vw;letter-spacing:.01em;}
+.rank-diamond .rank-accent{color:#C8EEFF;text-shadow:0 0 20px rgba(200,238,255,.3);}
+.rank-emerald .rank-accent{color:var(--emerald4);text-shadow:0 0 20px rgba(16,160,112,.25);}
+.rank-gold .rank-accent{color:var(--gold3);text-shadow:0 0 20px rgba(196,160,68,.25);}
+.rank-mauve .rank-accent{color:var(--mauve4);text-shadow:0 0 20px rgba(154,120,200,.25);}
+.rank-silver .rank-accent{color:#C8C8DE;}
+.rank-bronze .rank-accent{color:#D0986A;}
 .rank-title{font-family:'Playfair Display',serif;font-size:8vw;font-weight:700;line-height:1;margin-bottom:1.5vw;}
-.rank-sub{font-size:3.5vw;color:var(--text2);font-style:italic;line-height:1.4;}
+.rank-sub{font-size:3.8vw;color:var(--champagne);font-style:italic;line-height:1.5;margin-top:1.5vw;opacity:.9;}
 .rank-diamond .rank-label,.rank-diamond .rank-title{color:#C8EEFF;}
 .rank-emerald .rank-label,.rank-emerald .rank-title{color:var(--emerald4);}
 .rank-gold .rank-label,.rank-gold .rank-title{color:var(--gold3);}
@@ -220,10 +237,10 @@ html,body{width:100%;background:var(--obsidian);color:var(--cream);font-family:'
 .bg-bronze{color:#D0986A;}
 .score-right{flex:1;}
 .score-label{font-family:'DM Mono',monospace;font-size:2.3vw;color:var(--muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.5vw;}
-.score-detail{font-size:3.5vw;color:var(--text2);font-style:italic;margin-bottom:3vw;line-height:1.4;}
-.score-bar-track{width:100%;height:1px;background:var(--border2);border-radius:999px;overflow:hidden;}
-.score-bar-fill{height:100%;border-radius:999px;width:0%;transition:width 1.2s cubic-bezier(.16,1,.3,1) .4s;}
-.r-msg{font-family:'Playfair Display',serif;font-size:4vw;font-style:italic;border:1px solid var(--border2);border-left:2px solid var(--gold-dark);border-radius:1vw;padding:4.5vw 5vw;margin-bottom:4.5vw;line-height:1.7;color:var(--text2);background:var(--obsidian3);position:relative;overflow:hidden;}
+.score-detail{font-size:3.8vw;color:var(--champagne);font-style:italic;margin-bottom:2vw;line-height:1.4;font-family:'Playfair Display',serif;}
+.score-bar-track{width:100%;height:6px;background:var(--border3);border-radius:999px;overflow:hidden;margin-top:2vw;}
+.score-bar-fill{height:100%;border-radius:999px;width:0%;transition:width 1.4s cubic-bezier(.16,1,.3,1) .4s;box-shadow:0 0 10px currentColor;}
+.r-msg{font-family:'Playfair Display',serif;font-size:4.2vw;font-style:italic;border:1px solid var(--border2);border-left:3px solid var(--gold2);border-radius:1vw;padding:5vw 5.5vw;margin-bottom:4.5vw;line-height:1.8;color:var(--champagne);background:var(--obsidian3);position:relative;overflow:hidden;}
 .r-msg::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);opacity:.3;}
 .r-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:3vw;margin-bottom:4.5vw;}
 .r-stat-box{background:var(--obsidian3);border:1px solid var(--border2);border-radius:2px;padding:5.5vw 2vw 4.5vw;text-align:center;position:relative;overflow:hidden;}
@@ -245,10 +262,10 @@ html,body{width:100%;background:var(--obsidian);color:var(--cream);font-family:'
 .r-breakdown-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);opacity:.5;}
 .r-breakdown-title{font-family:'DM Mono',monospace;font-size:2.4vw;font-weight:500;color:var(--gold2);letter-spacing:.25em;text-transform:uppercase;margin-bottom:5vw;}
 .bd-row{display:flex;align-items:center;gap:3vw;margin-bottom:3.5vw;}
-.bd-lbl{font-family:'Cormorant Garamond',serif;font-size:3.2vw;color:var(--text2);min-width:32vw;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.bd-track{flex:1;height:1px;background:var(--border2);border-radius:999px;overflow:hidden;}
-.bd-bar{height:100%;border-radius:999px;}
-.bd-sc{font-family:'DM Mono',monospace;font-size:2.6vw;min-width:8vw;text-align:right;}
+.bd-lbl{font-family:'Cormorant Garamond',serif;font-size:3.6vw;color:var(--champagne);min-width:32vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bd-track{flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:999px;overflow:hidden;}
+.bd-bar{height:100%;border-radius:999px;filter:brightness(1.15);}
+.bd-sc{font-family:'Cormorant Garamond',serif;font-size:3.4vw;min-width:14vw;text-align:right;font-style:italic;letter-spacing:.02em;}
 .sheets-status{margin-bottom:4.5vw;padding:3.5vw 4.5vw;border-radius:2px;font-family:'DM Mono',monospace;font-size:3vw;text-align:center;letter-spacing:.08em;}
 .sheets-ok{background:rgba(10,92,64,.08);border:1px solid rgba(16,160,112,.2);color:var(--emerald4);}
 .sheets-err{background:rgba(122,20,40,.06);border:1px solid rgba(168,30,60,.18);color:var(--ruby2);}
@@ -354,7 +371,6 @@ html,body{width:100%;background:var(--obsidian);color:var(--cream);font-family:'
     <div class="r-student" id="r-st">—</div>
   </div>
   <div class="r-body">
-    <div id="rank-hero-box"></div>
     <div class="r-score-hero">
       <div class="big-score" id="r-score">—</div>
       <div class="score-right">
@@ -372,13 +388,7 @@ html,body{width:100%;background:var(--obsidian);color:var(--cream);font-family:'
     <div class="r-highlights" id="r-highlights"></div>
     <div class="r-breakdown-box">
       <div class="r-breakdown-title">Rendimiento por tema</div>
-      <div class="bd-legend">
-        <div class="bd-leg-item"><div class="bd-leg-dot" style="background:#10A070;box-shadow:0 0 4px #10A07060;"></div>Esmeralda ≥85%</div>
-        <div class="bd-leg-item"><div class="bd-leg-dot" style="background:#DDB85C;box-shadow:0 0 4px #DDB85C60;"></div>Oro ≥70%</div>
-        <div class="bd-leg-item"><div class="bd-leg-dot" style="background:#9A78C8;box-shadow:0 0 4px #9A78C860;"></div>Amatista ≥50%</div>
-        <div class="bd-leg-item"><div class="bd-leg-dot" style="background:#4A88D0;box-shadow:0 0 4px #4A88D060;"></div>Zafiro ≥30%</div>
-        <div class="bd-leg-item"><div class="bd-leg-dot" style="background:#A81E3C;"></div>Rubí &lt;30%</div>
-      </div>
+
       <div id="r-bk"></div>
     </div>
     <div id="sheets-status" class="sheets-status" style="display:none"></div>
@@ -392,12 +402,12 @@ html,body{width:100%;background:var(--obsidian);color:var(--cream);font-family:'
 var APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwrVJ6YWfMGxJS-EckL1sHe-AEXP5mSlu4RhhVyyvmycOy_CRoh7KSNYPbehFWUHcsq/exec';
 
 var RANKS=[
-  {min:95,max:100,cls:'rank-diamond',scoreCls:'bg-diamond',icon:'💎',label:'Diamond',title:'Maestro',sub:'Rendimiento excepcional. Dominio absoluto de la Física.',barColor:'#C8EEFF',sheetColor:'#BDD7EE'},
-  {min:85,max:94, cls:'rank-emerald',scoreCls:'bg-emerald',icon:'🟢',label:'Esmeralda',title:'Experto', sub:'Conocimiento sólido y preciso. Listo para el examen real.',barColor:'#10A070',sheetColor:'#C6EFCE'},
-  {min:70,max:84, cls:'rank-gold',   scoreCls:'bg-gold',   icon:'🥇',label:'Oro',     title:'Avanzado',sub:'Base muy buena. Refuerza los temas donde fallaste.',barColor:'#DDB85C',sheetColor:'#FFEB9C'},
-  {min:50,max:69, cls:'rank-mauve',  scoreCls:'bg-mauve',  icon:'🔮',label:'Amatista', title:'Intermedio',sub:'Progreso notable. Profundiza en fórmulas y cálculo.',barColor:'#9A78C8',sheetColor:'#E2CFED'},
-  {min:30,max:49, cls:'rank-silver', scoreCls:'bg-silver', icon:'🥈',label:'Plata',   title:'En Progreso',sub:'Sigue practicando. Cada intento te acerca más.',barColor:'#C8C8DE',sheetColor:'#EDEDED'},
-  {min:0, max:29, cls:'rank-bronze', scoreCls:'bg-bronze', icon:'🥉',label:'Bronce',  title:'Iniciando',sub:'Este resultado es el punto de partida. ¡Vuelve más fuerte!',barColor:'#D0986A',sheetColor:'#FFCCBB'}
+  {min:95,max:100,cls:'rank-diamond',scoreCls:'bg-diamond',icon:'💎',label:'Diamond',title:'Maestro',sub:'Llegaste al nivel más alto. Eso no es suerte, es trabajo real.',barColor:'#C8EEFF',sheetColor:'#BDD7EE'},
+  {min:85,max:94, cls:'rank-emerald',scoreCls:'bg-emerald',icon:'🟢',label:'Esmeralda',title:'Experto', sub:'Tus bases son muy fuertes. El ingreso a UNSA está muy cerca.',barColor:'#10A070',sheetColor:'#C6EFCE'},
+  {min:70,max:84, cls:'rank-gold',   scoreCls:'bg-gold',   icon:'🥇',label:'Oro',     title:'Avanzado',sub:'Estás por encima del promedio. Afina los temas flojos y llegas.',barColor:'#DDB85C',sheetColor:'#FFEB9C'},
+  {min:50,max:69, cls:'rank-mauve',  scoreCls:'bg-mauve',  icon:'🔮',label:'Amatista', title:'Intermedio',sub:'Vas avanzando y se nota. Sigue practicando, los resultados llegan.',barColor:'#9A78C8',sheetColor:'#E2CFED'},
+  {min:30,max:49, cls:'rank-silver', scoreCls:'bg-silver', icon:'🥈',label:'Plata',   title:'En Camino',sub:'Todavía hay trecho, pero ya estás en movimiento. Eso cuenta.',barColor:'#C8C8DE',sheetColor:'#EDEDED'},
+  {min:0, max:29, cls:'rank-bronze', scoreCls:'bg-bronze', icon:'🥉',label:'Bronce',  title:'Empezando',sub:'Este es tu primer paso. Todos comenzamos aquí. Vuelve mañana.',barColor:'#D0986A',sheetColor:'#FFCCBB'}
 ];
 function getRank(p){return RANKS.find(function(r){return p>=r.min&&p<=r.max;})||RANKS[RANKS.length-1];}
 
@@ -413,11 +423,11 @@ var QS=[
   {n:4,t:"U",tm:"Análisis Vectorial",p:"¿En qué unidad del SI se expresa el módulo de un vector de <strong>posición</strong>?",o:["m/s²","Newton (N)","Metro (m)","Joule (J)"],a:2,tip:"El módulo tiene las MISMAS unidades que el vector. Posición → metro (m)."},
   {n:5,t:"F",tm:"MRU",p:"Un objeto se mueve en MRU. ¿Qué fórmula relaciona posición $x$, velocidad $v$ y tiempo $t$?",o:["$x = x_0 + v_0 t + \\dfrac{1}{2}at^2$","$x = x_0 + v \\cdot t$","$v = v_0 + a \\cdot t$","$x = \\dfrac{1}{2} g t^2$"],a:1,tip:"En MRU no hay aceleración. Fórmula lineal: posición = posición inicial + velocidad × tiempo."},
   {n:6,t:"T",tm:"MRU",p:"En el MRU, ¿qué magnitud permanece <strong>constante</strong>?",o:["La posición","La aceleración (a > 0)","La velocidad","La fuerza neta"],a:2,tip:"MRU = Movimiento Rectilíneo UNIFORME. La velocidad NO cambia. La aceleración es CERO."},
-  {n:7,t:"U",tm:"MRU",p:"¿Cuál es la unidad de la <strong>velocidad</strong> en el SI?",o:["km/h","m · s","m/s²","m/s"],a:3,tip:"Velocidad = metros ÷ segundos = m/s. Para convertir km/h a m/s: divide entre 3.6."},
+  {n:7,t:"U",tm:"MRU",p:"¿Cuál es la unidad de la <strong>velocidad</strong> en el SI?",o:["km/h","m · s","m/s²","m/s"],a:3,tip:"Velocidad = metros / segundos = m/s. Para convertir km/h a m/s: divide entre 3.6."},
   {n:8,t:"F",tm:"MRUV",p:"En el MRUV, ¿cuál es la ecuación que relaciona $v$, $v_0$, $a$ y $t$?",o:["$v = \\dfrac{x}{t}$","$v = v_0 + a \\cdot t$","$v = \\dfrac{1}{2} a t^2$","$v = \\sqrt{2gh}$"],a:1,tip:"Primera ecuación del MRUV. Si parte del reposo: v = a · t."},
   {n:9,t:"F",tm:"MRUV",p:"¿Cuál es la fórmula de la <strong>posición</strong> en MRUV desde $x_0 = 0$?",o:["$x = v \\cdot t$","$x = \\dfrac{v^2}{2a}$","$x = v_0 t + \\dfrac{1}{2}at^2$","$x = \\dfrac{1}{2} g t$"],a:2,tip:"Segunda ecuación del MRUV. Tiene término cuadrático (t²). Si v₀ = 0: x = ½ · a · t²."},
-  {n:10,t:"F",tm:"MRUV",p:"¿Qué ecuación del MRUV usas cuando el problema <strong>no da el tiempo</strong>?",o:["$v = v_0 + a \\cdot t$","$x = v_0 t + \\dfrac{1}{2}at^2$","$v^2 = v_0^2 + 2 \\cdot a \\cdot x$","$v = \\dfrac{x}{t}$"],a:2,tip:"Ecuación sin tiempo. Relaciona velocidad, aceleración y distancia."},
-  {n:11,t:"U",tm:"MRUV",p:"¿Cuál es la unidad de la <strong>aceleración</strong> en el SI?",o:["m/s","N · m","m/s²","kg · m/s"],a:2,tip:"Aceleración = cambio de velocidad ÷ tiempo = (m/s) ÷ s = m/s²."},
+  {n:10,t:"F",tm:"MRUV",p:"¿Qué ecuación del MRUV usas cuando el problema <strong>no da el tiempo</strong>?",o:["$v = v_0 + a \\cdot t$","$x = v_0 t + \\dfrac{1}{2}at^2$","$v^2 = v_0^2 + 2 \\cdot a \\cdot x$","$v = \\dfrac{x}{t}$"],a:2,tip:"Ecuación sin tiempo. Relaciona velocidad, aceleración y distancia (d)."},
+  {n:11,t:"U",tm:"MRUV",p:"¿Cuál es la unidad de la <strong>aceleración</strong> en el SI?",o:["m/s","N · m","m/s²","kg · m/s"],a:2,tip:"Aceleración = cambio de velocidad / tiempo = (m/s) / s = m/s²."},
   {n:12,t:"T",tm:"MRUV",p:"La gráfica v-t de un MRUV tiene la forma de:",o:["Una parábola","Una curva exponencial","Una línea horizontal","Una línea recta inclinada"],a:3,tip:"La pendiente de esa recta inclinada es igual a la aceleración."},
   {n:13,t:"U",tm:"Caída Libre",p:"¿Cuál es el valor estándar de $g$ en la superficie terrestre?",o:["8.0 m/s²","9.8 m/s²","10.8 m/s²","12.0 m/s²"],a:1,tip:"g = 9.8 m/s² (en exámenes peruanos se usa g = 10 m/s²)."},
   {n:14,t:"F",tm:"Caída Libre",p:"Un objeto cae desde $h$ partiendo del reposo. ¿Cuál es el <strong>tiempo de caída</strong>?",o:["$t = \\dfrac{h}{g}$","$t = \\sqrt{\\dfrac{h}{2g}}$","$t = \\sqrt{\\dfrac{2h}{g}}$","$t = 2 \\cdot h \\cdot g$"],a:2,tip:"Se despeja t de h = ½·g·t². El '2' siempre va arriba."},
@@ -450,22 +460,22 @@ var QS=[
   {n:41,t:"T",tm:"Energía Mecánica",p:"Una pelota rueda y se detiene por rozamiento. ¿Qué ocurre con su energía mecánica?",o:["Se destruye completamente","Se transforma en energía térmica (calor)","Se conserva siempre","Se convierte íntegramente en energía potencial"],a:1,tip:"La energía MECÁNICA NO se conserva con rozamiento. Se convierte en calor."},
   {n:42,t:"C",tm:"Análisis Vectorial",p:"Una fuerza tiene componente horizontal de 6 N y vertical de 8 N. ¿Cuál es el módulo?",o:["14 N","48 N","10 N","7 N"],a:2,tip:"Módulo = √(6²+8²) = √100 = 10 N. Trío pitagórico 6-8-10."},
   {n:43,t:"C",tm:"Análisis Vectorial",p:"Un vector de 20 m/s forma 30° con el eje horizontal. ¿Componente vertical? (sen 30°=0.5)",o:["17.4 m/s","20 m/s","10 m/s","5 m/s"],a:2,tip:"Comp. vertical = 20 × sen(30°) = 20 × 0.5 = 10 m/s. VERTICAL → seno."},
-  {n:44,t:"C",tm:"MRU",p:"Un tren recorre 450 m en 30 s. ¿Cuál es su velocidad?",o:["10 m/s","15 m/s","20 m/s","25 m/s"],a:1,tip:"v = 450 ÷ 30 = 15 m/s (= 54 km/h)."},
+  {n:44,t:"C",tm:"MRU",p:"Un tren recorre 450 m en 30 s. ¿Cuál es su velocidad?",o:["10 m/s","15 m/s","20 m/s","25 m/s"],a:1,tip:"v = 450 / 30 = 15 m/s (= 54 km/h)."},
   {n:45,t:"C",tm:"MRUV",p:"Un auto parte del reposo con $a = 5$ m/s². ¿Velocidad a los 6 segundos?",o:["11 m/s","25 m/s","30 m/s","150 m/s"],a:2,tip:"v = 0 + 5×6 = 30 m/s (= 108 km/h)."},
   {n:46,t:"C",tm:"MRUV",p:"Un objeto parte del reposo con $a = 4$ m/s². ¿Distancia en 5 segundos?",o:["20 m","40 m","50 m","100 m"],a:2,tip:"x = ½×4×25 = 50 m. El factor ½ es OBLIGATORIO."},
-  {n:47,t:"C",tm:"MRUV",p:"Un auto a 36 m/s frena hasta detenerse en 9 s. ¿Cuál es su desaceleración?",o:["−2 m/s²","−4 m/s²","−5 m/s²","−9 m/s²"],a:1,tip:"a = (0−36)÷9 = −4 m/s². El signo negativo indica frenado."},
+  {n:47,t:"C",tm:"MRUV",p:"Un auto a 36 m/s frena hasta detenerse en 9 s. ¿Cuál es su desaceleración?",o:["−2 m/s²","−4 m/s²","−5 m/s²","−9 m/s²"],a:1,tip:"a = (0−36) / 9 = −4 m/s². El signo negativo indica frenado."},
   {n:48,t:"C",tm:"Caída Libre",p:"Un objeto cae desde 125 m ($g=10$ m/s²). ¿Cuántos segundos tarda?",o:["3 s","4 s","5 s","6 s"],a:2,tip:"t = √(2×125/10) = √25 = 5 s."},
   {n:49,t:"C",tm:"Caída Libre",p:"Un objeto cae 4 segundos ($g=10$ m/s²). ¿Con qué velocidad impacta?",o:["20 m/s","40 m/s","80 m/s","160 m/s"],a:1,tip:"v = 10×4 = 40 m/s (= 144 km/h)."},
-  {n:50,t:"C",tm:"Caída Libre",p:"Se lanza una piedra hacia arriba con $v_0=30$ m/s ($g=10$). ¿Altura máxima?",o:["15 m","30 m","45 m","60 m"],a:2,tip:"h = 30²÷(2×10) = 900÷20 = 45 m."},
-  {n:51,t:"C",tm:"Movimiento Parabólico",p:"Proyectil con $v_0=40$ m/s a 45°. ¿Distancia horizontal? ($g=10$, sen90°=1)",o:["80 m","120 m","160 m","200 m"],a:2,tip:"d = 1600×1÷10 = 160 m. Con 45° se obtiene el MÁXIMO alcance."},
-  {n:52,t:"C",tm:"Movimiento Parabólico",p:"Proyectil con $v_0=20$ m/s a 30°. ¿Altura máxima? ($g=10$, sen30°=0.5)",o:["2.5 m","5 m","10 m","20 m"],a:1,tip:"h = (20×0.5)²÷(2×10) = 100÷20 = 5 m."},
+  {n:50,t:"C",tm:"Caída Libre",p:"Se lanza una piedra hacia arriba con $v_0=30$ m/s ($g=10$). ¿Altura máxima?",o:["15 m","30 m","45 m","60 m"],a:2,tip:"h = 30² / (2×10) = 900 / 20 = 45 m."},
+  {n:51,t:"C",tm:"Movimiento Parabólico",p:"Proyectil con $v_0=40$ m/s a 45°. ¿Distancia horizontal? ($g=10$, sen90°=1)",o:["80 m","120 m","160 m","200 m"],a:2,tip:"d = 1600×1 / 10 = 160 m. Con 45° se obtiene el MÁXIMO alcance."},
+  {n:52,t:"C",tm:"Movimiento Parabólico",p:"Proyectil con $v_0=20$ m/s a 30°. ¿Altura máxima? ($g=10$, sen30°=0.5)",o:["2.5 m","5 m","10 m","20 m"],a:1,tip:"h = (20×0.5)² / (2×10) = 100 / 20 = 5 m."},
   {n:53,t:"C",tm:"Leyes de Newton",p:"¿Cuánto pesa un objeto de 12 kg? ($g=10$ m/s²)",o:["12 N","60 N","120 N","1200 N"],a:2,tip:"Peso = 12×10 = 120 N."},
-  {n:54,t:"C",tm:"Leyes de Newton",p:"Fuerza de 75 N sobre un objeto de 5 kg sin rozamiento. ¿Aceleración?",o:["0.07 m/s²","15 m/s²","70 m/s²","375 m/s²"],a:1,tip:"a = 75÷5 = 15 m/s²."},
+  {n:54,t:"C",tm:"Leyes de Newton",p:"Fuerza de 75 N sobre un objeto de 5 kg sin rozamiento. ¿Aceleración?",o:["0.07 m/s²","15 m/s²","70 m/s²","375 m/s²"],a:1,tip:"a = 75 / 5 = 15 m/s²."},
   {n:55,t:"C",tm:"Dinámica Lineal",p:"Bloque de 6 kg con $\\mu_c=0.4$ ($g=10$). ¿Fuerza de rozamiento?",o:["2.4 N","16 N","24 N","60 N"],a:2,tip:"N = 6×10 = 60 N. f = 0.4×60 = 24 N."},
-  {n:56,t:"C",tm:"Dinámica Lineal",p:"Caja de 8 kg empujada con 60 N y rozamiento de 20 N. ¿Aceleración?",o:["3 m/s²","5 m/s²","7.5 m/s²","10 m/s²"],a:1,tip:"F_neta = 60−20 = 40 N. a = 40÷8 = 5 m/s²."},
+  {n:56,t:"C",tm:"Dinámica Lineal",p:"Caja de 8 kg empujada con 60 N y rozamiento de 20 N. ¿Aceleración?",o:["3 m/s²","5 m/s²","7.5 m/s²","10 m/s²"],a:1,tip:"F_neta = 60−20 = 40 N. a = 40 / 8 = 5 m/s²."},
   {n:57,t:"C",tm:"Estática",p:"Bloque de 5 kg en plano a 37°. ¿Componente del peso <strong>paralela al plano</strong>? (sen37°=0.6, $g=10$)",o:["20 N","30 N","40 N","50 N"],a:1,tip:"F∥ = 5×10×0.6 = 30 N."},
   {n:58,t:"C",tm:"Trabajo Mecánico",p:"Caja arrastrada 10 m con 80 N a 60°. ¿Cuánto trabajo? (cos60°=0.5)",o:["200 J","400 J","692 J","800 J"],a:1,tip:"W = 80×10×0.5 = 400 J."},
-  {n:59,t:"C",tm:"Potencia Mecánica",p:"Grúa eleva 400 kg hasta 15 m en 20 s ($g=10$). ¿Potencia?",o:["1500 W","3000 W","6000 W","30000 W"],a:1,tip:"W = 400×10×15 = 60000 J. P = 60000÷20 = 3000 W."},
+  {n:59,t:"C",tm:"Potencia Mecánica",p:"Grúa eleva 400 kg hasta 15 m en 20 s ($g=10$). ¿Potencia?",o:["1500 W","3000 W","6000 W","30000 W"],a:1,tip:"W = 400×10×15 = 60000 J. P = 60000 / 20 = 3000 W."},
   {n:60,t:"C",tm:"Potencia Mecánica",p:"Motor aplica 600 N a 25 m/s. ¿Potencia?",o:["24 W","625 W","6 000 W","15 000 W"],a:3,tip:"P = F·v = 600×25 = 15000 W = 15 kW."},
   {n:61,t:"C",tm:"Energía Mecánica",p:"¿Energía cinética de un auto de 1200 kg a 20 m/s?",o:["24 000 J","120 000 J","240 000 J","480 000 J"],a:2,tip:"Ec = ½×1200×400 = 240000 J."},
   {n:62,t:"C",tm:"Energía Mecánica",p:"¿Energía potencial de 6 kg a 12 m? ($g=10$)",o:["72 J","360 J","720 J","1 440 J"],a:2,tip:"Ep = 6×10×12 = 720 J."},
@@ -473,10 +483,10 @@ var QS=[
   {n:64,t:"C",tm:"Energía Mecánica",p:"Pelota de 3 kg cae desde 8 m. ¿Ec al llegar? ($g=10$, sin rozamiento)",o:["30 J","120 J","240 J","720 J"],a:2,tip:"Ec = Ep_inicial = 3×10×8 = 240 J."},
   {n:65,t:"C",tm:"Energía Mecánica",p:"Cuerpo de 4 kg a 5 m de altura moviéndose a 6 m/s. ¿Energía mecánica total? ($g=10$)",o:["72 J","200 J","272 J","400 J"],a:2,tip:"Ec = ½×4×36 = 72 J. Ep = 4×10×5 = 200 J. Total = 272 J."},
   {n:66,t:"C",tm:"Leyes de Newton",p:"¿Cuánto pesa un astronauta de 80 kg en la Luna? ($g_{Luna}=1.6$ m/s²)",o:["12.8 N","50 N","128 N","784 N"],a:2,tip:"P = 80×1.6 = 128 N. En la Tierra sería 784 N."},
-  {n:67,t:"C",tm:"Trabajo Mecánico",p:"Auto de 1000 kg a 30 m/s se detiene en 150 m. ¿Fuerza de frenado?",o:["1 500 N","3 000 N","6 000 N","9 000 N"],a:1,tip:"F = (m·v²)÷(2·d) = (1000×900)÷300 = 3000 N."},
+  {n:67,t:"C",tm:"Trabajo Mecánico",p:"Auto de 1000 kg a 30 m/s se detiene en 150 m. ¿Fuerza de frenado?",o:["1 500 N","3 000 N","6 000 N","9 000 N"],a:1,tip:"F = (m·v²) / (2·d) = (1000×900) / 300 = 3000 N."},
   {n:68,t:"C",tm:"MRUV",p:"Objeto a 10 m/s con $a=3$ m/s² durante 4 s. ¿Distancia?",o:["28 m","40 m","64 m","128 m"],a:2,tip:"x = 10×4 + ½×3×16 = 40+24 = 64 m."},
   {n:69,t:"C",tm:"Estática",p:"Bloque de 4 kg en plano a 53°. ¿Fuerza normal? (cos53°=0.6, $g=10$)",o:["16 N","24 N","32 N","40 N"],a:1,tip:"N = 4×10×0.6 = 24 N."},
-  {n:70,t:"C",tm:"MRU",p:"Un auto circula a 108 km/h. ¿Cuántos m/s equivale?",o:["20 m/s","25 m/s","30 m/s","35 m/s"],a:2,tip:"108÷3.6 = 30 m/s. Factor: 1 km/h = 1/3.6 m/s."}
+  {n:70,t:"C",tm:"MRU",p:"Un auto circula a 108 km/h. ¿Cuántos m/s equivale?",o:["20 m/s","25 m/s","30 m/s","35 m/s"],a:2,tip:"108 / 3.6 = 30 m/s. Factor: 1 km/h = 1/3.6 m/s."}
 ];
 
 var TSEC=30,TOTAL=QS.length;
@@ -573,8 +583,7 @@ function showResults(){
   sendToSheets(record);showToast();
 
   // Rank badge
-  document.getElementById('rank-hero-box').innerHTML=
-    '<div class="rank-hero '+rank.cls+'"><div class="rank-inner"><div class="rank-icon">'+rank.icon+'</div><div class="rank-info"><div class="rank-label">'+rank.label+'</div><div class="rank-title">'+rank.title+'</div><div class="rank-sub">'+rank.sub+'</div></div></div></div>';
+
 
   document.getElementById('r-st').innerHTML='<strong>'+stu.n+' '+stu.a+'</strong> · '+stu.area;
   var sc=document.getElementById('r-score');sc.textContent=pct;sc.className='big-score '+rank.scoreCls;
@@ -583,12 +592,12 @@ function showResults(){
   setTimeout(function(){bar.style.width=pct+'%';},300);
 
   var msgs=[
-    [95,'✦ Nivel Diamond, '+stu.n+'. Rendimiento excepcional. Eres candidato al primer puesto.'],
-    [85,'✦ Nivel Esmeralda, '+stu.n+'. Dominio sólido. Estás muy bien preparado.'],
-    [70,'✦ Nivel Oro, '+stu.n+'. Excelente base. Refuerza los temas donde fallaste.'],
-    [50,'✦ Nivel Amatista, '+stu.n+'. Progreso notable. Profundiza en fórmulas y cálculo.'],
-    [30,'✦ Nivel Plata, '+stu.n+'. Sigue practicando. Cada intento te acerca más.'],
-    [0, '✦ Nivel Bronce, '+stu.n+'. Este resultado es el punto de partida. ¡Vuelve más fuerte!']
+    [95,stu.n+', llegaste al nivel más alto. Eso no pasa por suerte, pasa porque te preparaste de verdad. Ya estás listo para el ingreso a UNSA.'],
+    [85,stu.n+', tus bases son muy sólidas. Se nota el trabajo que pusiste. Un repaso más a los temas flojos y el ingreso es tuyo.'],
+    [70,stu.n+', estás por encima del promedio, eso ya dice mucho. Mira qué temas fallaste, trabaja eso puntual y vas a subir bastante.'],
+    [50,stu.n+', vas avanzando y eso se nota. Cada vez que practicas estás cerrando la brecha. Sigue así, los resultados van a llegar.'],
+    [30,stu.n+', todavía hay camino por recorrer pero estás en movimiento. Enfócate en los temas con menos aciertos y vuelve pronto.'],
+    [0, stu.n+', este es solo tu primer intento. No te desanimes, todos empezamos desde cero. Estudia un poco cada día y regresa, vas a sorprenderte.']
   ];
   document.getElementById('r-msg').textContent=msgs.find(function(m){return pct>=m[0];})[1];
   document.getElementById('r-ok').textContent=ok;
@@ -608,8 +617,8 @@ function showResults(){
   Object.entries(temas).forEach(function(entry){
     var tm=entry[0],d=entry[1];
     var p=d.tot?Math.round((d.ok/d.tot)*100):0;
-    var col=p>=85?'#10A070':p>=70?'#DDB85C':p>=50?'#9A78C8':p>=30?'#4A88D0':'#A81E3C';
-    bkHtml+='<div class="bd-row"><span class="bd-lbl">'+tm+'</span><div class="bd-track"><div class="bd-bar" style="width:0%;background:'+col+'" data-w="'+p+'"></div></div><span class="bd-sc" style="color:'+col+'">'+d.ok+'/'+d.tot+'</span></div>';
+    var col=p>=85?'#8FBF9F':p>=70?'#C8A448':p>=50?'#9A7AB8':p>=30?'#7A9AAA':'#8A3A4A';
+    var frac=d.ok+' de '+d.tot; bkHtml+='<div class="bd-row"><span class="bd-lbl">'+tm+'</span><div class="bd-track"><div class="bd-bar" style="width:0%;background:'+col+'" data-w="'+p+'"></div></div><span class="bd-sc" style="color:'+col+'">'+frac+'</span></div>';
   });
   document.getElementById('r-bk').innerHTML=bkHtml;
   setTimeout(function(){document.querySelectorAll('.bd-bar').forEach(function(b){b.style.transition='width 1s cubic-bezier(.16,1,.3,1)';b.style.width=b.dataset.w+'%';});},300);
