@@ -2,8 +2,10 @@
  * SIMULACRO UNSA — Almacenamiento y análisis en Google Sheets
  * ============================================================
  * CÓMO INSTALARLO (5 minutos):
- *  1. Abre tu hoja de cálculo de Google Sheets (la misma de siempre).
- *  2. Menú: Extensiones → Apps Script.
+ *  1. Abre el editor de Apps Script (desde la hoja: Extensiones → Apps
+ *     Script, o directamente en script.google.com — ambas formas sirven,
+ *     el script ya está conectado a la hoja por su ID).
+ *  2. (nada más que abrirlo)
  *  3. Borra todo el código anterior y pega ESTE archivo completo.
  *  4. Guarda (Ctrl+S).
  *  5. Implementar → Nueva implementación → tipo "Aplicación web":
@@ -21,6 +23,10 @@
  *  - Hoja "Resumen":      estadísticas automáticas — promedio general,
  *    ranking de temas más débiles, rendimiento por área y por carrera.
  */
+
+/* ID de tu hoja de cálculo (sacado de su URL). Gracias a esto el script
+   funciona aunque el proyecto de Apps Script no esté vinculado a la hoja. */
+var SPREADSHEET_ID = '1woitAAesn5TJr6pp2f1MNobx2r3ACo-Jl60kyp25iac';
 
 var HEADERS_RESULTADOS = ['Fecha','Nombre','Apellido','Área','Carrera','Curso','Puntaje','Nivel','Correctas','Incorrectas','Sin tiempo','Total','Seg/pregunta','Mejor racha','Mejor tema','Peor tema','Dispositivo'];
 var HEADERS_DETALLE    = ['Fecha','Nombre','Apellido','Área','Carrera','Tema','Correctas','Preguntas','Precisión'];
@@ -66,7 +72,7 @@ function guardarResultado(data) {
   var lock = LockService.getScriptLock();
   lock.waitLock(10000); // evita filas mezcladas si dos alumnos terminan a la vez
   try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
 
     // ---- Hoja Resultados ----
     var hoja = obtenerHoja(ss, 'Resultados', HEADERS_RESULTADOS);
