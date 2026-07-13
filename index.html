@@ -43,23 +43,29 @@ h1,h2,h3{text-wrap:balance;}
 .reg-topbar{border-bottom:1px solid var(--border);background:rgba(7,7,10,.92);position:relative;}
 .reg-topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--lux-line);}
 .reg-topbar-in{display:flex;align-items:center;justify-content:center;padding-block:1.15rem;}
-.reg-main{max-width:34rem;margin-inline:auto;padding:clamp(3rem,9vh,6rem) clamp(1.25rem,5vw,2rem) 4rem;text-align:center;}
-.reg-h1{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(3rem,9vw,4.6rem);line-height:.98;letter-spacing:-.02em;color:var(--cream);margin-bottom:1.5rem;}
-.reg-h1 em{font-style:italic;color:var(--gold3);text-shadow:0 0 30px rgba(196,160,68,.2);}
+.reg-main{max-width:34rem;margin-inline:auto;padding:clamp(2.75rem,8vh,5.5rem) clamp(1.25rem,5vw,2rem) 3rem;text-align:center;}
+@keyframes riseIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.reg-h1{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(3rem,9vw,4.6rem);line-height:.98;letter-spacing:-.02em;color:var(--cream);margin-bottom:1.5rem;animation:riseIn .8s cubic-bezier(.16,1,.3,1) both;}
+.reg-h1 em{font-style:italic;color:var(--gold3);text-shadow:0 0 40px rgba(196,160,68,.28);}
 .reg-h1 span{display:block;font-size:.55em;color:var(--champagne);font-weight:300;}
-.reg-rule{width:3.25rem;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:0 auto 1.5rem;}
-.reg-sub{font-size:1.08rem;color:var(--text2);font-style:italic;line-height:1.75;margin-bottom:3rem;}
-.reg-form{max-width:24rem;margin-inline:auto;text-align:left;}
-.field{margin-bottom:1.15rem;}
-.field label{display:block;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);margin-bottom:.5rem;}
-.field input,.field select{width:100%;padding:.85rem 1rem;background:var(--obsidian3);border:1px solid var(--border2);border-bottom:2px solid var(--border3);border-radius:2px;color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:1.2rem;outline:none;-webkit-appearance:none;appearance:none;transition:border-color .2s,background .2s,box-shadow .2s;min-height:3.1rem;}
-.field input:focus,.field select:focus{border-bottom-color:var(--gold2);background:var(--obsidian4);box-shadow:0 2px 12px rgba(196,160,68,.08);}
+.reg-rule{width:3.25rem;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:0 auto 1.5rem;animation:riseIn .8s cubic-bezier(.16,1,.3,1) .1s both;}
+.reg-sub{font-size:1.08rem;color:var(--text2);font-style:italic;line-height:1.75;margin-bottom:2rem;animation:riseIn .8s cubic-bezier(.16,1,.3,1) .18s both;}
+.reg-stats{display:flex;align-items:center;justify-content:center;gap:1.4rem;margin-bottom:2.75rem;animation:riseIn .8s cubic-bezier(.16,1,.3,1) .26s both;}
+.reg-stats span{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;gap:.3rem;}
+.reg-stats strong{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;letter-spacing:0;color:var(--champagne);}
+.reg-stats i{width:1px;height:2.2rem;background:linear-gradient(180deg,transparent,var(--border3),transparent);}
+.reg-form{max-width:24rem;margin-inline:auto;text-align:left;animation:riseIn .8s cubic-bezier(.16,1,.3,1) .34s both;}
+.reg-foot{margin-top:3.5rem;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.32em;text-indent:.32em;text-transform:uppercase;color:var(--muted);animation:riseIn .8s cubic-bezier(.16,1,.3,1) .5s both;}
+.field{margin-bottom:1.7rem;}
+.field label{display:block;font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);margin-bottom:.15rem;}
+.field input,.field select{width:100%;padding:.7rem .1rem;background:transparent;border:none;border-bottom:1px solid var(--border3);border-radius:0;color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:1.25rem;outline:none;-webkit-appearance:none;appearance:none;transition:border-color .25s;min-height:3rem;}
+.field input:focus,.field select:focus{border-bottom-color:var(--gold2);}
 .field input::placeholder{color:var(--muted);}
 .select-wrap{position:relative;}
-.select-wrap::after{content:'';position:absolute;right:1rem;top:50%;width:.55rem;height:.55rem;border-right:1.5px solid var(--gold2);border-bottom:1.5px solid var(--gold2);transform:translateY(-70%) rotate(45deg);pointer-events:none;}
-.field select{cursor:pointer;padding-right:2.6rem;}
+.select-wrap::after{content:'';position:absolute;right:.35rem;top:50%;width:.5rem;height:.5rem;border-right:1.5px solid var(--gold2);border-bottom:1.5px solid var(--gold2);transform:translateY(-70%) rotate(45deg);pointer-events:none;}
+.field select{cursor:pointer;padding-right:2rem;}
 .field select option{background:var(--obsidian3);color:var(--cream);font-family:Georgia,serif;}
-.reg-note{margin-top:1.75rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.9;}
+.reg-note{margin-top:1.75rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.9;animation:riseIn .8s cubic-bezier(.16,1,.3,1) .42s both;}
 .btn-start{width:100%;margin-top:.5rem;padding:1.1rem;background:transparent;border:1px solid var(--border3);border-radius:2px;color:var(--muted);font-family:'Playfair Display',serif;font-weight:500;font-size:1.05rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:all .3s;opacity:.25;pointer-events:none;position:relative;overflow:hidden;min-height:3.4rem;}
 .btn-start.ready{opacity:1;pointer-events:all;border-color:var(--gold-dark);color:var(--gold2);animation:goldPulse 3s ease infinite;}
 .btn-start.ready::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);}
@@ -317,34 +323,29 @@ h1,h2,h3{text-wrap:balance;}
   <main class="reg-main">
     <h1 class="reg-h1"><em>Examen</em><span>de Física</span></h1>
     <div class="reg-rule" aria-hidden="true"></div>
-    <p class="reg-sub">Cuarenta preguntas, cuarenta segundos cada una.<br>Corrección instantánea con tips de resolución.</p>
+    <p class="reg-sub">Corrección instantánea, resolución fundamentada<br>y ranking por niveles de mérito.</p>
+    <div class="reg-stats" aria-label="Datos del examen">
+      <span><strong>40</strong>preguntas</span><i aria-hidden="true"></i>
+      <span><strong>100</strong>puntos</span><i aria-hidden="true"></i>
+      <span><strong>40 s</strong>por pregunta</span>
+    </div>
     <form class="reg-form" onsubmit="event.preventDefault();startExam();">
       <div class="field">
         <label for="inp-n">Nombres completos</label>
-        <input id="inp-n" type="text" placeholder="David Samuel Quispe Mamani" autocomplete="name" oninput="chk()">
+        <input id="inp-n" type="text" placeholder="Ing. David" autocomplete="name" oninput="chk()">
       </div>
       <div class="field">
         <label for="sel-car">Carrera a la que postulas</label>
         <div class="select-wrap">
           <select id="sel-car" onchange="chk()">
             <option value="">Selecciona tu carrera</option>
-            <option>Medicina</option>
-            <option>Enfermería</option>
-            <option>Ingeniería Civil</option>
-            <option>Ingeniería Electrónica</option>
-            <option>Arquitectura</option>
-            <option>Derecho</option>
-            <option>Psicología</option>
-            <option>Ciencias de la Comunicación</option>
-            <option>Nutrición</option>
-            <option>Educación</option>
-            <option>Otra carrera</option>
           </select>
         </div>
       </div>
       <button type="submit" class="btn-start" id="btn-start">Comenzar</button>
     </form>
     <p class="reg-note">Tu ingreso y tus resultados quedan registrados automáticamente</p>
+    <p class="reg-foot">Universidad Nacional de San Agustín · Arequipa</p>
   </main>
 </div>
 
@@ -429,8 +430,28 @@ h1,h2,h3{text-wrap:balance;}
 <script>
 var APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbygfjhGy8rvP0LEKUI5Ham2I59vxBeg-jhMCVGiybVx3ADEKGLU9uIs5mG9XQD8Jg/exec';
 
-/* Área derivada automáticamente de la carrera (para el análisis en Sheets) */
-var AREA_DE={'Medicina':'Biomédicas','Enfermería':'Biomédicas','Nutrición':'Biomédicas','Ingeniería Civil':'Ingenierías','Ingeniería Electrónica':'Ingenierías','Arquitectura':'Ingenierías','Derecho':'Sociales','Psicología':'Sociales','Ciencias de la Comunicación':'Sociales','Educación':'Sociales','Otra carrera':'Otra'};
+/* Catálogo de carreras UNSA (Arequipa) por área. El área se deriva
+   automáticamente de la carrera elegida para el análisis en Sheets. */
+var CARRERAS_UNSA={
+  'Biomédicas':['Medicina','Enfermería','Ciencias de la Nutrición','Biología','Agronomía','Medicina Veterinaria y Zootecnia','Ingeniería Pesquera'],
+  'Ingenierías':['Arquitectura','Ciencia de la Computación','Física','Matemáticas','Química','Ingeniería Ambiental','Ingeniería Civil','Ingeniería de Industrias Alimentarias','Ingeniería de Materiales','Ingeniería de Minas','Ingeniería de Sistemas','Ingeniería de Telecomunicaciones','Ingeniería Eléctrica','Ingeniería Electrónica','Ingeniería Geofísica','Ingeniería Geológica','Ingeniería Industrial','Ingeniería Mecánica','Ingeniería Metalúrgica','Ingeniería Química','Ingeniería Sanitaria','Ingeniería Topográfica y Agrimensura'],
+  'Sociales':['Administración','Antropología','Artes','Banca y Seguros','Ciencias de la Comunicación','Contabilidad','Derecho','Economía','Educación','Filosofía','Historia','Literatura y Lingüística','Psicología','Relaciones Industriales','Sociología','Trabajo Social','Turismo y Hotelería']
+};
+var AREA_DE={'Otra carrera':'Otra'};
+function initCarreras(){
+  var sel=document.getElementById('sel-car');
+  Object.keys(CARRERAS_UNSA).forEach(function(area){
+    var og=document.createElement('optgroup');og.label=area;
+    CARRERAS_UNSA[area].forEach(function(c){
+      AREA_DE[c]=area;
+      var op=document.createElement('option');op.textContent=c;op.value=c;og.appendChild(op);
+    });
+    sel.appendChild(og);
+  });
+  var otra=document.createElement('option');otra.value='Otra carrera';otra.textContent='Otra carrera';
+  sel.appendChild(otra);
+}
+initCarreras();
 
 var RANKS=[
   {min:95,max:100,cls:'rank-diamond',scoreCls:'bg-diamond',icon:'💎',label:'Diamond',title:'Maestro',sub:'Llegaste al nivel más alto. Eso no es suerte, es trabajo real.',barColor:'#C8EEFF',sheetColor:'#BDD7EE'},
@@ -448,45 +469,45 @@ function renderMath(el){
 }
 
 var QS=[
-  {n:1,t:"T",tm:"Análisis Vectorial",p:"¿Qué diferencia una magnitud vectorial de una escalar?",o:["El vector tiene módulo, dirección y sentido; el escalar solo tiene módulo","El escalar tiene dirección y el vector no","Ambos se representan igual con flechas","El escalar siempre vale más que el vector"],a:0,tip:"VECTOR = módulo + dirección + sentido. Ejemplos escalares: masa, temperatura. Ejemplos vectoriales: fuerza, velocidad, aceleración."},
-  {n:2,t:"F",tm:"Análisis Vectorial",p:"El módulo de un vector con componentes $A_x$ y $A_y$ es:",o:["$|\\vec{A}| = A_x + A_y$","$|\\vec{A}| = \\sqrt{A_x^2 + A_y^2}$","$|\\vec{A}| = A_x \\cdot A_y$","$|\\vec{A}| = A_x^2 + A_y^2$"],a:1,tip:"Teorema de Pitágoras. Raíz cuadrada obligatoria. Tríos clásicos: 3-4-5, 5-12-13."},
-  {n:3,t:"F",tm:"Análisis Vectorial",p:"Un vector $\\vec{A}$ forma ángulo $\\theta$ con el eje horizontal. Su componente horizontal es:",o:["$A_x = |\\vec{A}|\\sin\\theta$","$A_x = |\\vec{A}|\\tan\\theta$","$A_x = |\\vec{A}|\\cos\\theta$","$A_x = \\dfrac{|\\vec{A}|}{\\cos\\theta}$"],a:2,tip:"Horizontal → coseno. Vertical → seno. Sin excepción."},
-  {n:4,t:"T",tm:"Análisis Vectorial",p:"Dos vectores son iguales si y solo si:",o:["Tienen el mismo módulo","Tienen la misma dirección","Tienen la misma dirección y sentido","Tienen igual módulo, dirección y sentido"],a:3,tip:"Igualdad vectorial requiere los tres elementos. Basta que uno difiera para que sean distintos."},
-  {n:5,t:"F",tm:"MRU",p:"En MRU, la posición $x$ en función del tiempo es:",o:["$x = x_0 + v_0 t + \\tfrac{1}{2}at^2$","$x = x_0 + v \\cdot t$","$v = v_0 + at$","$x = \\tfrac{1}{2}gt^2$"],a:1,tip:"En MRU no hay aceleración. Posición = posición inicial + velocidad × tiempo."},
-  {n:6,t:"T",tm:"MRU",p:"En el MRU, la magnitud que permanece constante es:",o:["La posición","La fuerza neta","La aceleración (a > 0)","La velocidad"],a:3,tip:"MRU = Uniforme. Velocidad constante → aceleración cero."},
-  {n:7,t:"U",tm:"MRU",p:"La unidad de velocidad en el SI es:",o:["km/h","m·s","m/s²","m/s"],a:3,tip:"Velocidad = distancia/tiempo = m/s. Para convertir km/h a m/s divide entre 3.6."},
-  {n:8,t:"C",tm:"MRU",p:"Un móvil viaja a 20 m/s durante 15 s. ¿Qué distancia recorre?",o:["35 m","200 m","280 m","300 m"],a:3,tip:"x = v · t = 20 × 15 = 300 m."},
-  {n:9,t:"F",tm:"MRUV",p:"Primera ecuación del MRUV:",o:["$v = \\dfrac{x}{t}$","$v = v_0 + at$","$v = \\dfrac{1}{2}at^2$","$v = \\sqrt{2gh}$"],a:1,tip:"v = v₀ + a·t. Si parte del reposo (v₀ = 0): v = a·t."},
-  {n:10,t:"F",tm:"MRUV",p:"Segunda ecuación del MRUV (posición desde $x_0 = 0$):",o:["$x = v_0 t + \\tfrac{1}{2}at^2$","$x = vt$","$x = \\tfrac{v^2}{2a}$","$x = \\tfrac{1}{2}gt$"],a:0,tip:"Tiene el término cuadrático t². Si v₀ = 0: x = ½·a·t²."},
-  {n:11,t:"F",tm:"MRUV",p:"Ecuación del MRUV que no contiene el tiempo:",o:["$v = v_0 + at$","$x = v_0 t + \\tfrac{1}{2}at^2$","$v^2 = v_0^2 + 2ax$","$x = vt$"],a:2,tip:"Útil cuando el problema no da t. Relaciona velocidad, aceleración y distancia."},
-  {n:12,t:"U",tm:"MRUV",p:"La unidad de aceleración en el SI es:",o:["m/s","N·m","kg·m/s","m/s²"],a:3,tip:"Aceleración = Δvelocidad / tiempo = (m/s)/s = m/s²."},
-  {n:13,t:"C",tm:"MRUV",p:"Un auto parte del reposo con $a = 3$ m/s². ¿Velocidad a los 8 s?",o:["11 m/s","16 m/s","24 m/s","192 m/s"],a:2,tip:"v = 0 + 3 × 8 = 24 m/s."},
-  {n:14,t:"C",tm:"MRUV",p:"Un objeto parte del reposo con $a = 6$ m/s². ¿Distancia en 4 s?",o:["24 m","48 m","96 m","144 m"],a:1,tip:"x = ½ × 6 × 16 = 48 m. El ½ es obligatorio."},
-  {n:15,t:"U",tm:"Caída Libre",p:"Valor estándar de $g$ en la superficie terrestre:",o:["8.0 m/s²","9.8 m/s²","10.8 m/s²","12.0 m/s²"],a:1,tip:"g = 9.8 m/s². En exámenes peruanos se acepta g = 10 m/s²."},
-  {n:16,t:"F",tm:"Caída Libre",p:"Tiempo de caída desde altura $h$ (parte del reposo):",o:["$t = \\dfrac{h}{g}$","$t = \\sqrt{\\dfrac{2h}{g}}$","$t = \\sqrt{\\dfrac{h}{2g}}$","$t = 2hg$"],a:1,tip:"Se despeja t de h = ½·g·t². El 2 va arriba, g abajo."},
-  {n:17,t:"F",tm:"Caída Libre",p:"Velocidad de impacto al caer desde $h$ (sin velocidad inicial):",o:["$v = gh$","$v = \\sqrt{gh}$","$v = 2gh$","$v = \\sqrt{2gh}$"],a:3,tip:"v² = 2gh → v = √(2gh). El 2 siempre acompaña a g·h."},
-  {n:18,t:"T",tm:"Caída Libre",p:"En el punto más alto de un lanzamiento vertical, ¿qué ocurre?",o:["Velocidad y aceleración son cero","Solo la aceleración es cero","La velocidad es máxima","La velocidad es cero, pero g sigue actuando"],a:3,tip:"En la cima v = 0, pero la gravedad actúa siempre. Es la trampa más frecuente."},
-  {n:19,t:"C",tm:"Caída Libre",p:"Un objeto cae desde 80 m ($g = 10$ m/s²). ¿Tiempo de caída?",o:["2 s","3 s","4 s","8 s"],a:2,tip:"t = √(2×80/10) = √16 = 4 s."},
+  {n:1,t:"T",tm:"Análisis Vectorial",p:"¿Qué diferencia una magnitud vectorial de una escalar?",o:["El vector tiene módulo, dirección y sentido; el escalar solo tiene módulo","El escalar tiene dirección y el vector no","Ambos se representan igual con flechas","El escalar siempre vale más que el vector"],a:0,tip:"Una magnitud escalar queda definida solo con su valor (masa, tiempo, temperatura). La vectorial necesita además dirección y sentido (fuerza, velocidad, aceleración); por eso se representa con una flecha."},
+  {n:2,t:"F",tm:"Análisis Vectorial",p:"El módulo de un vector con componentes $A_x$ y $A_y$ es:",o:["$|\\vec{A}| = A_x + A_y$","$|\\vec{A}| = \\sqrt{A_x^2 + A_y^2}$","$|\\vec{A}| = A_x \\cdot A_y$","$|\\vec{A}| = A_x^2 + A_y^2$"],a:1,tip:"Las componentes forman un triángulo rectángulo, así que se aplica Pitágoras. Ejemplo: Ax=3 y Ay=4 → |A|=√(9+16)=√25=5. Memoriza los tríos 3-4-5 y 5-12-13: aparecen siempre."},
+  {n:3,t:"F",tm:"Análisis Vectorial",p:"Un vector $\\vec{A}$ forma ángulo $\\theta$ con el eje horizontal. Su componente horizontal es:",o:["$A_x = |\\vec{A}|\\sin\\theta$","$A_x = |\\vec{A}|\\tan\\theta$","$A_x = |\\vec{A}|\\cos\\theta$","$A_x = \\dfrac{|\\vec{A}|}{\\cos\\theta}$"],a:2,tip:"La componente pegada al ángulo (adyacente) usa coseno: Ax = |A|·cosθ; la opuesta usa seno: Ay = |A|·senθ. Regla fija: horizontal → coseno, vertical → seno."},
+  {n:4,t:"T",tm:"Análisis Vectorial",p:"Dos vectores son iguales si y solo si:",o:["Tienen el mismo módulo","Tienen la misma dirección","Tienen la misma dirección y sentido","Tienen igual módulo, dirección y sentido"],a:3,tip:"La igualdad vectorial exige que coincidan los tres elementos: módulo, dirección y sentido. Si uno solo difiere, los vectores ya no son iguales aunque midan lo mismo."},
+  {n:5,t:"F",tm:"MRU",p:"En MRU, la posición $x$ en función del tiempo es:",o:["$x = x_0 + v_0 t + \\tfrac{1}{2}at^2$","$x = x_0 + v \\cdot t$","$v = v_0 + at$","$x = \\tfrac{1}{2}gt^2$"],a:1,tip:"En el MRU la velocidad es constante (a = 0) y la posición avanza linealmente: x = x₀ + v·t. Las fórmulas que llevan a o t² pertenecen al MRUV, no al MRU."},
+  {n:6,t:"T",tm:"MRU",p:"En el MRU, la magnitud que permanece constante es:",o:["La posición","La fuerza neta","La aceleración (a > 0)","La velocidad"],a:3,tip:"MRU = movimiento rectilíneo UNIFORME: recorre distancias iguales en tiempos iguales. Eso significa velocidad constante y, por lo tanto, aceleración nula."},
+  {n:7,t:"U",tm:"MRU",p:"La unidad de velocidad en el SI es:",o:["km/h","m·s","m/s²","m/s"],a:3,tip:"v = d/t: en el SI la distancia va en metros y el tiempo en segundos → m/s. Conversión útil: de km/h a m/s se divide entre 3.6 (72 km/h = 20 m/s)."},
+  {n:8,t:"C",tm:"MRU",p:"Un móvil viaja a 20 m/s durante 15 s. ¿Qué distancia recorre?",o:["35 m","200 m","280 m","300 m"],a:3,tip:"MRU: x = v·t = 20 × 15 = 300 m. Velocidad por tiempo, directo."},
+  {n:9,t:"F",tm:"MRUV",p:"Primera ecuación del MRUV:",o:["$v = \\dfrac{x}{t}$","$v = v_0 + at$","$v = \\dfrac{1}{2}at^2$","$v = \\sqrt{2gh}$"],a:1,tip:"v = v₀ + a·t: la velocidad cambia a·t cada segundo. Si parte del reposo, v₀ = 0 y queda v = a·t."},
+  {n:10,t:"F",tm:"MRUV",p:"Segunda ecuación del MRUV (posición desde $x_0 = 0$):",o:["$x = v_0 t + \\tfrac{1}{2}at^2$","$x = vt$","$x = \\tfrac{v^2}{2a}$","$x = \\tfrac{1}{2}gt$"],a:0,tip:"x = v₀·t + ½·a·t². El término cuadrático ½at² es la firma del MRUV; partiendo del reposo queda x = ½·a·t²."},
+  {n:11,t:"F",tm:"MRUV",p:"Ecuación del MRUV que no contiene el tiempo:",o:["$v = v_0 + at$","$x = v_0 t + \\tfrac{1}{2}at^2$","$v^2 = v_0^2 + 2ax$","$x = vt$"],a:2,tip:"v² = v₀² + 2·a·x conecta velocidad, aceleración y distancia sin usar el tiempo. Úsala siempre que el problema no mencione t."},
+  {n:12,t:"U",tm:"MRUV",p:"La unidad de aceleración en el SI es:",o:["m/s","N·m","kg·m/s","m/s²"],a:3,tip:"a = Δv/t: se divide (m/s) entre s y resulta m/s². Indica cuántos m/s cambia la velocidad en cada segundo."},
+  {n:13,t:"C",tm:"MRUV",p:"Un auto parte del reposo con $a = 3$ m/s². ¿Velocidad a los 8 s?",o:["11 m/s","16 m/s","24 m/s","192 m/s"],a:2,tip:"v = v₀ + a·t = 0 + 3×8 = 24 m/s."},
+  {n:14,t:"C",tm:"MRUV",p:"Un objeto parte del reposo con $a = 6$ m/s². ¿Distancia en 4 s?",o:["24 m","48 m","96 m","144 m"],a:1,tip:"x = ½·a·t² = ½ × 6 × 4² = ½ × 6 × 16 = 48 m. Quien olvida el ½ obtiene 96 m: es el distractor clásico."},
+  {n:15,t:"U",tm:"Caída Libre",p:"Valor estándar de $g$ en la superficie terrestre:",o:["8.0 m/s²","9.8 m/s²","10.8 m/s²","12.0 m/s²"],a:1,tip:"g ≈ 9.8 m/s² al nivel del mar. En los exámenes peruanos se suele redondear a 10 m/s² para agilizar el cálculo."},
+  {n:16,t:"F",tm:"Caída Libre",p:"Tiempo de caída desde altura $h$ (parte del reposo):",o:["$t = \\dfrac{h}{g}$","$t = \\sqrt{\\dfrac{2h}{g}}$","$t = \\sqrt{\\dfrac{h}{2g}}$","$t = 2hg$"],a:1,tip:"De h = ½·g·t² se despeja t = √(2h/g). Fíjate: el 2 multiplica arriba junto a h, y g queda abajo."},
+  {n:17,t:"F",tm:"Caída Libre",p:"Velocidad de impacto al caer desde $h$ (sin velocidad inicial):",o:["$v = gh$","$v = \\sqrt{gh}$","$v = 2gh$","$v = \\sqrt{2gh}$"],a:3,tip:"De v² = 2·g·h resulta v = √(2gh): la velocidad al llegar al suelo cayendo desde una altura h, sin velocidad inicial."},
+  {n:18,t:"T",tm:"Caída Libre",p:"En el punto más alto de un lanzamiento vertical, ¿qué ocurre?",o:["Velocidad y aceleración son cero","Solo la aceleración es cero","La velocidad es máxima","La velocidad es cero, pero g sigue actuando"],a:3,tip:"En la altura máxima el cuerpo se detiene un instante (v = 0), pero la gravedad sigue actuando hacia abajo (a = g). Es la trampa más repetida de caída libre."},
+  {n:19,t:"C",tm:"Caída Libre",p:"Un objeto cae desde 80 m ($g = 10$ m/s²). ¿Tiempo de caída?",o:["2 s","3 s","4 s","8 s"],a:2,tip:"t = √(2h/g) = √(2×80/10) = √16 = 4 s."},
   {n:20,t:"C",tm:"Caída Libre",p:"Un objeto cae durante 5 s ($g = 10$ m/s²). ¿Velocidad de impacto?",o:["25 m/s","50 m/s","100 m/s","250 m/s"],a:1,tip:"v = g·t = 10 × 5 = 50 m/s."},
-  {n:21,t:"T",tm:"Movimiento Parabólico",p:"El movimiento parabólico se analiza como:",o:["Dos MRUV perpendiculares","MRU horizontal + MRUV vertical","Dos MRU paralelos","MRUV horizontal + MRUV vertical"],a:1,tip:"Horizontal: velocidad constante (MRU). Vertical: actúa g (MRUV)."},
-  {n:22,t:"F",tm:"Movimiento Parabólico",p:"En el lanzamiento horizontal, la velocidad $v_x$ durante el vuelo:",o:["Aumenta con g","Disminuye linealmente","Es cero en la cima","Es constante e igual a $v_0$"],a:3,tip:"Horizontal sin fuerza → v_x = v₀ = constante en todo el trayecto."},
-  {n:23,t:"U",tm:"Leyes de Newton",p:"La unidad de fuerza en el SI es:",o:["Joule (J)","Pascal (Pa)","Watt (W)","Newton (N)"],a:3,tip:"1 N = 1 kg·m/s². J = energía, W = potencia, Pa = presión."},
-  {n:24,t:"F",tm:"Leyes de Newton",p:"Segunda Ley de Newton:",o:["$F = m/a$","$F = mv$","$F = ma$","$F = a/m$"],a:2,tip:"F = m·a es la ecuación fundamental de la Dinámica."},
-  {n:25,t:"F",tm:"Leyes de Newton",p:"El peso $P$ de un objeto de masa $m$ es:",o:["$P = m + g$","$P = m/g$","$P = m \\cdot g$","$P = g/m$"],a:2,tip:"Peso = m·g. La masa no cambia; el peso sí (en la Luna g = 1.6 m/s²)."},
-  {n:26,t:"T",tm:"Leyes de Newton",p:"Un cuerpo sin fuerza neta (Primera Ley de Newton):",o:["Siempre está en reposo","Siempre se acelera","Mantiene su estado de reposo o MRU","Reduce su velocidad hasta detenerse"],a:2,tip:"Inercia: sin fuerza neta, sin cambio de movimiento."},
-  {n:27,t:"T",tm:"Leyes de Newton",p:"Tercera Ley de Newton: si A ejerce fuerza sobre B, entonces B ejerce sobre A:",o:["Una fuerza mayor","Una fuerza nula","La misma fuerza en igual sentido","Una fuerza igual en módulo y sentido opuesto"],a:3,tip:"Acción y Reacción: igual módulo, sentidos opuestos, cuerpos distintos."},
-  {n:28,t:"C",tm:"Leyes de Newton",p:"¿Cuánto pesa un objeto de 15 kg? ($g = 10$ m/s²)",o:["15 N","75 N","150 N","1500 N"],a:2,tip:"P = 15 × 10 = 150 N."},
-  {n:29,t:"C",tm:"Leyes de Newton",p:"Fuerza de 90 N sobre un objeto de 6 kg sin rozamiento. ¿Aceleración?",o:["0.07 m/s²","15 m/s²","60 m/s²","540 m/s²"],a:1,tip:"a = F/m = 90/6 = 15 m/s²."},
-  {n:30,t:"F",tm:"Estática",p:"Condición del equilibrio estático:",o:["$\\Sigma F = ma$","$\\Sigma F > 0$","$\\Sigma \\vec{F} = 0$","El cuerpo se mueve a velocidad constante"],a:2,tip:"Equilibrio: ΣFx = 0 y ΣFy = 0."},
-  {n:31,t:"F",tm:"Estática",p:"Componente normal de un bloque en plano inclinado $\\theta$:",o:["$N = mg$","$N = mg\\sin\\theta$","$N = mg\\tan\\theta$","$N = mg\\cos\\theta$"],a:3,tip:"Normal = mg·cosθ (perpendicular al plano). Paralela = mg·senθ."},
-  {n:32,t:"F",tm:"Dinámica Lineal",p:"Fórmula de la fuerza de rozamiento $f$:",o:["$f = \\mu m$","$f = \\mu g$","$f = m\\mu^2$","$f = \\mu N$"],a:3,tip:"Fricción = μ × Normal. Sin normal no hay fricción."},
-  {n:33,t:"U",tm:"Dinámica Lineal",p:"El coeficiente de rozamiento $\\mu$ tiene por unidad:",o:["Newton (N)","kg/m","m/s²","Sin unidades (adimensional)"],a:3,tip:"μ = f/N = N/N → adimensional. Valores: hielo 0.03, madera 0.3, goma 0.7."},
-  {n:34,t:"C",tm:"Dinámica Lineal",p:"Bloque de 8 kg con $\\mu_c = 0.3$ ($g = 10$). ¿Fuerza de rozamiento?",o:["2.4 N","8 N","24 N","80 N"],a:2,tip:"N = 8×10 = 80 N. f = 0.3×80 = 24 N."},
-  {n:35,t:"F",tm:"Trabajo Mecánico",p:"Trabajo mecánico de una fuerza $F$ con desplazamiento $d$:",o:["$W = Ft$","$W = mat$","$W = Fd\\cos\\theta$","$W = F/d$"],a:2,tip:"W = F·d·cosθ. Con θ=0°: W=F·d (máximo). Con θ=90°: W=0."},
-  {n:36,t:"U",tm:"Trabajo Mecánico",p:"La unidad de trabajo mecánico en el SI es:",o:["Newton (N)","Watt (W)","Pascal (Pa)","Joule (J)"],a:3,tip:"1 J = 1 N × 1 m. El Joule es unidad de trabajo y de energía."},
-  {n:37,t:"T",tm:"Trabajo Mecánico",p:"El trabajo de una fuerza es negativo cuando:",o:["θ = 0° entre fuerza y desplazamiento","θ = 90° entre fuerza y desplazamiento","θ > 90° entre fuerza y desplazamiento","El objeto se detiene"],a:2,tip:"W = F·d·cosθ. Si θ>90° → cosθ<0 → W<0. La fricción siempre hace W<0."},
-  {n:38,t:"F",tm:"Potencia Mecánica",p:"Potencia mecánica media:",o:["$P = Fd$","$P = ma$","$P = Wt$","$P = W/t$"],a:3,tip:"P = W/t. También P = F·v para fuerza constante."},
-  {n:39,t:"U",tm:"Potencia Mecánica",p:"La unidad de potencia en el SI es:",o:["Joule (J)","Newton (N)","Volt (V)","Watt (W)"],a:3,tip:"1 W = 1 J/s. 1 HP ≈ 746 W."},
+  {n:21,t:"T",tm:"Movimiento Parabólico",p:"El movimiento parabólico se analiza como:",o:["Dos MRUV perpendiculares","MRU horizontal + MRUV vertical","Dos MRU paralelos","MRUV horizontal + MRUV vertical"],a:1,tip:"Se descompone en dos movimientos independientes: horizontal MRU (nada lo frena) y vertical MRUV (actúa g). Su combinación dibuja la parábola."},
+  {n:22,t:"F",tm:"Movimiento Parabólico",p:"En el lanzamiento horizontal, la velocidad $v_x$ durante el vuelo:",o:["Aumenta con g","Disminuye linealmente","Es cero en la cima","Es constante e igual a $v_0$"],a:3,tip:"En el eje horizontal no actúa ninguna fuerza, así que vx = v₀ se mantiene todo el vuelo; solo la componente vertical cambia por acción de g."},
+  {n:23,t:"U",tm:"Leyes de Newton",p:"La unidad de fuerza en el SI es:",o:["Joule (J)","Pascal (Pa)","Watt (W)","Newton (N)"],a:3,tip:"1 N = 1 kg·m/s²: la fuerza que da a 1 kg una aceleración de 1 m/s². No confundir: Joule = trabajo, Watt = potencia, Pascal = presión."},
+  {n:24,t:"F",tm:"Leyes de Newton",p:"Segunda Ley de Newton:",o:["$F = m/a$","$F = mv$","$F = ma$","$F = a/m$"],a:2,tip:"F = m·a: la fuerza neta produce una aceleración proporcional a ella e inversa a la masa. Es la ecuación central de toda la dinámica."},
+  {n:25,t:"F",tm:"Leyes de Newton",p:"El peso $P$ de un objeto de masa $m$ es:",o:["$P = m + g$","$P = m/g$","$P = m \\cdot g$","$P = g/m$"],a:2,tip:"P = m·g. La masa no cambia de lugar en lugar; el peso sí: en la Luna (g = 1.6 m/s²) pesas seis veces menos con la misma masa."},
+  {n:26,t:"T",tm:"Leyes de Newton",p:"Un cuerpo sin fuerza neta (Primera Ley de Newton):",o:["Siempre está en reposo","Siempre se acelera","Mantiene su estado de reposo o MRU","Reduce su velocidad hasta detenerse"],a:2,tip:"Primera ley (inercia): sin fuerza neta, el cuerpo conserva su estado — sigue en reposo o sigue en MRU. Nada se frena por sí solo: siempre hay una fuerza detrás."},
+  {n:27,t:"T",tm:"Leyes de Newton",p:"Tercera Ley de Newton: si A ejerce fuerza sobre B, entonces B ejerce sobre A:",o:["Una fuerza mayor","Una fuerza nula","La misma fuerza en igual sentido","Una fuerza igual en módulo y sentido opuesto"],a:3,tip:"Acción y reacción: fuerzas de igual módulo y sentido opuesto que actúan sobre cuerpos DISTINTOS; por eso nunca se anulan entre sí."},
+  {n:28,t:"C",tm:"Leyes de Newton",p:"¿Cuánto pesa un objeto de 15 kg? ($g = 10$ m/s²)",o:["15 N","75 N","150 N","1500 N"],a:2,tip:"P = m·g = 15 × 10 = 150 N."},
+  {n:29,t:"C",tm:"Leyes de Newton",p:"Fuerza de 90 N sobre un objeto de 6 kg sin rozamiento. ¿Aceleración?",o:["0.07 m/s²","15 m/s²","60 m/s²","540 m/s²"],a:1,tip:"De F = m·a se despeja a = F/m = 90 ÷ 6 = 15 m/s²."},
+  {n:30,t:"F",tm:"Estática",p:"Condición del equilibrio estático:",o:["$\\Sigma F = ma$","$\\Sigma F > 0$","$\\Sigma \\vec{F} = 0$","El cuerpo se mueve a velocidad constante"],a:2,tip:"Equilibrio estático: la suma vectorial de fuerzas es cero en ambos ejes (ΣFx = 0 y ΣFy = 0). Sin fuerza neta no hay aceleración y el cuerpo permanece en reposo."},
+  {n:31,t:"F",tm:"Estática",p:"Componente normal de un bloque en plano inclinado $\\theta$:",o:["$N = mg$","$N = mg\\sin\\theta$","$N = mg\\tan\\theta$","$N = mg\\cos\\theta$"],a:3,tip:"En el plano inclinado el peso se descompone: mg·cosθ perpendicular al plano (la equilibra la normal) y mg·senθ paralela (la que tiende a deslizarlo)."},
+  {n:32,t:"F",tm:"Dinámica Lineal",p:"Fórmula de la fuerza de rozamiento $f$:",o:["$f = \\mu m$","$f = \\mu g$","$f = m\\mu^2$","$f = \\mu N$"],a:3,tip:"f = μ·N: el rozamiento es proporcional a la fuerza normal, no al peso directamente. Si no hay contacto que apriete (N = 0), no hay fricción."},
+  {n:33,t:"U",tm:"Dinámica Lineal",p:"El coeficiente de rozamiento $\\mu$ tiene por unidad:",o:["Newton (N)","kg/m","m/s²","Sin unidades (adimensional)"],a:3,tip:"μ = f/N: se divide newton entre newton y el resultado queda sin unidades. Referencias: hielo ≈ 0.03, madera ≈ 0.3, goma ≈ 0.7."},
+  {n:34,t:"C",tm:"Dinámica Lineal",p:"Bloque de 8 kg con $\\mu_c = 0.3$ ($g = 10$). ¿Fuerza de rozamiento?",o:["2.4 N","8 N","24 N","80 N"],a:2,tip:"Primero la normal: N = m·g = 8 × 10 = 80 N. Luego f = μ·N = 0.3 × 80 = 24 N."},
+  {n:35,t:"F",tm:"Trabajo Mecánico",p:"Trabajo mecánico de una fuerza $F$ con desplazamiento $d$:",o:["$W = Ft$","$W = mat$","$W = Fd\\cos\\theta$","$W = F/d$"],a:2,tip:"W = F·d·cosθ. Con θ = 0° el trabajo es máximo (W = F·d); con θ = 90° la fuerza no trabaja (W = 0) porque no ayuda ni frena el movimiento."},
+  {n:36,t:"U",tm:"Trabajo Mecánico",p:"La unidad de trabajo mecánico en el SI es:",o:["Newton (N)","Watt (W)","Pascal (Pa)","Joule (J)"],a:3,tip:"1 J = 1 N × 1 m: el trabajo de una fuerza de un newton a lo largo de un metro. El Joule también es la unidad de la energía."},
+  {n:37,t:"T",tm:"Trabajo Mecánico",p:"El trabajo de una fuerza es negativo cuando:",o:["θ = 0° entre fuerza y desplazamiento","θ = 90° entre fuerza y desplazamiento","θ > 90° entre fuerza y desplazamiento","El objeto se detiene"],a:2,tip:"Si θ > 90°, cosθ es negativo y W < 0: la fuerza le quita energía al cuerpo. La fricción siempre trabaja en contra del movimiento (W negativo)."},
+  {n:38,t:"F",tm:"Potencia Mecánica",p:"Potencia mecánica media:",o:["$P = Fd$","$P = ma$","$P = Wt$","$P = W/t$"],a:3,tip:"P = W/t: el trabajo realizado por unidad de tiempo. Con fuerza constante también sirve P = F·v (fuerza por velocidad)."},
+  {n:39,t:"U",tm:"Potencia Mecánica",p:"La unidad de potencia en el SI es:",o:["Joule (J)","Newton (N)","Volt (V)","Watt (W)"],a:3,tip:"1 W = 1 J/s: un joule de trabajo por cada segundo. Dato útil: 1 HP ≈ 746 W."},
   {n:40,t:"C",tm:"Potencia Mecánica",p:"Motor aplica 500 N a 20 m/s. ¿Potencia?",o:["25 W","500 W","2 500 W","10 000 W"],a:3,tip:"P = F·v = 500 × 20 = 10 000 W = 10 kW."}
 ];
 
