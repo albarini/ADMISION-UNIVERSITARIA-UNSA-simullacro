@@ -32,67 +32,35 @@ h1,h2,h3{text-wrap:balance;}
 .screen.active{display:block;}
 @keyframes goldPulse{0%,100%{box-shadow:0 0 0 0 rgba(196,160,68,0);}50%{box-shadow:0 0 18px 2px rgba(196,160,68,.12);}}
 
-/* ============ BRAND MARK ============ */
-.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;color:inherit;}
-.brand-mark{width:2.1rem;height:2.1rem;flex-shrink:0;}
-.brand-word{font-family:'Playfair Display',serif;font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);font-weight:500;line-height:1.15;text-shadow:0 0 20px rgba(196,160,68,.15);white-space:nowrap;}
-.brand-word small{display:block;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.3em;color:var(--muted);font-weight:400;margin-top:.15rem;}
+/* ============ MARCA (tipográfica) ============ */
+.brand{display:inline-flex;flex-direction:column;align-items:center;gap:.4rem;}
+.brand-word{font-family:'Playfair Display',serif;font-size:1rem;letter-spacing:.42em;text-indent:.42em;text-transform:uppercase;color:var(--champagne);font-weight:500;white-space:nowrap;}
+.brand-word em{font-style:normal;color:var(--gold2);}
+.brand-sub{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.48em;text-indent:.48em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
 
 /* ============ REGISTER ============ */
 #screen-register{min-height:100vh;padding-bottom:4rem;background:radial-gradient(ellipse 70% 40% at 50% -8%,rgba(196,160,68,.10) 0%,transparent 55%),radial-gradient(ellipse 50% 35% at 92% 65%,rgba(10,92,64,.09) 0%,transparent 50%),radial-gradient(ellipse 40% 30% at 5% 80%,rgba(92,58,122,.07) 0%,transparent 50%),var(--obsidian);}
 .reg-topbar{border-bottom:1px solid var(--border);background:rgba(7,7,10,.92);position:relative;}
 .reg-topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--lux-line);}
-.reg-topbar-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.9rem;max-width:72rem;}
-.reg-badge{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;padding:.35rem .85rem;border:1px solid var(--border2);border-radius:999px;background:rgba(28,28,40,.6);white-space:nowrap;}
-.reg-grid{max-width:72rem;display:grid;grid-template-columns:1fr;gap:0;}
-.reg-hero{padding:2.2rem 0 1.8rem;border-bottom:1px solid var(--border);position:relative;}
-.reg-eyebrow{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--emerald4);letter-spacing:.35em;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.7rem;}
-.reg-eyebrow::before{content:'';display:block;width:1.6rem;height:1px;background:linear-gradient(90deg,var(--emerald2),var(--emerald4));}
-.reg-h1{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(3rem,9vw,4.6rem);line-height:.98;letter-spacing:-.02em;color:var(--cream);margin-bottom:.6rem;}
+.reg-topbar-in{display:flex;align-items:center;justify-content:center;padding-block:1.15rem;}
+.reg-main{max-width:34rem;margin-inline:auto;padding:clamp(3rem,9vh,6rem) clamp(1.25rem,5vw,2rem) 4rem;text-align:center;}
+.reg-h1{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(3rem,9vw,4.6rem);line-height:.98;letter-spacing:-.02em;color:var(--cream);margin-bottom:1.5rem;}
 .reg-h1 em{font-style:italic;color:var(--gold3);text-shadow:0 0 30px rgba(196,160,68,.2);}
 .reg-h1 span{display:block;font-size:.55em;color:var(--champagne);font-weight:300;}
-.reg-desc{font-size:clamp(1.05rem,2.5vw,1.2rem);color:var(--text2);line-height:1.6;font-style:italic;margin-bottom:1.4rem;max-width:34rem;}
-.reg-desc strong{color:var(--champagne);font-style:normal;}
-.reg-meta{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;margin-bottom:1.4rem;}
-.reg-meta span{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.1em;color:var(--muted);display:flex;align-items:center;gap:.45rem;}
-.reg-meta span::before{content:'';width:.3rem;height:.3rem;border-radius:50%;background:var(--gold2);box-shadow:0 0 6px rgba(196,160,68,.5);}
-.rank-pills{display:flex;gap:.55rem;flex-wrap:wrap;}
-.rank-pill{display:flex;align-items:center;gap:.45rem;padding:.4rem .8rem;border-radius:999px;font-family:'DM Mono',monospace;font-size:.66rem;border:1px solid;letter-spacing:.05em;}
-.rp-diamond{background:rgba(165,225,255,.06);border-color:rgba(165,225,255,.25);color:#B8E8FF;}
-.rp-emerald{background:rgba(16,160,112,.08);border-color:rgba(16,160,112,.25);color:var(--emerald4);}
-.rp-gold{background:rgba(196,160,68,.08);border-color:rgba(196,160,68,.25);color:var(--gold3);}
-.rp-mauve{background:rgba(92,58,122,.1);border-color:rgba(154,120,200,.25);color:var(--mauve4);}
-.rp-silver{background:rgba(180,180,200,.05);border-color:rgba(180,180,200,.18);color:#C0C0D8;}
-.rp-bronze{background:rgba(140,90,50,.06);border-color:rgba(180,120,70,.22);color:#D0986A;}
-.rp-dot{width:.35rem;height:.35rem;border-radius:50%;background:currentColor;box-shadow:0 0 5px currentColor;}
-.reg-form{padding:1.8rem 0 0;}
+.reg-rule{width:3.25rem;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent);margin:0 auto 1.5rem;}
+.reg-sub{font-size:1.08rem;color:var(--text2);font-style:italic;line-height:1.75;margin-bottom:3rem;}
+.reg-form{max-width:24rem;margin-inline:auto;text-align:left;}
 .field{margin-bottom:1.15rem;}
 .field label{display:block;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);margin-bottom:.5rem;}
 .field input,.field select{width:100%;padding:.85rem 1rem;background:var(--obsidian3);border:1px solid var(--border2);border-bottom:2px solid var(--border3);border-radius:2px;color:var(--cream);font-family:'Cormorant Garamond',serif;font-size:1.2rem;outline:none;-webkit-appearance:none;appearance:none;transition:border-color .2s,background .2s,box-shadow .2s;min-height:3.1rem;}
-.field input:focus,.field select:focus{border-bottom-color:var(--emerald4);background:var(--obsidian4);box-shadow:0 2px 12px rgba(16,160,112,.08);}
+.field input:focus,.field select:focus{border-bottom-color:var(--gold2);background:var(--obsidian4);box-shadow:0 2px 12px rgba(196,160,68,.08);}
 .field input::placeholder{color:var(--muted);}
-.field select:disabled{opacity:.45;cursor:not-allowed;}
 .select-wrap{position:relative;}
 .select-wrap::after{content:'';position:absolute;right:1rem;top:50%;width:.55rem;height:.55rem;border-right:1.5px solid var(--gold2);border-bottom:1.5px solid var(--gold2);transform:translateY(-70%) rotate(45deg);pointer-events:none;}
 .field select{cursor:pointer;padding-right:2.6rem;}
 .field select option{background:var(--obsidian3);color:var(--cream);font-family:Georgia,serif;}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
-.hidden{display:none !important;}
-.area-section-title{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold2);margin-bottom:.8rem;margin-top:.3rem;}
-.areas-list{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.4rem;}
-.area-card{display:flex;align-items:center;gap:1rem;padding:1rem 1.15rem;border:1px solid var(--border2);border-radius:2px;cursor:pointer;background:var(--obsidian3);transition:border-color .2s,background .2s,box-shadow .2s;min-height:4.2rem;position:relative;overflow:hidden;}
-.area-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:transparent;transition:background .2s;}
-.area-card.selected{border-color:var(--emerald3);background:rgba(16,160,112,.06);box-shadow:0 0 20px rgba(16,160,112,.06);}
-.area-card.selected::before{background:linear-gradient(90deg,transparent,var(--emerald3),transparent);}
-.ac-radio{width:1.35rem;height:1.35rem;border-radius:50%;border:1.5px solid var(--border3);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .2s,box-shadow .2s;}
-.area-card.selected .ac-radio{border-color:var(--emerald4);box-shadow:0 0 8px rgba(16,160,112,.3);}
-.ac-radio-dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--emerald4);transform:scale(0);transition:transform .2s;}
-.area-card.selected .ac-radio-dot{transform:scale(1);}
-.ac-icon{font-size:1.7rem;flex-shrink:0;line-height:1;}
-.ac-info{flex:1;min-width:0;}
-.ac-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:500;color:var(--cream);margin-bottom:.15rem;}
-.ac-sub{font-size:.85rem;color:var(--muted);line-height:1.3;font-style:italic;}
-.btn-start{width:100%;padding:1.1rem;background:transparent;border:1px solid var(--border3);border-radius:2px;color:var(--muted);font-family:'Playfair Display',serif;font-weight:500;font-size:1.05rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:all .3s;opacity:.25;pointer-events:none;position:relative;overflow:hidden;min-height:3.4rem;}
+.reg-note{margin-top:1.75rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.9;}
+.btn-start{width:100%;margin-top:.5rem;padding:1.1rem;background:transparent;border:1px solid var(--border3);border-radius:2px;color:var(--muted);font-family:'Playfair Display',serif;font-weight:500;font-size:1.05rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:all .3s;opacity:.25;pointer-events:none;position:relative;overflow:hidden;min-height:3.4rem;}
 .btn-start.ready{opacity:1;pointer-events:all;border-color:var(--gold-dark);color:var(--gold2);animation:goldPulse 3s ease infinite;}
 .btn-start.ready::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);}
 .btn-start.ready:active{background:var(--gold);color:var(--obsidian);animation:none;}
@@ -310,9 +278,6 @@ h1,h2,h3{text-wrap:balance;}
 /* ============ TABLET ≥640px ============ */
 @media(min-width:640px){
   .shell{padding-inline:2rem;}
-  .areas-list{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;}
-  .area-card{flex-direction:column;align-items:flex-start;gap:.7rem;padding:1.15rem 1.1rem 1.25rem;min-height:0;}
-  .ac-radio{position:absolute;top:1rem;right:1rem;}
   .r-stats-row{grid-template-columns:repeat(4,1fr);}
   .r-types{grid-template-columns:repeat(4,1fr);}
   .rv-ans{flex-direction:row;gap:1.6rem;flex-wrap:wrap;}
@@ -320,9 +285,7 @@ h1,h2,h3{text-wrap:balance;}
 }
 /* ============ DESKTOP ≥1024px ============ */
 @media(min-width:1024px){
-  .reg-grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:4.5rem;align-items:start;padding-block:1rem;}
-  .reg-hero{border-bottom:none;padding:2.8rem 0;position:sticky;top:1rem;}
-  .reg-form{padding-top:2.8rem;}
+  .reg-main{padding-top:7rem;}
   .reg-h1{font-size:clamp(4rem,5vw,5rem);}
   .stage,.top-in,.nav-in{max-width:46rem;margin-inline:auto;}
   .r-duo{grid-template-columns:1fr 1fr;}
@@ -331,7 +294,6 @@ h1,h2,h3{text-wrap:balance;}
 /* Hover (solo dispositivos con puntero fino) */
 @media(hover:hover){
   .opt:hover:not(.dis){border-color:var(--emerald3);background:rgba(16,160,112,.06);}
-  .area-card:hover:not(.selected){border-color:var(--border3);background:var(--obsidian4);}
   .btn-start.ready:hover,.btn-next:hover,.btn-retry:hover{background:var(--gold);color:var(--obsidian);animation:none;}
   .review summary:hover{color:var(--gold3);}
 }
@@ -342,87 +304,48 @@ h1,h2,h3{text-wrap:balance;}
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="au" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#F0D07A"/><stop offset="1" stop-color="#C4A044"/>
-    </linearGradient>
-  </defs>
-</svg>
-
 <!-- REGISTRO -->
 <div class="screen active" id="screen-register">
   <header class="reg-topbar">
-    <div class="shell reg-topbar-in">
+    <div class="reg-topbar-in">
       <span class="brand">
-        <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
-          <g fill="none" stroke="url(#au)" stroke-width="1.6">
-            <ellipse cx="24" cy="24" rx="20" ry="8.5"/>
-            <ellipse cx="24" cy="24" rx="20" ry="8.5" transform="rotate(60 24 24)"/>
-            <ellipse cx="24" cy="24" rx="20" ry="8.5" transform="rotate(120 24 24)"/>
-          </g>
-          <circle cx="24" cy="24" r="3" fill="url(#au)"/>
-        </svg>
-        <span class="brand-word">Simulacro UNSA<small>Física · Preuniversitario</small></span>
+        <span class="brand-word">Simulacro <em>UNSA</em></span>
+        <span class="brand-sub">Física — Admisión 2026</span>
       </span>
-      <span class="reg-badge">Admisión 2026</span>
     </div>
   </header>
-  <div class="shell reg-grid">
-    <section class="reg-hero">
-      <div class="reg-eyebrow">Simulacro Oficial</div>
-      <h1 class="reg-h1"><em>Examen</em><span>de Física</span></h1>
-      <p class="reg-desc"><strong>40 preguntas</strong> con corrección instantánea, tips de resolución y ranking por niveles. Cada pregunta tiene <strong>40 segundos</strong>, igual que la presión del examen real.</p>
-      <div class="reg-meta">
-        <span>40 preguntas</span><span>40 s por pregunta</span><span>2.5 pts cada una</span>
-      </div>
-      <div class="rank-pills">
-        <span class="rank-pill rp-diamond"><span class="rp-dot"></span>Diamond 95+</span>
-        <span class="rank-pill rp-emerald"><span class="rp-dot"></span>Esmeralda 85+</span>
-        <span class="rank-pill rp-gold"><span class="rp-dot"></span>Oro 70+</span>
-        <span class="rank-pill rp-mauve"><span class="rp-dot"></span>Amatista 50+</span>
-        <span class="rank-pill rp-silver"><span class="rp-dot"></span>Plata 30+</span>
-        <span class="rank-pill rp-bronze"><span class="rp-dot"></span>Bronce</span>
-      </div>
-    </section>
-    <section class="reg-form">
-      <div class="field-row">
-        <div class="field"><label for="inp-n">Nombre</label><input id="inp-n" type="text" placeholder="Ing. David" autocomplete="given-name" oninput="chk()"></div>
-        <div class="field"><label for="inp-a">Apellido</label><input id="inp-a" type="text" placeholder="Samuel" autocomplete="family-name" oninput="chk()"></div>
-      </div>
-      <div class="area-section-title">Área de postulación</div>
-      <div class="areas-list" role="radiogroup" aria-label="Área de postulación">
-        <div class="area-card" role="radio" aria-checked="false" tabindex="0" onclick="selArea('Biomédicas',this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selArea('Biomédicas',this);}">
-          <div class="ac-radio"><div class="ac-radio-dot"></div></div>
-          <div class="ac-icon">🩺</div>
-          <div class="ac-info"><div class="ac-name">Biomédicas</div><div class="ac-sub">Medicina, Enfermería, Biología</div></div>
-        </div>
-        <div class="area-card" role="radio" aria-checked="false" tabindex="0" onclick="selArea('Ingenierías',this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selArea('Ingenierías',this);}">
-          <div class="ac-radio"><div class="ac-radio-dot"></div></div>
-          <div class="ac-icon">⚙️</div>
-          <div class="ac-info"><div class="ac-name">Ingenierías</div><div class="ac-sub">Civil, Sistemas, Electrónica</div></div>
-        </div>
-        <div class="area-card" role="radio" aria-checked="false" tabindex="0" onclick="selArea('Sociales',this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selArea('Sociales',this);}">
-          <div class="ac-radio"><div class="ac-radio-dot"></div></div>
-          <div class="ac-icon">📚</div>
-          <div class="ac-info"><div class="ac-name">Sociales</div><div class="ac-sub">Derecho, Psicología, CCSS</div></div>
-        </div>
+  <main class="reg-main">
+    <h1 class="reg-h1"><em>Examen</em><span>de Física</span></h1>
+    <div class="reg-rule" aria-hidden="true"></div>
+    <p class="reg-sub">Cuarenta preguntas, cuarenta segundos cada una.<br>Corrección instantánea con tips de resolución.</p>
+    <form class="reg-form" onsubmit="event.preventDefault();startExam();">
+      <div class="field">
+        <label for="inp-n">Nombres completos</label>
+        <input id="inp-n" type="text" placeholder="David Samuel Quispe Mamani" autocomplete="name" oninput="chk()">
       </div>
       <div class="field">
         <label for="sel-car">Carrera a la que postulas</label>
         <div class="select-wrap">
-          <select id="sel-car" disabled onchange="carreraChange()">
-            <option value="">Elige primero tu área…</option>
+          <select id="sel-car" onchange="chk()">
+            <option value="">Selecciona tu carrera</option>
+            <option>Medicina</option>
+            <option>Enfermería</option>
+            <option>Ingeniería Civil</option>
+            <option>Ingeniería Electrónica</option>
+            <option>Arquitectura</option>
+            <option>Derecho</option>
+            <option>Psicología</option>
+            <option>Ciencias de la Comunicación</option>
+            <option>Nutrición</option>
+            <option>Educación</option>
+            <option>Otra carrera</option>
           </select>
         </div>
       </div>
-      <div class="field hidden" id="field-car-otra">
-        <label for="inp-car-otra">Escribe tu carrera</label>
-        <input id="inp-car-otra" type="text" placeholder="Ej. Ingeniería Ambiental" oninput="chk()">
-      </div>
-      <button class="btn-start" id="btn-start" onclick="startExam()">Comenzar Examen →</button>
-    </section>
-  </div>
+      <button type="submit" class="btn-start" id="btn-start">Comenzar</button>
+    </form>
+    <p class="reg-note">Tu ingreso y tus resultados quedan registrados automáticamente</p>
+  </main>
 </div>
 
 <!-- EXAMEN -->
@@ -461,14 +384,10 @@ h1,h2,h3{text-wrap:balance;}
         <div class="r-title">Examen Completado</div>
         <div class="r-student" id="r-st">—</div>
       </div>
-      <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true" style="width:2.6rem;height:2.6rem">
-        <g fill="none" stroke="url(#au)" stroke-width="1.6">
-          <ellipse cx="24" cy="24" rx="20" ry="8.5"/>
-          <ellipse cx="24" cy="24" rx="20" ry="8.5" transform="rotate(60 24 24)"/>
-          <ellipse cx="24" cy="24" rx="20" ry="8.5" transform="rotate(120 24 24)"/>
-        </g>
-        <circle cx="24" cy="24" r="3" fill="url(#au)"/>
-      </svg>
+      <span class="brand" style="align-items:flex-end">
+        <span class="brand-word" style="font-size:.8rem">Simulacro <em>UNSA</em></span>
+        <span class="brand-sub">Física</span>
+      </span>
     </div>
   </div>
   <div class="shell r-body">
@@ -510,11 +429,8 @@ h1,h2,h3{text-wrap:balance;}
 <script>
 var APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbygfjhGy8rvP0LEKUI5Ham2I59vxBeg-jhMCVGiybVx3ADEKGLU9uIs5mG9XQD8Jg/exec';
 
-var CARRERAS={
-  'Biomédicas':['Medicina','Enfermería','Ciencias de la Nutrición','Biología','Agronomía','Medicina Veterinaria y Zootecnia','Ingeniería Pesquera'],
-  'Ingenierías':['Arquitectura','Ingeniería Civil','Ingeniería de Sistemas','Ciencia de la Computación','Ingeniería Electrónica','Ingeniería Eléctrica','Ingeniería Mecánica','Ingeniería Industrial','Ingeniería Química','Ingeniería de Minas','Ingeniería Metalúrgica','Ingeniería de Materiales','Ingeniería de Telecomunicaciones','Ingeniería Ambiental','Ingeniería Geológica','Ingeniería Geofísica','Física','Matemáticas','Química'],
-  'Sociales':['Derecho','Psicología','Administración','Contabilidad','Economía','Sociología','Trabajo Social','Antropología','Historia','Turismo y Hotelería','Ciencias de la Comunicación','Educación','Filosofía','Literatura y Lingüística','Artes']
-};
+/* Área derivada automáticamente de la carrera (para el análisis en Sheets) */
+var AREA_DE={'Medicina':'Biomédicas','Enfermería':'Biomédicas','Nutrición':'Biomédicas','Ingeniería Civil':'Ingenierías','Ingeniería Electrónica':'Ingenierías','Arquitectura':'Ingenierías','Derecho':'Sociales','Psicología':'Sociales','Ciencias de la Comunicación':'Sociales','Educación':'Sociales','Otra carrera':'Otra'};
 
 var RANKS=[
   {min:95,max:100,cls:'rank-diamond',scoreCls:'bg-diamond',icon:'💎',label:'Diamond',title:'Maestro',sub:'Llegaste al nivel más alto. Eso no es suerte, es trabajo real.',barColor:'#C8EEFF',sheetColor:'#BDD7EE'},
@@ -575,49 +491,33 @@ var QS=[
 ];
 
 var TSEC=40,TOTAL=QS.length;
-var stu={n:'',a:'',area:'',carrera:''};
-var idx=0,ans=[],tmr=null,tLeft=0,done=false,pickedArea='',transitioning=false;
+var stu={n:'',carrera:'',area:''};
+var idx=0,ans=[],tmr=null,tLeft=0,done=false,transitioning=false;
 var tipoLbl={T:'Teoría',F:'Fórmula',U:'Unidad',C:'Cálculo'};
 var tipoCol={T:'#DDB85C',F:'#14C088',U:'#B89EDE',C:'#4A88D0'};
 var LETTERS=['A','B','C','D'];
 
 /* ---------- REGISTRO ---------- */
-function selArea(ar,el){
-  pickedArea=ar;
-  document.querySelectorAll('.area-card').forEach(function(c){c.classList.remove('selected');c.setAttribute('aria-checked','false');});
-  el.classList.add('selected');el.setAttribute('aria-checked','true');
-  var sel=document.getElementById('sel-car');
-  sel.disabled=false;
-  var html='<option value="">Elige tu carrera…</option>';
-  (CARRERAS[ar]||[]).forEach(function(c){html+='<option value="'+c+'">'+c+'</option>';});
-  html+='<option value="__otra">Otra carrera…</option>';
-  sel.innerHTML=html;
-  document.getElementById('field-car-otra').classList.add('hidden');
-  chk();
-}
-function carreraChange(){
-  var v=document.getElementById('sel-car').value;
-  document.getElementById('field-car-otra').classList.toggle('hidden',v!=='__otra');
-  if(v==='__otra')document.getElementById('inp-car-otra').focus();
-  chk();
-}
-function getCarrera(){
-  var v=document.getElementById('sel-car').value;
-  if(v==='__otra')return document.getElementById('inp-car-otra').value.trim();
-  return v;
-}
 function chk(){
   var n=document.getElementById('inp-n').value.trim();
-  var a=document.getElementById('inp-a').value.trim();
+  var c=document.getElementById('sel-car').value;
   var b=document.getElementById('btn-start');
-  if(n&&a&&pickedArea&&getCarrera())b.classList.add('ready');else b.classList.remove('ready');
+  if(n&&c)b.classList.add('ready');else b.classList.remove('ready');
 }
 function startExam(){
-  stu.n=document.getElementById('inp-n').value.trim();
-  stu.a=document.getElementById('inp-a').value.trim();
-  stu.area=pickedArea;stu.carrera=getCarrera();
+  var n=document.getElementById('inp-n').value.trim();
+  var c=document.getElementById('sel-car').value;
+  if(!n||!c)return;
+  stu.n=n;stu.carrera=c;stu.area=AREA_DE[c]||'Otra';
+  registrarIngreso();
   idx=0;ans=[];transitioning=false;
   sw('screen-exam');renderQ();
+}
+/* Registro de ingreso en tiempo real: guarda nombre y carrera en Sheets
+   apenas el alumno pulsa COMENZAR (no bloquea el inicio del examen) */
+function registrarIngreso(){
+  var url=APPS_SCRIPT_URL+'?ingreso=1&alumno='+encodeURIComponent(stu.n)+'&carrera='+encodeURIComponent(stu.carrera)+'&area='+encodeURIComponent(stu.area)+'&dispositivo='+encodeURIComponent(/Mobi|Android/i.test(navigator.userAgent)?'móvil':'escritorio');
+  try{fetch(url).catch(function(){});}catch(e){}
 }
 function sw(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 
@@ -625,7 +525,7 @@ function sw(id){document.querySelectorAll('.screen').forEach(function(s){s.class
 function renderQ(){
   done=false;tLeft=TSEC;transitioning=false;
   var q=QS[idx];var pct=Math.round((idx/TOTAL)*100);
-  document.getElementById('bar-st').innerHTML='<strong>'+esc(stu.n)+' '+esc(stu.a)+'</strong> · '+esc(stu.carrera);
+  document.getElementById('bar-st').innerHTML='<strong>'+esc(stu.n)+'</strong> · '+esc(stu.carrera);
   document.getElementById('bar-ctr').textContent=(idx+1)+'/'+TOTAL;
   document.getElementById('bar-fill').style.width=pct+'%';
   document.getElementById('bar-pct').textContent=pct+'%';
@@ -731,7 +631,7 @@ function showResults(){
   var record={
     fecha:new Date().toISOString(),
     fechaLocal:new Date().toLocaleString('es-PE'),
-    nombre:stu.n,apellido:stu.a,area:stu.area,carrera:stu.carrera,
+    nombre:stu.n,apellido:'',area:stu.area,carrera:stu.carrera,
     curso:'Física',
     puntaje:pct,correctas:ok,incorrectas:err-to,sinTiempo:to,total:TOTAL,
     nivel:rank.label,colorFila:rank.sheetColor,
@@ -742,7 +642,7 @@ function showResults(){
   };
   sendToSheets(record);
 
-  document.getElementById('r-st').innerHTML='<strong>'+esc(stu.n)+' '+esc(stu.a)+'</strong> · '+esc(stu.carrera)+' · '+esc(stu.area);
+  document.getElementById('r-st').innerHTML='<strong>'+esc(stu.n)+'</strong> · '+esc(stu.carrera);
   document.getElementById('rank-hero-slot').innerHTML=
     '<div class="rank-hero '+rank.cls+'"><div class="rank-inner"><div class="rank-badge-box"><span class="rank-badge-pct">'+pct+'</span><span class="rank-badge-label">pts</span></div><div class="rank-info"><div class="rank-label">'+rank.icon+' Nivel '+rank.label+'</div><div class="rank-title">'+rank.title+'</div><div class="rank-sub">'+rank.sub+'</div></div></div></div>';
   var sc=document.getElementById('r-score');sc.textContent=pct;sc.className='big-score '+rank.scoreCls;
@@ -750,13 +650,14 @@ function showResults(){
   var bar=document.getElementById('r-bar');bar.style.background=rank.barColor;
   setTimeout(function(){bar.style.width=pct+'%';},300);
 
+  var fn=stu.n.split(' ')[0];
   var msgs=[
-    [95,stu.n+', llegaste al nivel más alto. Eso no pasa por suerte, pasa porque te preparaste de verdad. Ya estás listo para el ingreso a UNSA.'],
-    [85,stu.n+', tus bases son muy sólidas. Se nota el trabajo que pusiste. Un repaso más a los temas flojos y el ingreso es tuyo.'],
-    [70,stu.n+', estás por encima del promedio, eso ya dice mucho. Mira qué temas fallaste, trabaja eso puntual y vas a subir bastante.'],
-    [50,stu.n+', vas avanzando y eso se nota. Cada vez que practicas estás cerrando la brecha. Sigue así, los resultados van a llegar.'],
-    [30,stu.n+', todavía hay camino por recorrer pero estás en movimiento. Enfócate en los temas con menos aciertos y vuelve pronto.'],
-    [0, stu.n+', este es solo tu primer intento. No te desanimes, todos empezamos desde cero. Estudia un poco cada día y regresa, vas a sorprenderte.']
+    [95,fn+', llegaste al nivel más alto. Eso no pasa por suerte, pasa porque te preparaste de verdad. Ya estás listo para el ingreso a UNSA.'],
+    [85,fn+', tus bases son muy sólidas. Se nota el trabajo que pusiste. Un repaso más a los temas flojos y el ingreso es tuyo.'],
+    [70,fn+', estás por encima del promedio, eso ya dice mucho. Mira qué temas fallaste, trabaja eso puntual y vas a subir bastante.'],
+    [50,fn+', vas avanzando y eso se nota. Cada vez que practicas estás cerrando la brecha. Sigue así, los resultados van a llegar.'],
+    [30,fn+', todavía hay camino por recorrer pero estás en movimiento. Enfócate en los temas con menos aciertos y vuelve pronto.'],
+    [0, fn+', este es solo tu primer intento. No te desanimes, todos empezamos desde cero. Estudia un poco cada día y regresa, vas a sorprenderte.']
   ];
   document.getElementById('r-msg').textContent=msgs.find(function(m){return pct>=m[0];})[1];
   document.getElementById('r-ok').textContent=ok;
@@ -808,14 +709,11 @@ function buildReview(){
 }
 
 function retry(){
-  clearInterval(tmr);idx=0;ans=[];transitioning=false;stu={n:'',a:'',area:'',carrera:''};
+  clearInterval(tmr);idx=0;ans=[];transitioning=false;stu={n:'',carrera:'',area:''};
   sw('screen-register');
-  document.getElementById('inp-n').value='';document.getElementById('inp-a').value='';
-  document.getElementById('inp-car-otra').value='';
-  document.getElementById('field-car-otra').classList.add('hidden');
-  var sel=document.getElementById('sel-car');sel.innerHTML='<option value="">Elige primero tu área…</option>';sel.disabled=true;
-  document.querySelectorAll('.area-card').forEach(function(c){c.classList.remove('selected');c.setAttribute('aria-checked','false');});
-  pickedArea='';document.getElementById('btn-start').classList.remove('ready');
+  document.getElementById('inp-n').value='';
+  document.getElementById('sel-car').value='';
+  document.getElementById('btn-start').classList.remove('ready');
 }
 
 /* ---------- GOOGLE SHEETS ---------- */

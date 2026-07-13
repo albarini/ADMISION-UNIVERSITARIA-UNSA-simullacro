@@ -18,7 +18,9 @@
  *  cambios no se aplican.
  *
  * QUÉ CREA AUTOMÁTICAMENTE:
- *  - Hoja "Resultados":   una fila por examen, coloreada por nivel.
+ *  - Hoja "Ingresos":     una fila cada vez que un alumno pulsa COMENZAR
+ *    (monitoreo en tiempo real de quién entra al examen).
+ *  - Hoja "Resultados":   una fila por examen terminado, coloreada por nivel.
  *  - Hoja "DetalleTemas": una fila por tema y por examen (para análisis).
  *  - Hoja "Resumen":      estadísticas automáticas — promedio general,
  *    ranking de temas más débiles, rendimiento por área y por carrera.
@@ -30,12 +32,18 @@ var SPREADSHEET_ID = '1woitAAesn5TJr6pp2f1MNobx2r3ACo-Jl60kyp25iac';
 
 var HEADERS_RESULTADOS = ['Fecha','Nombre','Apellido','Área','Carrera','Curso','Puntaje','Nivel','Correctas','Incorrectas','Sin tiempo','Total','Seg/pregunta','Mejor racha','Mejor tema','Peor tema','Dispositivo'];
 var HEADERS_DETALLE    = ['Fecha','Nombre','Apellido','Área','Carrera','Tema','Correctas','Preguntas','Precisión'];
+var HEADERS_INGRESOS   = ['Fecha','Nombre','Carrera','Área','Dispositivo'];
+
+function fechaLima() {
+  return Utilities.formatDate(new Date(), 'America/Lima', 'dd/MM/yyyy HH:mm:ss');
+}
 
 /* Recibe los resultados del index.html nuevo (POST con JSON) */
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
-    guardarResultado(data);
+    if (data.tipo === 'ingreso') guardarIngreso(data);
+    else guardarResultado(data);
     return respuestaJSON({ ok: true });
   } catch (err) {
     return respuestaJSON({ ok: false, error: String(err) });
@@ -47,9 +55,13 @@ function doGet(e) {
   try {
     var p = (e && e.parameter) || {};
     if (p.ping) return respuestaJSON({ ok: true, ping: 'pong' });
+    if (p.ingreso) {
+      guardarIngreso({ nombre: p.alumno || '', carrera: p.carrera || '', area: p.area || '', dispositivo: p.dispositivo || '' });
+      return respuestaJSON({ ok: true, tipo: 'ingreso' });
+    }
     if (!p.nombre) return respuestaJSON({ ok: false, error: 'sin datos' });
     guardarResultado({
-      fechaLocal: p.fecha || new Date().toLocaleString('es-PE'),
+      fechaLocal: p.fecha || fechaLima(),
       nombre: p.nombre, apellido: p.apellido || '', area: p.area || '',
       carrera: p.carrera || '', curso: p.curso || 'Física',
       puntaje: Number(p.puntaje) || 0, nivel: p.nivel || '',
@@ -68,6 +80,19 @@ function respuestaJSON(obj) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+/* Registra el INGRESO del alumno (cuando pulsa COMENZAR) */
+function guardarIngreso(d) {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var hoja = obtenerHoja(ss, 'Ingresos', HEADERS_INGRESOS);
+    hoja.appendRow([fechaLima(), d.nombre || '', d.carrera || '', d.area || '', d.dispositivo || '']);
+  } finally {
+    lock.releaseLock();
+  }
+}
+
 function guardarResultado(data) {
   var lock = LockService.getScriptLock();
   lock.waitLock(10000); // evita filas mezcladas si dos alumnos terminan a la vez
@@ -77,7 +102,7 @@ function guardarResultado(data) {
     // ---- Hoja Resultados ----
     var hoja = obtenerHoja(ss, 'Resultados', HEADERS_RESULTADOS);
     var fila = [
-      data.fechaLocal || new Date().toLocaleString('es-PE'),
+      data.fechaLocal || fechaLima(),
       data.nombre || '', data.apellido || '', data.area || '', data.carrera || '',
       data.curso || 'Física',
       Number(data.puntaje) || 0, data.nivel || '',
@@ -143,6 +168,8 @@ function crearResumenSiFalta(ss) {
   h.getRange('B5').setFormula('=IFERROR(MAX(Resultados!G2:G),0)');
   h.getRange('A6').setValue('Estudiantes únicos (aprox.):');
   h.getRange('B6').setFormula('=IFERROR(COUNTA(UNIQUE(FILTER(Resultados!B2:B&" "&Resultados!C2:C,Resultados!B2:B<>""))),0)');
+  h.getRange('A7').setValue('Ingresos registrados (pulsaron COMENZAR):');
+  h.getRange('B7').setFormula('=IFERROR(COUNTA(Ingresos!B2:B),0)');
 
   h.getRange('A8').setValue('🔻 TEMAS MÁS DÉBILES (donde más hay que reforzar)').setFontWeight('bold');
   h.getRange('A9').setFormula('=IFERROR(QUERY(DetalleTemas!A2:I,"select F, sum(G), sum(H), round(sum(G)/sum(H)*100,1) where F is not null group by F order by sum(G)/sum(H) asc label F \'Tema\', sum(G) \'Correctas\', sum(H) \'Preguntas\', round(sum(G)/sum(H)*100,1) \'% acierto\'",0),"Aún no hay datos")');
