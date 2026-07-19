@@ -30,9 +30,9 @@
    funciona aunque el proyecto de Apps Script no esté vinculado a la hoja. */
 var SPREADSHEET_ID = '1woitAAesn5TJr6pp2f1MNobx2r3ACo-Jl60kyp25iac';
 
-var HEADERS_RESULTADOS = ['Fecha','Nombre','Apellido','Área','Carrera','Curso','Puntaje','Nivel','Correctas','Incorrectas','Sin tiempo','Total','Seg/pregunta','Mejor racha','Mejor tema','Peor tema','Dispositivo'];
-var HEADERS_DETALLE    = ['Fecha','Nombre','Apellido','Área','Carrera','Tema','Correctas','Preguntas','Precisión'];
-var HEADERS_INGRESOS   = ['Fecha','Nombre','Carrera','Área','Dispositivo'];
+var HEADERS_RESULTADOS = ['Fecha','Nombre','Apellido','Área','Carrera','Curso','Puntaje','Nivel','Correctas','Incorrectas','Sin tiempo','Total','Seg/pregunta','Mejor racha','Mejor tema','Peor tema','Dispositivo','Modo'];
+var HEADERS_DETALLE    = ['Fecha','Nombre','Apellido','Área','Carrera','Tema','Correctas','Preguntas','Precisión','Curso'];
+var HEADERS_INGRESOS   = ['Fecha','Nombre','Carrera','Área','Dispositivo','Curso'];
 
 function fechaLima() {
   return Utilities.formatDate(new Date(), 'America/Lima', 'dd/MM/yyyy HH:mm:ss');
@@ -56,7 +56,7 @@ function doGet(e) {
     var p = (e && e.parameter) || {};
     if (p.ping) return respuestaJSON({ ok: true, ping: 'pong' });
     if (p.ingreso) {
-      guardarIngreso({ nombre: p.alumno || '', carrera: p.carrera || '', area: p.area || '', dispositivo: p.dispositivo || '' });
+      guardarIngreso({ nombre: p.alumno || '', carrera: p.carrera || '', area: p.area || '', dispositivo: p.dispositivo || '', curso: p.curso || '' });
       return respuestaJSON({ ok: true, tipo: 'ingreso' });
     }
     if (!p.nombre) return respuestaJSON({ ok: false, error: 'sin datos' });
@@ -87,7 +87,7 @@ function guardarIngreso(d) {
   try {
     var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
     var hoja = obtenerHoja(ss, 'Ingresos', HEADERS_INGRESOS);
-    hoja.appendRow([fechaLima(), d.nombre || '', d.carrera || '', d.area || '', d.dispositivo || '']);
+    hoja.appendRow([fechaLima(), d.nombre || '', d.carrera || '', d.area || '', d.dispositivo || '', d.curso || '']);
   } finally {
     lock.releaseLock();
   }
@@ -109,7 +109,8 @@ function guardarResultado(data) {
       Number(data.correctas) || 0, Number(data.incorrectas) || 0,
       Number(data.sinTiempo) || 0, Number(data.total) || 0,
       Number(data.tiempoMedio) || '', Number(data.mejorRacha) || '',
-      data.mejorTema || '', data.peorTema || '', data.dispositivo || ''
+      data.mejorTema || '', data.peorTema || '', data.dispositivo || '',
+      data.modo || 'Miscelánea'
     ];
     hoja.appendRow(fila);
     var r = hoja.getLastRow();
@@ -131,7 +132,8 @@ function guardarResultado(data) {
           data.fechaLocal || '', data.nombre || '', data.apellido || '',
           data.area || '', data.carrera || '',
           t.tema, Number(t.ok) || 0, Number(t.tot) || 0,
-          t.tot ? Math.round((t.ok / t.tot) * 100) / 100 : 0
+          t.tot ? Math.round((t.ok / t.tot) * 100) / 100 : 0,
+          data.curso || ''
         ];
       });
       det.getRange(det.getLastRow() + 1, 1, filas.length, HEADERS_DETALLE.length).setValues(filas);
@@ -151,6 +153,11 @@ function obtenerHoja(ss, nombre, headers) {
     hoja.getRange(1, 1, 1, headers.length).setValues([headers])
         .setFontWeight('bold').setBackground('#13131B').setFontColor('#DDB85C');
     hoja.setFrozenRows(1);
+  } else if (hoja.getLastColumn() < headers.length) {
+    // Migración suave: si se agregaron columnas nuevas (siempre al final),
+    // se reescribe la fila de encabezados sin tocar los datos existentes.
+    hoja.getRange(1, 1, 1, headers.length).setValues([headers])
+        .setFontWeight('bold').setBackground('#13131B').setFontColor('#DDB85C');
   }
   return hoja;
 }
@@ -171,14 +178,17 @@ function crearResumenSiFalta(ss) {
   h.getRange('A7').setValue('Ingresos registrados (pulsaron COMENZAR):');
   h.getRange('B7').setFormula('=IFERROR(COUNTA(Ingresos!B2:B),0)');
 
-  h.getRange('A8').setValue('🔻 TEMAS MÁS DÉBILES (donde más hay que reforzar)').setFontWeight('bold');
-  h.getRange('A9').setFormula('=IFERROR(QUERY(DetalleTemas!A2:I,"select F, sum(G), sum(H), round(sum(G)/sum(H)*100,1) where F is not null group by F order by sum(G)/sum(H) asc label F \'Tema\', sum(G) \'Correctas\', sum(H) \'Preguntas\', round(sum(G)/sum(H)*100,1) \'% acierto\'",0),"Aún no hay datos")');
+  h.getRange('A8').setValue('🔻 TEMAS MÁS DÉBILES POR CURSO (donde más hay que reforzar)').setFontWeight('bold');
+  h.getRange('A9').setFormula('=IFERROR(QUERY(DetalleTemas!A2:J,"select J, F, sum(G), sum(H), round(sum(G)/sum(H)*100,1) where F is not null group by J, F order by J, sum(G)/sum(H) asc label J \'Curso\', F \'Tema\', sum(G) \'Correctas\', sum(H) \'Preguntas\', round(sum(G)/sum(H)*100,1) \'% acierto\'",0),"Aún no hay datos")');
 
-  h.getRange('F8').setValue('🏛 RENDIMIENTO POR ÁREA').setFontWeight('bold');
-  h.getRange('F9').setFormula('=IFERROR(QUERY(Resultados!A2:Q,"select D, count(D), round(avg(G),1) where D is not null group by D label D \'Área\', count(D) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
+  h.getRange('F8').setValue('📚 RENDIMIENTO POR CURSO').setFontWeight('bold');
+  h.getRange('F9').setFormula('=IFERROR(QUERY(Resultados!A2:R,"select F, count(F), round(avg(G),1) where F is not null group by F label F \'Curso\', count(F) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
 
-  h.getRange('F15').setValue('🎓 RENDIMIENTO POR CARRERA').setFontWeight('bold');
-  h.getRange('F16').setFormula('=IFERROR(QUERY(Resultados!A2:Q,"select E, count(E), round(avg(G),1) where E is not null group by E order by count(E) desc label E \'Carrera\', count(E) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
+  h.getRange('F14').setValue('🏛 RENDIMIENTO POR ÁREA').setFontWeight('bold');
+  h.getRange('F15').setFormula('=IFERROR(QUERY(Resultados!A2:R,"select D, count(D), round(avg(G),1) where D is not null group by D label D \'Área\', count(D) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
+
+  h.getRange('F20').setValue('🎓 RENDIMIENTO POR CARRERA').setFontWeight('bold');
+  h.getRange('F21').setFormula('=IFERROR(QUERY(Resultados!A2:R,"select E, count(E), round(avg(G),1) where E is not null group by E order by count(E) desc label E \'Carrera\', count(E) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
 
   h.getRange('A1:K1').merge();
   h.setColumnWidths(1, 11, 140);

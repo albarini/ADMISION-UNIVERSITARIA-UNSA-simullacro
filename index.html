@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Física — Simulacro UNSA</title>
+<title>Simulacro UNSA — Admisión Arequipa</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
@@ -70,6 +70,19 @@ h1,h2,h3{text-wrap:balance;}
 .btn-start.ready{opacity:1;pointer-events:all;border-color:var(--gold-dark);color:var(--gold2);animation:goldPulse 3s ease infinite;}
 .btn-start.ready::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--lux-line);}
 .btn-start.ready:active{background:var(--gold);color:var(--obsidian);animation:none;}
+
+.seg{display:flex;border:1px solid var(--border3);border-radius:2px;overflow:hidden;margin-top:.45rem;}
+.seg button{flex:1;padding:.7rem .2rem;background:transparent;border:none;border-right:1px solid var(--border2);color:var(--muted);font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s;}
+.seg button:last-child{border-right:none;}
+.seg button.on{background:rgba(196,160,68,.12);color:var(--gold3);}
+@media(hover:hover){.seg button:not(.on):hover{color:var(--champagne);}}
+.q-diff{margin-left:auto;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .55rem;border-radius:2px;border:1px solid;white-space:nowrap;}
+.dif1{color:var(--emerald4);border-color:rgba(16,160,112,.25);background:rgba(16,160,112,.05);}
+.dif2{color:var(--gold2);border-color:rgba(196,160,68,.25);background:rgba(196,160,68,.05);}
+.dif3{color:var(--ruby-text);border-color:rgba(168,30,60,.3);background:rgba(122,20,40,.05);}
+.s-fire{font-family:'DM Mono',monospace;font-size:.78rem;color:var(--gold3);}
+.r-diff{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-bottom:1.1rem;}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:300;}
 
 /* ============ EXAM ============ */
 #screen-exam.active{padding-bottom:6.5rem;background:var(--obsidian);min-height:100vh;}
@@ -316,18 +329,18 @@ h1,h2,h3{text-wrap:balance;}
     <div class="reg-topbar-in">
       <span class="brand">
         <span class="brand-word">Simulacro <em>UNSA</em></span>
-        <span class="brand-sub">Física — Admisión 2026</span>
+        <span class="brand-sub">Admisión 2026 · Arequipa</span>
       </span>
     </div>
   </header>
   <main class="reg-main">
-    <h1 class="reg-h1"><em>Examen</em><span>de Física</span></h1>
+    <h1 class="reg-h1"><em>Simulacro</em><span>de Admisión</span></h1>
     <div class="reg-rule" aria-hidden="true"></div>
-    <p class="reg-sub">Corrección instantánea, resolución fundamentada<br>y ranking por niveles de mérito.</p>
+    <p class="reg-sub">Física, Razonamiento Matemático y Química.<br>Corrección instantánea con resolución fundamentada.</p>
     <div class="reg-stats" aria-label="Datos del examen">
-      <span><strong>40</strong>preguntas</span><i aria-hidden="true"></i>
-      <span><strong>100</strong>puntos</span><i aria-hidden="true"></i>
-      <span><strong>40 s</strong>por pregunta</span>
+      <span><strong>100</strong>preguntas</span><i aria-hidden="true"></i>
+      <span><strong>3</strong>cursos</span><i aria-hidden="true"></i>
+      <span><strong>100</strong>puntos</span>
     </div>
     <form class="reg-form" onsubmit="event.preventDefault();startExam();">
       <div class="field">
@@ -340,6 +353,26 @@ h1,h2,h3{text-wrap:balance;}
           <select id="sel-car" onchange="chk()">
             <option value="">Selecciona tu carrera</option>
           </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="sel-curso">Curso</label>
+        <div class="select-wrap">
+          <select id="sel-curso" onchange="chk()">
+            <option value="">Selecciona el curso</option>
+            <option>Física</option>
+            <option>Razonamiento Matemático</option>
+            <option>Química</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label id="lbl-nivel">Nivel del examen</label>
+        <div class="seg" id="seg-nivel" role="radiogroup" aria-labelledby="lbl-nivel">
+          <button type="button" class="on" onclick="selNivel('Miscelánea',this)">Miscelánea</button>
+          <button type="button" onclick="selNivel('Básico',this)">Básico</button>
+          <button type="button" onclick="selNivel('Intermedio',this)">Intermedio</button>
+          <button type="button" onclick="selNivel('Avanzado',this)">Avanzado</button>
         </div>
       </div>
       <button type="submit" class="btn-start" id="btn-start">Comenzar</button>
@@ -355,7 +388,7 @@ h1,h2,h3{text-wrap:balance;}
     <div class="shell top-in">
       <div class="bar-r1">
         <div class="bar-name" id="bar-st">—</div>
-        <div class="bar-scores"><span class="s-ok" id="bar-ok">0 ✓</span><span class="s-err" id="bar-err">0 ✗</span></div>
+        <div class="bar-scores"><span class="s-fire" id="bar-fire"></span><span class="s-ok" id="bar-ok">0 ✓</span><span class="s-err" id="bar-err">0 ✗</span></div>
       </div>
       <div class="bar-r2">
         <span class="bar-qnum" id="bar-ctr">1/40</span>
@@ -387,7 +420,7 @@ h1,h2,h3{text-wrap:balance;}
       </div>
       <span class="brand" style="align-items:flex-end">
         <span class="brand-word" style="font-size:.8rem">Simulacro <em>UNSA</em></span>
-        <span class="brand-sub">Física</span>
+        <span class="brand-sub" id="r-curso">—</span>
       </span>
     </div>
   </div>
@@ -412,6 +445,7 @@ h1,h2,h3{text-wrap:balance;}
     </div>
     <div class="r-highlights" id="r-highlights"></div>
     <div class="r-types" id="r-types"></div>
+    <div class="r-diff" id="r-diff"></div>
     <div class="r-breakdown-box">
       <div class="r-breakdown-title">Rendimiento por tema</div>
       <div id="r-bk"></div>
@@ -468,7 +502,7 @@ function renderMath(el){
   try{renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false,errorColor:'#ef4444',strict:false});}catch(e){}}d();
 }
 
-var QS=[
+var QS_FIS=[
   {n:1,t:"T",tm:"Análisis Vectorial",p:"¿Qué diferencia una magnitud vectorial de una escalar?",o:["El vector tiene módulo, dirección y sentido; el escalar solo tiene módulo","El escalar tiene dirección y el vector no","Ambos se representan igual con flechas","El escalar siempre vale más que el vector"],a:0,tip:"Una magnitud escalar queda definida solo con su valor (masa, tiempo, temperatura). La vectorial necesita además dirección y sentido (fuerza, velocidad, aceleración); por eso se representa con una flecha."},
   {n:2,t:"F",tm:"Análisis Vectorial",p:"El módulo de un vector con componentes $A_x$ y $A_y$ es:",o:["$|\\vec{A}| = A_x + A_y$","$|\\vec{A}| = \\sqrt{A_x^2 + A_y^2}$","$|\\vec{A}| = A_x \\cdot A_y$","$|\\vec{A}| = A_x^2 + A_y^2$"],a:1,tip:"Las componentes forman un triángulo rectángulo, así que se aplica Pitágoras. Ejemplo: Ax=3 y Ay=4 → |A|=√(9+16)=√25=5. Memoriza los tríos 3-4-5 y 5-12-13: aparecen siempre."},
   {n:3,t:"F",tm:"Análisis Vectorial",p:"Un vector $\\vec{A}$ forma ángulo $\\theta$ con el eje horizontal. Su componente horizontal es:",o:["$A_x = |\\vec{A}|\\sin\\theta$","$A_x = |\\vec{A}|\\tan\\theta$","$A_x = |\\vec{A}|\\cos\\theta$","$A_x = \\dfrac{|\\vec{A}|}{\\cos\\theta}$"],a:2,tip:"La componente pegada al ángulo (adyacente) usa coseno: Ax = |A|·cosθ; la opuesta usa seno: Ay = |A|·senθ. Regla fija: horizontal → coseno, vertical → seno."},
@@ -511,33 +545,129 @@ var QS=[
   {n:40,t:"C",tm:"Potencia Mecánica",p:"Motor aplica 500 N a 20 m/s. ¿Potencia?",o:["25 W","500 W","2 500 W","10 000 W"],a:3,tip:"P = F·v = 500 × 20 = 10 000 W = 10 kW."}
 ];
 
-var TSEC=40,TOTAL=QS.length;
-var stu={n:'',carrera:'',area:''};
+/* Dificultad de cada pregunta de Física (1 básico, 2 intermedio, 3 avanzado) */
+var DIF_FIS={1:1,2:2,3:2,4:1,5:1,6:1,7:1,8:1,9:2,10:2,11:3,12:1,13:2,14:2,15:1,16:3,17:2,18:2,19:3,20:2,21:2,22:2,23:1,24:1,25:1,26:2,27:2,28:1,29:2,30:2,31:3,32:2,33:2,34:3,35:2,36:1,37:3,38:2,39:1,40:3};
+QS_FIS.forEach(function(q){q.d=DIF_FIS[q.n];});
+
+/* ===== RAZONAMIENTO MATEMÁTICO — estilo examen de admisión UNSA ===== */
+var QS_RM=[
+  {n:1,t:"C",tm:"Sucesiones",d:1,p:"¿Qué número sigue en la sucesión: 2; 5; 10; 17; 26; …?",o:["35","36","37","39"],a:2,tip:"Las diferencias crecen de 2 en 2: +3, +5, +7, +9… la siguiente es +11 → 26 + 11 = 37."},
+  {n:2,t:"C",tm:"Sucesiones",d:2,p:"¿Qué letra sigue: A; C; F; J; Ñ; …? (considera la Ñ)",o:["R","S","T","U"],a:2,tip:"Se saltan 1, 2, 3, 4 y luego 5 letras. Después de la Ñ se saltan O, P, Q, R, S y se llega a la T."},
+  {n:3,t:"F",tm:"Series",d:1,p:"Calcula: S = 1 + 2 + 3 + … + 20",o:["190","200","210","220"],a:2,tip:"Suma de los n primeros naturales: n(n+1)/2 = 20 × 21 / 2 = 210."},
+  {n:4,t:"F",tm:"Series",d:1,p:"Calcula: S = 2 + 4 + 6 + … + 40",o:["380","400","420","440"],a:2,tip:"Son los 20 primeros pares: S = 2(1+2+…+20) = 2 × 210 = 420. Directo: n(n+1) = 20 × 21."},
+  {n:5,t:"C",tm:"Operadores Matemáticos",d:2,p:"Si a ▲ b = a² − b, halla 5 ▲ (3 ▲ 2)",o:["16","17","18","20"],a:2,tip:"De adentro hacia afuera: 3▲2 = 9 − 2 = 7; luego 5▲7 = 25 − 7 = 18."},
+  {n:6,t:"C",tm:"Operadores Matemáticos",d:3,p:"Se define x ∗ y = 3x − 2y. Si a ∗ 5 = 14, el valor de a es:",o:["6","7","8","9"],a:2,tip:"3a − 2(5) = 14 → 3a = 24 → a = 8."},
+  {n:7,t:"C",tm:"Edades",d:2,p:"Hace 5 años mi edad era la mitad de la que tendré dentro de 7 años. ¿Cuántos años tengo?",o:["15","16","17","19"],a:2,tip:"x − 5 = (x + 7)/2 → 2x − 10 = x + 7 → x = 17 años."},
+  {n:8,t:"C",tm:"Edades",d:3,p:"La edad de un padre es el triple de la de su hijo. Dentro de 12 años será solo el doble. ¿Qué edad tiene el hijo?",o:["10","12","14","16"],a:1,tip:"Padre = 3h. Dentro de 12 años: 3h + 12 = 2(h + 12) → h = 12 años. El padre tiene 36."},
+  {n:9,t:"C",tm:"Planteo de Ecuaciones",d:1,p:"El doble de un número, aumentado en 15, resulta 43. El número es:",o:["12","13","14","15"],a:2,tip:"2x + 15 = 43 → 2x = 28 → x = 14."},
+  {n:10,t:"C",tm:"Planteo de Ecuaciones",d:2,p:"En una granja hay gallinas y conejos: 20 cabezas y 56 patas. ¿Cuántos conejos hay?",o:["6","7","8","10"],a:2,tip:"Con c conejos: 4c + 2(20 − c) = 56 → 2c = 16 → c = 8. Comprobación: 8×4 + 12×2 = 56 patas."},
+  {n:11,t:"C",tm:"Porcentajes",d:1,p:"El 20% de 350 es:",o:["60","65","70","75"],a:2,tip:"20% = 1/5, y 350 ÷ 5 = 70."},
+  {n:12,t:"C",tm:"Porcentajes",d:2,p:"Un precio sube 20% y luego baja 20%. Respecto al inicio, el precio final:",o:["Queda igual","Baja 4%","Sube 4%","Baja 2%"],a:1,tip:"1.20 × 0.80 = 0.96 → queda al 96%: bajó 4%. Subida y bajada del mismo porcentaje no se cancelan."},
+  {n:13,t:"C",tm:"Porcentajes",d:2,p:"¿De qué número es 45 el 30%?",o:["135","140","150","160"],a:2,tip:"0.30·x = 45 → x = 45 ÷ 0.3 = 150."},
+  {n:14,t:"C",tm:"Fracciones",d:1,p:"Los 3/4 de los 2/5 de 200 es:",o:["50","55","60","65"],a:2,tip:"2/5 de 200 = 80; 3/4 de 80 = 60. La palabra «de» indica multiplicación."},
+  {n:15,t:"C",tm:"Fracciones",d:2,p:"Un caño llena un tanque en 6 h y otro en 3 h. Trabajando juntos lo llenan en:",o:["2 h","2.5 h","3 h","4.5 h"],a:0,tip:"En 1 hora llenan 1/6 + 1/3 = 1/2 del tanque → tardan 2 horas."},
+  {n:16,t:"C",tm:"Móviles",d:2,p:"Dos móviles separados 300 km parten al encuentro a 40 y 60 km/h. ¿En cuánto tiempo se cruzan?",o:["2 h","3 h","4 h","5 h"],a:1,tip:"Al ir al encuentro las velocidades se suman: t = 300 / (40+60) = 3 h."},
+  {n:17,t:"C",tm:"Móviles",d:3,p:"Un auto parte a 40 km/h. Dos horas después sale otro a 60 km/h a alcanzarlo. ¿En cuántas horas lo alcanza?",o:["3 h","4 h","5 h","6 h"],a:1,tip:"Ventaja: 40 × 2 = 80 km. Se recorta a 60 − 40 = 20 km/h → t = 80/20 = 4 h."},
+  {n:18,t:"F",tm:"Cronometría",d:1,p:"¿Qué ángulo forman las agujas del reloj a las 4:00 en punto?",o:["100°","110°","120°","130°"],a:2,tip:"Cada hora de la esfera equivale a 30°. A las 4:00: 4 × 30° = 120°."},
+  {n:19,t:"C",tm:"Cronometría",d:3,p:"Un reloj se adelanta 3 minutos cada hora. Si empezó bien a las 0:00, cuando sean las 8:00 reales marcará:",o:["8:18","8:20","8:24","8:30"],a:2,tip:"Adelanto acumulado: 3 × 8 = 24 min → marcará las 8:24."},
+  {n:20,t:"C",tm:"Conteo de Figuras",d:2,p:"Sobre una recta se marcan 5 puntos. ¿Cuántos segmentos quedan determinados?",o:["8","9","10","12"],a:2,tip:"Cada par de puntos define un segmento: C(5,2) = 5×4/2 = 10."},
+  {n:21,t:"C",tm:"Conteo de Figuras",d:3,p:"¿Cuántos cuadriláteros hay en total en una fila de 5 rectángulos contiguos?",o:["12","15","18","20"],a:1,tip:"La fila tiene 6 líneas verticales; cada par de ellas forma un cuadrilátero: C(6,2) = 15."},
+  {n:22,t:"F",tm:"Análisis Combinatorio",d:1,p:"¿De cuántas maneras distintas se pueden ordenar 4 libros en un estante?",o:["12","16","24","32"],a:2,tip:"Permutación de 4 elementos: 4! = 4×3×2×1 = 24."},
+  {n:23,t:"F",tm:"Análisis Combinatorio",d:3,p:"¿Cuántos comités de 2 personas pueden formarse con un grupo de 6?",o:["12","15","30","36"],a:1,tip:"El orden no importa: C(6,2) = 6×5/2 = 15. Si el orden importara serían 30."},
+  {n:24,t:"T",tm:"Razonamiento Lógico",d:1,p:"Todos los físicos son científicos. ¿Qué se concluye con certeza?",o:["Algunos científicos no son físicos","Todo científico es físico","Ningún físico es profesor","Todo físico es científico"],a:3,tip:"Solo puede afirmarse lo que la premisa garantiza. Las otras opciones agregan información que no se deduce."},
+  {n:25,t:"T",tm:"Orden de Información",d:2,p:"En una carrera: A llegó antes que B, C llegó después de B y D llegó entre A y B. ¿Quién llegó último?",o:["A","B","C","D"],a:2,tip:"El orden de llegada queda: A, D, B, C → el último es C."},
+  {n:26,t:"T",tm:"Orden de Información",d:3,p:"En un edificio de 4 pisos: Ana vive en el 1.º, Pedro vive más abajo que Juan y María más arriba que Juan. ¿Quién vive en el 4.º piso?",o:["Ana","Pedro","Juan","María"],a:3,tip:"Ana ocupa el 1.º; para cumplir Pedro < Juan < María: Pedro 2.º, Juan 3.º y María 4.º."},
+  {n:27,t:"C",tm:"Sucesiones",d:3,p:"¿Qué número sigue: 3; 4; 8; 9; 18; 19; …?",o:["36","37","38","40"],a:2,tip:"Alterna +1 y ×2: 3→4 (+1), 4→8 (×2), 8→9 (+1), 9→18 (×2), 18→19 (+1) → 19 × 2 = 38."},
+  {n:28,t:"C",tm:"Razones y Proporciones",d:1,p:"Dos números están en razón de 3 a 5 y suman 64. El mayor es:",o:["36","38","40","45"],a:2,tip:"3k + 5k = 64 → k = 8. El mayor: 5k = 40."},
+  {n:29,t:"C",tm:"Promedios",d:2,p:"El promedio de 4 notas es 14. Al agregar una quinta nota el promedio sube a 15. La quinta nota es:",o:["17","18","19","20"],a:2,tip:"Nota = suma nueva − suma anterior = 5×15 − 4×14 = 75 − 56 = 19."},
+  {n:30,t:"T",tm:"Certezas",d:3,p:"Una urna tiene 6 bolas rojas, 4 azules y 5 verdes. ¿Cuántas se deben extraer al azar, como mínimo, para tener con certeza 3 del mismo color?",o:["6","7","8","9"],a:1,tip:"Peor caso: 2 de cada color = 6 bolas sin lograrlo. Una extracción más obliga a completar 3 de algún color → 7."}
+];
+
+/* ===== QUÍMICA — por temas, estilo examen de admisión UNSA ===== */
+var QS_QUIM=[
+  {n:1,t:"T",tm:"Materia",d:1,p:"El paso directo de sólido a gas se llama:",o:["Fusión","Evaporación","Sublimación","Condensación"],a:2,tip:"Sublimación: sólido → gas sin pasar por líquido (hielo seco, naftalina). El proceso inverso es la deposición."},
+  {n:2,t:"T",tm:"Materia",d:1,p:"¿Cuál es una mezcla homogénea?",o:["Agua con aceite","El aire","El granito","Una ensalada"],a:1,tip:"En la mezcla homogénea no se distinguen los componentes: el aire es una sola fase (N₂, O₂, Ar…). Las demás son heterogéneas."},
+  {n:3,t:"T",tm:"Materia",d:2,p:"¿Cuál es una propiedad intensiva de la materia?",o:["La masa","El volumen","El peso","La densidad"],a:3,tip:"Las intensivas no dependen de la cantidad: densidad, temperatura, punto de ebullición. Masa, peso y volumen son extensivas."},
+  {n:4,t:"T",tm:"Estructura Atómica",d:1,p:"La partícula subatómica con carga negativa es:",o:["El protón","El neutrón","El electrón","El positrón"],a:2,tip:"Electrón: carga −1, en la nube electrónica. Protón: +1 y neutrón: 0, ambos en el núcleo."},
+  {n:5,t:"C",tm:"Estructura Atómica",d:2,p:"Un átomo tiene 17 protones y 18 neutrones. Su número de masa (A) es:",o:["17","18","35","36"],a:2,tip:"A = Z + n = 17 + 18 = 35. Es el cloro-35."},
+  {n:6,t:"C",tm:"Estructura Atómica",d:3,p:"El ion Ca²⁺ (Z = 20) tiene una cantidad de electrones igual a:",o:["22","20","18","16"],a:2,tip:"El catión 2+ perdió 2 electrones: 20 − 2 = 18 e⁻. Queda con la configuración del argón."},
+  {n:7,t:"T",tm:"Tabla Periódica",d:1,p:"Los gases nobles pertenecen al grupo:",o:["IA","IIA","VIIA","VIIIA"],a:3,tip:"Grupo VIIIA (18): He, Ne, Ar, Kr, Xe, Rn. Su octeto completo explica su gran estabilidad."},
+  {n:8,t:"T",tm:"Tabla Periódica",d:2,p:"El elemento de número atómico Z = 11 es un:",o:["Halógeno","Metal alcalino","Gas noble","Metal de transición"],a:1,tip:"Z = 11 es el sodio (Na): su configuración termina en 3s¹ → grupo IA, metales alcalinos."},
+  {n:9,t:"T",tm:"Tabla Periódica",d:3,p:"En un periodo, al avanzar hacia la derecha, la electronegatividad:",o:["Disminuye","Se mantiene","Aumenta","Se hace cero"],a:2,tip:"Crece la carga nuclear y el átomo atrae con más fuerza los electrones: la electronegatividad aumenta (máximo: el flúor)."},
+  {n:10,t:"T",tm:"Enlace Químico",d:2,p:"El enlace del NaCl (sal común) es:",o:["Covalente polar","Covalente apolar","Iónico","Metálico"],a:2,tip:"Metal + no metal con diferencia de electronegatividad mayor a 1.7: el Na transfiere su electrón al Cl → enlace iónico."},
+  {n:11,t:"T",tm:"Enlace Químico",d:2,p:"El enlace predominante en la molécula de agua (H₂O) es:",o:["Iónico","Covalente polar","Covalente apolar","Metálico"],a:1,tip:"O y H comparten electrones, pero el oxígeno los atrae más (ΔEN ≈ 1.4): covalente polar."},
+  {n:12,t:"T",tm:"Enlace Químico",d:3,p:"El enlace covalente apolar se forma entre átomos con:",o:["Electronegatividades muy distintas","Igual electronegatividad","Cargas opuestas","Electrones libres metálicos"],a:1,tip:"Si ΔEN = 0 los electrones se comparten por igual: covalente apolar, como en O₂, N₂ o Cl₂."},
+  {n:13,t:"F",tm:"Nomenclatura",d:1,p:"El nombre del CO₂ es:",o:["Monóxido de carbono","Dióxido de carbono","Carbonato","Ácido carbónico"],a:1,tip:"Dos oxígenos → prefijo di-: dióxido de carbono. El CO (un solo oxígeno) es el monóxido, gas tóxico."},
+  {n:14,t:"F",tm:"Nomenclatura",d:2,p:"El Fe₂O₃ se llama:",o:["Óxido ferroso","Óxido férrico","Peróxido de hierro","Hidróxido férrico"],a:1,tip:"El hierro actúa con valencia 3 (Fe³⁺): óxido férrico u óxido de hierro (III). Con valencia 2 sería ferroso (FeO)."},
+  {n:15,t:"F",tm:"Nomenclatura",d:2,p:"La fórmula del ácido sulfúrico es:",o:["H₂S","H₂SO₃","H₂SO₄","HSO₄"],a:2,tip:"Ácido sulfúrico: H₂SO₄ (azufre con valencia 6). H₂SO₃ es el sulfuroso y H₂S el sulfuro de hidrógeno."},
+  {n:16,t:"T",tm:"Unidades Químicas",d:1,p:"Un mol de cualquier sustancia contiene:",o:["6.022 × 10²³ partículas","3.011 × 10²³ partículas","1.66 × 10⁻²⁴ partículas","22.4 partículas"],a:0,tip:"Número de Avogadro: 6.022 × 10²³. Un mol de átomos, moléculas o iones siempre contiene esa cantidad."},
+  {n:17,t:"C",tm:"Unidades Químicas",d:2,p:"La masa molar del agua (H₂O) es: (H = 1, O = 16)",o:["16 g/mol","17 g/mol","18 g/mol","20 g/mol"],a:2,tip:"M = 2(1) + 16 = 18 g/mol. Se suman las masas atómicas de todos los átomos de la fórmula."},
+  {n:18,t:"C",tm:"Unidades Químicas",d:3,p:"¿Cuántos moles hay en 88 g de CO₂? (M = 44 g/mol)",o:["1 mol","2 mol","3 mol","4 mol"],a:1,tip:"n = masa / masa molar = 88 ÷ 44 = 2 mol de CO₂."},
+  {n:19,t:"T",tm:"Reacciones Químicas",d:1,p:"La combustión completa de un hidrocarburo produce:",o:["CO y H₂","CO₂ y H₂O","C y H₂O","CO₂ y H₂"],a:1,tip:"Con oxígeno suficiente: hidrocarburo + O₂ → CO₂ + H₂O. Si falta oxígeno (combustión incompleta) aparece CO u hollín."},
+  {n:20,t:"T",tm:"Reacciones Químicas",d:2,p:"La reacción 2H₂ + O₂ → 2H₂O es de tipo:",o:["Descomposición","Síntesis o adición","Sustitución simple","Doble sustitución"],a:1,tip:"Dos sustancias se combinan en un solo producto: síntesis (A + B → AB)."},
+  {n:21,t:"C",tm:"Reacciones Químicas",d:3,p:"Al balancear C₃H₈ + O₂ → CO₂ + H₂O, el coeficiente del O₂ es:",o:["3","4","5","7"],a:2,tip:"C₃H₈ + 5O₂ → 3CO₂ + 4H₂O. Verificación del oxígeno: 3×2 + 4×1 = 10 = 5×2."},
+  {n:22,t:"C",tm:"Estequiometría",d:3,p:"Según N₂ + 3H₂ → 2NH₃, ¿cuántos moles de amoniaco se forman con 6 moles de H₂?",o:["2 mol","3 mol","4 mol","6 mol"],a:2,tip:"Proporción H₂ : NH₃ = 3 : 2. Con 6 mol de H₂ → 6 × (2/3) = 4 mol de NH₃."},
+  {n:23,t:"C",tm:"Estequiometría",d:3,p:"En 2H₂ + O₂ → 2H₂O, ¿qué masa de agua se forma con 4 g de H₂? (H = 1, O = 16)",o:["18 g","24 g","36 g","72 g"],a:2,tip:"4 g de H₂ = 2 mol → se forman 2 mol de H₂O = 2 × 18 = 36 g."},
+  {n:24,t:"T",tm:"Soluciones",d:1,p:"En el agua salada, la sal es:",o:["El solvente","El soluto","El coloide","El precipitado"],a:1,tip:"El soluto es lo que se disuelve (sal, menor cantidad); el solvente es el que disuelve (agua, mayor cantidad)."},
+  {n:25,t:"C",tm:"Soluciones",d:3,p:"Se disuelven 20 g de NaCl en 180 g de agua. El porcentaje en masa de la solución es:",o:["8%","10%","11.1%","20%"],a:1,tip:"% masa = soluto / (soluto + solvente) × 100 = 20/200 × 100 = 10%. Se divide entre la solución total, no solo el agua."},
+  {n:26,t:"T",tm:"Gases",d:2,p:"A temperatura constante, si la presión de un gas aumenta, su volumen:",o:["Aumenta","Disminuye","No cambia","Se duplica"],a:1,tip:"Ley de Boyle: P·V = constante → presión y volumen son inversamente proporcionales."},
+  {n:27,t:"U",tm:"Gases",d:3,p:"En condiciones normales (0 °C y 1 atm), un mol de gas ideal ocupa:",o:["11.2 L","22.4 L","24.5 L","44.8 L"],a:1,tip:"Volumen molar en condiciones normales = 22.4 L. Dato clave para convertir moles de gas a litros."},
+  {n:28,t:"T",tm:"Química Orgánica",d:1,p:"El elemento fundamental de la química orgánica es:",o:["El oxígeno","El hidrógeno","El carbono","El nitrógeno"],a:2,tip:"El carbono es tetravalente (forma 4 enlaces) y se encadena consigo mismo: base de todos los compuestos orgánicos."},
+  {n:29,t:"F",tm:"Química Orgánica",d:2,p:"El alcano más simple es:",o:["Eteno","Metano","Etino","Benceno"],a:1,tip:"Metano: CH₄, un solo carbono con enlaces simples. Eteno y etino llevan enlaces dobles y triples: no son alcanos."},
+  {n:30,t:"F",tm:"Química Orgánica",d:3,p:"La fórmula general de los alcanos es:",o:["CnH2n","CnH2n+2","CnH2n−2","CnHn"],a:1,tip:"Alcanos (solo enlaces simples): CnH2n+2. Alquenos: CnH2n; alquinos: CnH2n−2."}
+];
+
+var BANCOS={
+  'Física':{time:40,qs:QS_FIS},
+  'Razonamiento Matemático':{time:75,qs:QS_RM},
+  'Química':{time:50,qs:QS_QUIM}
+};
+var DIF_LBL={1:'Básico',2:'Intermedio',3:'Avanzado'};
+var DIF_NUM={'Básico':1,'Intermedio':2,'Avanzado':3};
+var DIF_COL={1:'#14C088',2:'#DDB85C',3:'#E06078'};
+
+var QS=QS_FIS,TSEC=40,TOTAL=QS.length;
+var stu={n:'',carrera:'',area:'',curso:'',nivel:'Miscelánea'};
+var NIVEL='Miscelánea',curStreak=0;
 var idx=0,ans=[],tmr=null,tLeft=0,done=false,transitioning=false;
 var tipoLbl={T:'Teoría',F:'Fórmula',U:'Unidad',C:'Cálculo'};
 var tipoCol={T:'#DDB85C',F:'#14C088',U:'#B89EDE',C:'#4A88D0'};
 var LETTERS=['A','B','C','D'];
 
 /* ---------- REGISTRO ---------- */
+function selNivel(n,btn){
+  NIVEL=n;
+  document.querySelectorAll('#seg-nivel button').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+}
 function chk(){
   var n=document.getElementById('inp-n').value.trim();
   var c=document.getElementById('sel-car').value;
+  var cu=document.getElementById('sel-curso').value;
   var b=document.getElementById('btn-start');
-  if(n&&c)b.classList.add('ready');else b.classList.remove('ready');
+  if(n&&c&&cu)b.classList.add('ready');else b.classList.remove('ready');
 }
 function startExam(){
   var n=document.getElementById('inp-n').value.trim();
   var c=document.getElementById('sel-car').value;
-  if(!n||!c)return;
-  stu.n=n;stu.carrera=c;stu.area=AREA_DE[c]||'Otra';
+  var cu=document.getElementById('sel-curso').value;
+  if(!n||!c||!cu)return;
+  stu.n=n;stu.carrera=c;stu.area=AREA_DE[c]||'Otra';stu.curso=cu;stu.nivel=NIVEL;
+  var banco=BANCOS[cu];
+  QS=banco.qs;
+  if(NIVEL!=='Miscelánea'){
+    var f=banco.qs.filter(function(q){return q.d===DIF_NUM[NIVEL];});
+    if(f.length)QS=f;else stu.nivel='Miscelánea';
+  }
+  TSEC=banco.time;TOTAL=QS.length;curStreak=0;
   registrarIngreso();
   idx=0;ans=[];transitioning=false;
   sw('screen-exam');renderQ();
 }
-/* Registro de ingreso en tiempo real: guarda nombre y carrera en Sheets
-   apenas el alumno pulsa COMENZAR (no bloquea el inicio del examen) */
+/* Registro de ingreso en tiempo real: guarda nombre, carrera y curso en
+   Sheets apenas el alumno pulsa COMENZAR (no bloquea el inicio) */
 function registrarIngreso(){
-  var url=APPS_SCRIPT_URL+'?ingreso=1&alumno='+encodeURIComponent(stu.n)+'&carrera='+encodeURIComponent(stu.carrera)+'&area='+encodeURIComponent(stu.area)+'&dispositivo='+encodeURIComponent(/Mobi|Android/i.test(navigator.userAgent)?'móvil':'escritorio');
+  var url=APPS_SCRIPT_URL+'?ingreso=1&alumno='+encodeURIComponent(stu.n)+'&carrera='+encodeURIComponent(stu.carrera)+'&area='+encodeURIComponent(stu.area)+'&curso='+encodeURIComponent(stu.curso+(stu.nivel!=='Miscelánea'?' · '+stu.nivel:''))+'&dispositivo='+encodeURIComponent(/Mobi|Android/i.test(navigator.userAgent)?'móvil':'escritorio');
   try{fetch(url).catch(function(){});}catch(e){}
 }
 function sw(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
@@ -552,6 +682,7 @@ function renderQ(){
   document.getElementById('bar-pct').textContent=pct+'%';
   document.getElementById('bar-ok').textContent=ans.filter(function(a){return a.ok;}).length+' ✓';
   document.getElementById('bar-err').textContent=ans.filter(function(a){return !a.ok;}).length+' ✗';
+  updFire();
   document.getElementById('rst').className='result-stamp';document.getElementById('rst').innerHTML='';
   var nxBtn=document.getElementById('btn-nx');nxBtn.className='btn-next';
   nxBtn.innerHTML=(idx<TOTAL-1?'Siguiente':'Ver Resultado')+' <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
@@ -564,7 +695,7 @@ function renderQ(){
   }
   document.getElementById('qw').innerHTML=
     '<div class="timer-row"><div class="timer-ring tr-ok" id="tr"><svg viewBox="0 0 52 52"><circle class="ring-bg" cx="26" cy="26" r="20"/><circle class="ring-bar" id="rb" cx="26" cy="26" r="20"/></svg><span class="ring-txt" id="rt">'+TSEC+'</span></div><div class="timer-meta"><span class="timer-strong">'+TSEC+' segundos</span><span class="timer-sub">'+tipoLbl[q.t]+' · '+q.tm+'</span></div></div>'+
-    '<div class="q-card '+q.t+' q-anim" id="qc"><div class="q-meta"><span class="q-badge">'+tipoLbl[q.t]+'</span><span class="q-tema">'+q.tm+'</span></div><div class="q-text" id="qtext"></div><div class="options" id="opts">'+optHtml+'</div><div class="to-badge" id="tob">⏱ Tiempo agotado — la respuesta correcta está marcada</div><div class="tip-box" id="tipb"><div class="tip-lbl" id="tipl"></div><span id="tipt"></span></div></div>';
+    '<div class="q-card '+q.t+' q-anim" id="qc"><div class="q-meta"><span class="q-badge">'+tipoLbl[q.t]+'</span><span class="q-tema">'+q.tm+'</span><span class="q-diff dif'+q.d+'">'+'★'.repeat(q.d)+' '+DIF_LBL[q.d]+'</span></div><div class="q-text" id="qtext"></div><div class="options" id="opts">'+optHtml+'</div><div class="to-badge" id="tob">⏱ Tiempo agotado — la respuesta correcta está marcada</div><div class="tip-box" id="tipb"><div class="tip-lbl" id="tipl"></div><span id="tipt"></span></div></div>';
   document.getElementById('qtext').innerHTML=q.p;
   renderMath(document.getElementById('qw'));window.scrollTo(0,0);startTmr();
 }
@@ -580,10 +711,15 @@ function startTmr(){
   },1000);
 }
 
+function updFire(){
+  var f=document.getElementById('bar-fire');
+  if(f)f.textContent=curStreak>=2?'🔥'+curStreak:'';
+}
 function pick(i){
   if(done)return;done=true;clearInterval(tmr);
   var q=QS[idx],ok=i===q.a;
-  ans.push({q:q.n,sel:i,ok:ok,to:false,t:TSEC-tLeft,tm:q.tm,tipo:q.t});
+  curStreak=ok?curStreak+1:0;updFire();
+  ans.push({q:q.n,sel:i,ok:ok,to:false,t:TSEC-tLeft,tm:q.tm,tipo:q.t,d:q.d});
   document.querySelectorAll('.opt').forEach(function(el,j){el.classList.add('dis');if(j===q.a)el.classList.add('c-ok');else if(j===i)el.classList.add('c-err');});
   document.getElementById('qc').classList.add(ok?'c-ok':'c-err');
   showTip(ok?'✓ Correcto':'✗ Incorrecto · Respuesta: '+LETTERS[q.a],q.tip);
@@ -592,7 +728,8 @@ function pick(i){
 }
 
 function timeout(){
-  done=true;var q=QS[idx];ans.push({q:q.n,sel:-1,ok:false,to:true,t:TSEC,tm:q.tm,tipo:q.t});
+  done=true;var q=QS[idx];curStreak=0;updFire();
+  ans.push({q:q.n,sel:-1,ok:false,to:true,t:TSEC,tm:q.tm,tipo:q.t,d:q.d});
   document.querySelectorAll('.opt').forEach(function(el,j){el.classList.add('dis');if(j===q.a)el.classList.add('c-ok');});
   document.getElementById('tob').classList.add('show');showTip('⏱ Tiempo agotado · Respuesta: '+LETTERS[q.a],q.tip);
   var rs=document.getElementById('rst');rs.className='result-stamp rs-to';rs.innerHTML='⏱ Tiempo agotado';
@@ -631,7 +768,7 @@ function showResults(){
   var ok=ans.filter(function(a){return a.ok;}).length;
   var to=ans.filter(function(a){return a.to;}).length;
   var err=TOTAL-ok;
-  var pct=Math.round(ok*2.5);
+  var pct=Math.round((ok/TOTAL)*100);
   var avgT=Math.round(ans.reduce(function(s,a){return s+a.t;},0)/(ans.length||1));
   var streak=0,best=0;
   ans.forEach(function(a){if(a.ok){streak++;if(streak>best)best=streak;}else streak=0;});
@@ -653,7 +790,7 @@ function showResults(){
     fecha:new Date().toISOString(),
     fechaLocal:new Date().toLocaleString('es-PE'),
     nombre:stu.n,apellido:'',area:stu.area,carrera:stu.carrera,
-    curso:'Física',
+    curso:stu.curso,modo:stu.nivel,
     puntaje:pct,correctas:ok,incorrectas:err-to,sinTiempo:to,total:TOTAL,
     nivel:rank.label,colorFila:rank.sheetColor,
     tiempoMedio:avgT,mejorRacha:best,
@@ -663,7 +800,9 @@ function showResults(){
   };
   sendToSheets(record);
 
-  document.getElementById('r-st').innerHTML='<strong>'+esc(stu.n)+'</strong> · '+esc(stu.carrera);
+  document.getElementById('r-st').innerHTML='<strong>'+esc(stu.n)+'</strong> · '+esc(stu.carrera)+' · '+esc(stu.curso);
+  var rc=document.getElementById('r-curso');
+  if(rc)rc.textContent=stu.curso+(stu.nivel!=='Miscelánea'?' · '+stu.nivel:'');
   document.getElementById('rank-hero-slot').innerHTML=
     '<div class="rank-hero '+rank.cls+'"><div class="rank-inner"><div class="rank-badge-box"><span class="rank-badge-pct">'+pct+'</span><span class="rank-badge-label">pts</span></div><div class="rank-info"><div class="rank-label">'+rank.icon+' Nivel '+rank.label+'</div><div class="rank-title">'+rank.title+'</div><div class="rank-sub">'+rank.sub+'</div></div></div></div>';
   var sc=document.getElementById('r-score');sc.textContent=pct;sc.className='big-score '+rank.scoreCls;
@@ -699,6 +838,20 @@ function showResults(){
   });
   document.getElementById('r-types').innerHTML=typeHtml;
 
+  var difs={};
+  ans.forEach(function(a){if(!difs[a.d])difs[a.d]={ok:0,tot:0};difs[a.d].tot++;if(a.ok)difs[a.d].ok++;});
+  var diffHtml='';
+  [1,2,3].forEach(function(dv){
+    var dd=difs[dv];if(!dd)return;
+    var p=dd.tot?Math.round((dd.ok/dd.tot)*100):0;
+    diffHtml+='<div class="r-type-box"><div class="r-type-lbl" style="color:'+DIF_COL[dv]+'">'+'★'.repeat(dv)+' '+DIF_LBL[dv]+'</div><div class="r-type-val">'+dd.ok+'/'+dd.tot+'<small>'+p+'%</small></div><div class="r-type-track"><div class="r-type-bar" style="width:'+p+'%;background:'+DIF_COL[dv]+'"></div></div></div>';
+  });
+  var diffEl=document.getElementById('r-diff');
+  diffEl.innerHTML=diffHtml;
+  diffEl.style.display=(stu.nivel==='Miscelánea'&&diffHtml)?'grid':'none';
+
+  if(pct>=85)celebrar();
+
   var bkHtml='';
   Object.entries(temas).forEach(function(entry){
     var tm=entry[0],d=entry[1];
@@ -711,6 +864,23 @@ function showResults(){
   setTimeout(function(){document.querySelectorAll('.bd-bar').forEach(function(b){b.style.transition='width 1s cubic-bezier(.16,1,.3,1)';b.style.width=b.dataset.w+'%';});},300);
 
   buildReview();
+}
+
+/* Lluvia dorada de celebración para puntajes altos (respeta reduced-motion) */
+function celebrar(){
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  if(document.getElementById('fx'))return;
+  var c=document.createElement('canvas');c.id='fx';document.body.appendChild(c);
+  var ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;
+  var cols=['#F0D07A','#DDB85C','#14C088','#C8EEFF'];
+  var P=[];
+  for(var i=0;i<90;i++)P.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,v:2+Math.random()*3.5,w:4+Math.random()*5,a:Math.random()*6.28,r:.06+Math.random()*.1,s:cols[Math.floor(Math.random()*cols.length)]});
+  var t0=Date.now();
+  (function fr(){
+    ctx.clearRect(0,0,c.width,c.height);
+    P.forEach(function(p){p.y+=p.v;p.a+=p.r;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.s;ctx.globalAlpha=.85;ctx.fillRect(-p.w/2,-p.w/2,p.w,p.w*.6);ctx.restore();});
+    if(Date.now()-t0<2600)requestAnimationFrame(fr);else c.remove();
+  })();
 }
 
 function buildReview(){
@@ -730,10 +900,14 @@ function buildReview(){
 }
 
 function retry(){
-  clearInterval(tmr);idx=0;ans=[];transitioning=false;stu={n:'',carrera:'',area:''};
+  clearInterval(tmr);idx=0;ans=[];transitioning=false;curStreak=0;
+  stu={n:'',carrera:'',area:'',curso:'',nivel:'Miscelánea'};
   sw('screen-register');
   document.getElementById('inp-n').value='';
   document.getElementById('sel-car').value='';
+  document.getElementById('sel-curso').value='';
+  NIVEL='Miscelánea';
+  document.querySelectorAll('#seg-nivel button').forEach(function(b,i){b.classList.toggle('on',i===0);});
   document.getElementById('btn-start').classList.remove('ready');
 }
 
@@ -760,7 +934,7 @@ function sendToSheets(record){
 }
 /* Compatibilidad con el Apps Script antiguo (solo doGet) */
 function legacySend(record){
-  var url=APPS_SCRIPT_URL+'?fecha='+encodeURIComponent(record.fechaLocal)+'&nombre='+encodeURIComponent(record.nombre)+'&apellido='+encodeURIComponent(record.apellido)+'&area='+encodeURIComponent(record.area)+'&carrera='+encodeURIComponent(record.carrera)+'&puntaje='+encodeURIComponent(record.puntaje)+'&correctas='+encodeURIComponent(record.correctas)+'&incorrectas='+encodeURIComponent(record.incorrectas)+'&sinTiempo='+encodeURIComponent(record.sinTiempo)+'&total='+encodeURIComponent(record.total)+'&nivel='+encodeURIComponent(record.nivel)+'&colorFila='+encodeURIComponent(record.colorFila)+'&ordenar=true';
+  var url=APPS_SCRIPT_URL+'?fecha='+encodeURIComponent(record.fechaLocal)+'&nombre='+encodeURIComponent(record.nombre)+'&apellido='+encodeURIComponent(record.apellido)+'&area='+encodeURIComponent(record.area)+'&carrera='+encodeURIComponent(record.carrera)+'&curso='+encodeURIComponent(record.curso)+'&puntaje='+encodeURIComponent(record.puntaje)+'&correctas='+encodeURIComponent(record.correctas)+'&incorrectas='+encodeURIComponent(record.incorrectas)+'&sinTiempo='+encodeURIComponent(record.sinTiempo)+'&total='+encodeURIComponent(record.total)+'&nivel='+encodeURIComponent(record.nivel)+'&colorFila='+encodeURIComponent(record.colorFila)+'&ordenar=true';
   fetch(url,{method:'GET',mode:'no-cors'})
     .then(function(){setSheetsStatus('ok','✓ Guardado (modo compatible). Actualiza el Apps Script para métricas completas.');showToast('✓ Guardado en Sheets');})
     .catch(function(){setSheetsStatus('err','✗ Sin conexión. El resultado quedó guardado en este dispositivo y se reenviará automáticamente.');});
