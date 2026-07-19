@@ -328,18 +328,18 @@ h1,h2,h3{text-wrap:balance;}
   <header class="reg-topbar">
     <div class="reg-topbar-in">
       <span class="brand">
-        <span class="brand-word">Simulacro <em>UNSA</em></span>
-        <span class="brand-sub">Admisión 2026 · Arequipa</span>
+        <span class="brand-word">Simulacro <em>Admisión</em></span>
+        <span class="brand-sub">UNSA · UNI · San Marcos 2026</span>
       </span>
     </div>
   </header>
   <main class="reg-main">
     <h1 class="reg-h1"><em>Simulacro</em><span>de Admisión</span></h1>
     <div class="reg-rule" aria-hidden="true"></div>
-    <p class="reg-sub">Física, Razonamiento Matemático y Química.<br>Corrección instantánea con resolución fundamentada.</p>
+    <p class="reg-sub">Física, Química, Aritmética y razonamientos.<br>Corrección instantánea con resolución fundamentada.</p>
     <div class="reg-stats" aria-label="Datos del examen">
-      <span><strong>100</strong>preguntas</span><i aria-hidden="true"></i>
-      <span><strong>3</strong>cursos</span><i aria-hidden="true"></i>
+      <span><strong>5</strong>cursos</span><i aria-hidden="true"></i>
+      <span><strong>20</strong>preguntas</span><i aria-hidden="true"></i>
       <span><strong>100</strong>puntos</span>
     </div>
     <form class="reg-form" onsubmit="event.preventDefault();startExam();">
@@ -356,13 +356,30 @@ h1,h2,h3{text-wrap:balance;}
         </div>
       </div>
       <div class="field">
+        <label for="sel-uni">Universidad</label>
+        <div class="select-wrap">
+          <select id="sel-uni" onchange="chk()">
+            <option value="">Selecciona la universidad</option>
+            <option>UNSA — San Agustín (Arequipa)</option>
+            <option>UNI — Ingeniería (Lima)</option>
+            <option>UNMSM — San Marcos (Lima)</option>
+            <option>UNSAAC — Cusco</option>
+            <option>UNT — Trujillo</option>
+            <option>PUCP — Católica</option>
+            <option>Otra universidad</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
         <label for="sel-curso">Curso</label>
         <div class="select-wrap">
           <select id="sel-curso" onchange="chk()">
             <option value="">Selecciona el curso</option>
             <option>Física</option>
-            <option>Razonamiento Matemático</option>
             <option>Química</option>
+            <option>Aritmética</option>
+            <option>Razonamiento Matemático</option>
+            <option>Razonamiento Verbal</option>
           </select>
         </div>
       </div>
@@ -378,7 +395,7 @@ h1,h2,h3{text-wrap:balance;}
       <button type="submit" class="btn-start" id="btn-start">Comenzar</button>
     </form>
     <p class="reg-note">Tu ingreso y tus resultados quedan registrados automáticamente</p>
-    <p class="reg-foot">Universidad Nacional de San Agustín · Arequipa</p>
+    <p class="reg-foot">UNSA · UNI · San Marcos · Admisión 2026 — Perú</p>
   </main>
 </div>
 
@@ -419,7 +436,7 @@ h1,h2,h3{text-wrap:balance;}
         <div class="r-student" id="r-st">—</div>
       </div>
       <span class="brand" style="align-items:flex-end">
-        <span class="brand-word" style="font-size:.8rem">Simulacro <em>UNSA</em></span>
+        <span class="brand-word" style="font-size:.8rem">Simulacro <em>Admisión</em></span>
         <span class="brand-sub" id="r-curso">—</span>
       </span>
     </div>
@@ -617,17 +634,84 @@ var QS_QUIM=[
   {n:30,t:"F",tm:"Química Orgánica",d:3,p:"La fórmula general de los alcanos es:",o:["CnH2n","CnH2n+2","CnH2n−2","CnHn"],a:1,tip:"Alcanos (solo enlaces simples): CnH2n+2. Alquenos: CnH2n; alquinos: CnH2n−2."}
 ];
 
+/* ===== RAZONAMIENTO VERBAL — estilo examen de admisión ===== */
+var QS_RV=[
+  {n:1,t:"T",tl:"Léxico",tm:"Sinónimos",d:1,p:"Señala el SINÓNIMO de «abundante»:",o:["Escaso","Copioso","Vacío","Simple"],a:1,tip:"Abundante = que hay en gran cantidad → copioso. «Escaso» y «vacío» son lo contrario."},
+  {n:2,t:"T",tl:"Léxico",tm:"Sinónimos",d:1,p:"Señala el SINÓNIMO de «veloz»:",o:["Lento","Raudo","Pesado","Quieto"],a:1,tip:"Veloz = que se mueve con rapidez → raudo. Los demás expresan lentitud o reposo."},
+  {n:3,t:"T",tl:"Léxico",tm:"Sinónimos",d:2,p:"Señala el SINÓNIMO de «perspicaz»:",o:["Torpe","Sagaz","Distraído","Lento"],a:1,tip:"Perspicaz = que capta las cosas con agudeza → sagaz, astuto. «Torpe» es su antónimo."},
+  {n:4,t:"T",tl:"Léxico",tm:"Antónimos",d:1,p:"Señala el ANTÓNIMO de «ascender»:",o:["Subir","Elevar","Descender","Trepar"],a:2,tip:"Ascender = subir; su opuesto es descender. Las otras opciones son sinónimos de subir."},
+  {n:5,t:"T",tl:"Léxico",tm:"Antónimos",d:2,p:"Señala el ANTÓNIMO de «efímero»:",o:["Breve","Fugaz","Perdurable","Pasajero"],a:2,tip:"Efímero = de muy corta duración; su antónimo es perdurable. «Breve», «fugaz» y «pasajero» son sinónimos: la trampa."},
+  {n:6,t:"T",tl:"Léxico",tm:"Antónimos",d:3,p:"Señala el ANTÓNIMO de «magnánimo»:",o:["Generoso","Noble","Mezquino","Bondadoso"],a:2,tip:"Magnánimo = generoso, de alma grande; su antónimo es mezquino. Las otras tres son sinónimos, distractores clásicos."},
+  {n:7,t:"C",tl:"Aptitud",tm:"Analogías",d:1,p:"GUANTE es a MANO como MEDIA es a:",o:["Zapato","Pie","Brazo","Tela"],a:1,tip:"Relación prenda–parte que cubre: el guante cubre la mano; la media, el pie."},
+  {n:8,t:"C",tl:"Aptitud",tm:"Analogías",d:2,p:"MÉDICO es a HOSPITAL como PROFESOR es a:",o:["Alumno","Escuela","Libro","Pizarra"],a:1,tip:"Relación agente–lugar donde trabaja: el médico en el hospital; el profesor en la escuela."},
+  {n:9,t:"C",tl:"Aptitud",tm:"Analogías",d:2,p:"AVARO es a DINERO como GLOTÓN es a:",o:["Hambre","Comida","Plato","Gordura"],a:1,tip:"Relación de apego excesivo: el avaro con el dinero; el glotón con la comida."},
+  {n:10,t:"C",tl:"Aptitud",tm:"Analogías",d:3,p:"LUZ es a CEGUERA como SONIDO es a:",o:["Ruido","Silencio","Sordera","Oído"],a:2,tip:"Relación estímulo–privación del sentido: no percibir la luz es ceguera; no percibir el sonido, sordera."},
+  {n:11,t:"C",tl:"Aptitud",tm:"Oraciones Incompletas",d:2,p:"«El deportista entrenó con ______, por eso su triunfo fue ______».",o:["pereza – injusto","disciplina – merecido","miedo – casual","suerte – dudoso"],a:1,tip:"La lógica pide causa positiva y consecuencia coherente: entrenó con disciplina, por eso el triunfo fue merecido."},
+  {n:12,t:"C",tl:"Aptitud",tm:"Oraciones Incompletas",d:3,p:"«A pesar de su ______, convenció al jurado con argumentos ______».",o:["seguridad – débiles","nerviosismo – sólidos","alegría – confusos","silencio – vacíos"],a:1,tip:"«A pesar de» exige contraste: pese al nerviosismo (obstáculo), venció con argumentos sólidos (fortaleza)."},
+  {n:13,t:"C",tl:"Aptitud",tm:"Conectores Lógicos",d:1,p:"«Estudié bastante, ______ aprobé el examen».",o:["pero","sin embargo","por lo tanto","aunque"],a:2,tip:"Hay causa-consecuencia: estudiar produce aprobar → «por lo tanto». Los demás marcan oposición."},
+  {n:14,t:"C",tl:"Aptitud",tm:"Conectores Lógicos",d:2,p:"«No se preparó, ______ desaprobó; ______ no se rindió».",o:["aunque – y","por eso – sin embargo","pero – porque","es decir – además"],a:1,tip:"Primero causa-efecto (no se preparó → por eso desaprobó) y luego contraste (sin embargo, no se rindió)."},
+  {n:15,t:"T",tl:"Léxico",tm:"Término Excluido",d:1,p:"¿Qué término NO corresponde al grupo?: fémur, tibia, rótula, pulmón.",o:["Fémur","Tibia","Rótula","Pulmón"],a:3,tip:"Fémur, tibia y rótula son huesos; el pulmón es un órgano. Por eso se excluye."},
+  {n:16,t:"T",tl:"Léxico",tm:"Término Excluido",d:2,p:"¿Qué término NO corresponde?: alegría, júbilo, regocijo, tristeza.",o:["Alegría","Júbilo","Regocijo","Tristeza"],a:3,tip:"Alegría, júbilo y regocijo son sinónimos de felicidad; tristeza es lo opuesto."},
+  {n:17,t:"C",tl:"Aptitud",tm:"Series Verbales",d:2,p:"¿Qué palabra continúa la serie?: iracundo, colérico, furioso, …",o:["tranquilo","airado","sereno","pacífico"],a:1,tip:"Todos son sinónimos de enojo; la serie sigue con airado. «Tranquilo» rompería el patrón."},
+  {n:18,t:"T",tl:"Léxico",tm:"Precisión Léxica",d:2,p:"Elige el verbo más PRECISO: «El científico ______ un descubrimiento».",o:["hizo","realizó","puso","dio"],a:1,tip:"«Hacer» es un verbo comodín, impreciso. El término exacto es «realizó un descubrimiento»."},
+  {n:19,t:"C",tl:"Aptitud",tm:"Comprensión de Lectura",d:2,p:"«La lectura amplía el vocabulario, mejora la concentración y agudiza el pensamiento crítico». La idea principal es:",o:["La lectura es aburrida","Los beneficios de leer","Solo los niños leen","Leer reemplaza al estudio"],a:1,tip:"El texto enumera ventajas de leer; su idea central son los beneficios de la lectura. Lo demás no se afirma."},
+  {n:20,t:"C",tl:"Aptitud",tm:"Comprensión de Lectura",d:3,p:"«Siempre que llueve, Juan lleva paraguas. Hoy salió sin paraguas». Se infiere que:",o:["Hoy está lloviendo","Juan olvidó el paraguas","Hoy no espera lluvia","Le gusta mojarse"],a:2,tip:"Si al llover siempre lo lleva y hoy no lo llevó, se deduce que hoy no espera lluvia. Es inferencia, no dato explícito."},
+  {n:21,t:"T",tl:"Léxico",tm:"Sinónimos",d:2,p:"En «defendió sus ideas con vehemencia», VEHEMENCIA significa:",o:["indiferencia","ímpetu","temor","calma"],a:1,tip:"Vehemencia = fuerza y pasión al actuar → ímpetu. El contexto («defendió») confirma el sentido enérgico."},
+  {n:22,t:"C",tl:"Aptitud",tm:"Analogías",d:1,p:"LÁPIZ es a ESCRIBIR como TIJERA es a:",o:["Papel","Cortar","Coser","Pegar"],a:1,tip:"Relación instrumento–función: el lápiz sirve para escribir; la tijera, para cortar."}
+];
+
+/* ===== ARITMÉTICA — estilo examen de admisión UNSA/UNI/San Marcos ===== */
+var QS_ARIT=[
+  {n:1,t:"C",tm:"Cuatro Operaciones",d:1,p:"A un número le sumo 18 y el resultado lo divido entre 4; obtengo 12. ¿Qué número es?",o:["24","30","32","40"],a:1,tip:"Voy al revés: 12 × 4 = 48; 48 − 18 = 30. Comprobación: (30 + 18) ÷ 4 = 12. ✓"},
+  {n:2,t:"C",tm:"Fracciones",d:1,p:"¿Cuánto es 3/5 de 200?",o:["100","120","125","150"],a:1,tip:"200 ÷ 5 = 40 (una quinta parte); 40 × 3 = 120."},
+  {n:3,t:"C",tm:"Tanto por Ciento",d:1,p:"El 15% de 80 es:",o:["10","12","15","20"],a:1,tip:"10% de 80 = 8 y 5% = 4 → 8 + 4 = 12."},
+  {n:4,t:"C",tm:"Promedios",d:1,p:"El promedio de 8, 12 y 16 es:",o:["10","12","14","16"],a:1,tip:"Promedio = (8 + 12 + 16) ÷ 3 = 36 ÷ 3 = 12."},
+  {n:5,t:"C",tm:"Regla de Tres",d:1,p:"Si 3 kg de manzanas cuestan S/12, ¿cuánto cuestan 7 kg?",o:["24","28","30","35"],a:1,tip:"Regla de tres directa: 12 ÷ 3 = 4 soles por kg; 4 × 7 = 28 soles."},
+  {n:6,t:"C",tm:"Regla de Tres",d:2,p:"Si 5 obreros hacen una obra en 12 días, ¿en cuántos días la harán 10 obreros?",o:["4","6","8","10"],a:1,tip:"Magnitudes inversas (más obreros, menos días): 5 × 12 = 10 × x → x = 60 ÷ 10 = 6 días."},
+  {n:7,t:"C",tm:"Razones y Proporciones",d:2,p:"Dos números están en la relación de 4 a 7 y su diferencia es 24. El menor es:",o:["28","32","40","56"],a:1,tip:"Sean 4k y 7k: 7k − 4k = 3k = 24 → k = 8. El menor es 4k = 32."},
+  {n:8,t:"C",tm:"Tanto por Ciento",d:2,p:"Un artículo cuesta S/80 y se vende ganando el 25%. ¿Cuál es el precio de venta?",o:["95","100","105","120"],a:1,tip:"Ganancia = 25% de 80 = 20. Venta = 80 + 20 = 100. Directo: 80 × 1.25 = 100."},
+  {n:9,t:"C",tm:"MCD y MCM",d:2,p:"Dos cuerdas de 12 m y 18 m se cortan en trozos iguales lo más largos posible. ¿Cuánto mide cada trozo?",o:["3 m","4 m","6 m","9 m"],a:2,tip:"«Trozos iguales, lo más largos» → MCD(12, 18) = 6 m. Salen 2 y 3 trozos."},
+  {n:10,t:"C",tm:"MCD y MCM",d:2,p:"Dos ciclistas parten juntos; uno da una vuelta cada 30 s y el otro cada 40 s. ¿Cada cuántos segundos vuelven a coincidir en la salida?",o:["70 s","110 s","120 s","240 s"],a:2,tip:"Coinciden en el MCM(30, 40) = 120 s. El MCM se usa cuando los sucesos vuelven a juntarse."},
+  {n:11,t:"C",tm:"Interés Simple",d:2,p:"¿Qué interés produce un capital de S/2000 al 5% anual durante 2 años?",o:["100","150","200","250"],a:2,tip:"Interés simple: I = C · r · t = 2000 × 0.05 × 2 = 200 soles."},
+  {n:12,t:"C",tm:"Progresiones",d:2,p:"En la progresión aritmética 3, 7, 11, 15, … ¿cuál es el término número 20?",o:["75","77","79","83"],a:2,tip:"Razón = 4. Término n: aₙ = a₁ + (n − 1)·r = 3 + 19 × 4 = 79."},
+  {n:13,t:"C",tm:"Divisibilidad",d:3,p:"¿Cuál es el menor número que, dividido entre 4, 6 y 9, deja siempre residuo 1?",o:["25","36","37","73"],a:2,tip:"Debe ser MCM(4, 6, 9) + 1 = 36 + 1 = 37. Verifica: 37 entre 4, 6 y 9 deja residuo 1 en los tres."},
+  {n:14,t:"C",tm:"Fracciones",d:3,p:"Gasté 1/3 de mi dinero y luego 1/4 de lo que me quedaba. Si aún tengo S/90, ¿cuánto tenía al inicio?",o:["120","150","180","240"],a:2,tip:"Tras gastar 1/3 queda 2/3. Gastar 1/4 del resto deja 3/4 de 2/3 = 1/2 del total. Si 1/2 = 90 → tenía 180."},
+  {n:15,t:"C",tm:"Descuentos Sucesivos",d:3,p:"Un producto recibe dos descuentos sucesivos del 20% y del 10%. ¿A qué descuento único equivalen?",o:["26%","28%","30%","32%"],a:1,tip:"Queda 0.80 × 0.90 = 0.72 (el 72% del precio): se descontó el 28%. Los descuentos NO se suman."},
+  {n:16,t:"C",tm:"Mezclas",d:3,p:"Se mezclan 30 L de vino de S/8 el litro con 20 L de S/13 el litro. ¿Cuál es el precio medio por litro?",o:["S/9","S/10","S/11","S/12"],a:1,tip:"Precio medio = costo total ÷ litros = (30×8 + 20×13) ÷ 50 = 500 ÷ 50 = S/10."},
+  {n:17,t:"C",tm:"Regla de Tres Compuesta",d:3,p:"Si 4 máquinas producen 800 piezas en 5 días, ¿cuántas piezas producen 6 máquinas en 10 días?",o:["1600","2000","2400","3200"],a:2,tip:"Todo es directo: 800 × (6/4) × (10/5) = 800 × 1.5 × 2 = 2400 piezas."},
+  {n:18,t:"C",tm:"Tanto por Ciento",d:3,p:"Tras un aumento del 20%, un artículo cuesta S/72. ¿Cuál era su precio original?",o:["58","60","62","65"],a:1,tip:"El precio con aumento es el 120% del original: 1.20 × P = 72 → P = 72 ÷ 1.2 = 60 soles."},
+  {n:19,t:"C",tm:"Teoría de Conjuntos",d:2,p:"En un aula de 40 alumnos, 25 practican fútbol, 20 vóley y 10 ambos. ¿Cuántos no practican ninguno?",o:["5","10","15","20"],a:0,tip:"Al menos un deporte: 25 + 20 − 10 = 35. Ninguno: 40 − 35 = 5."},
+  {n:20,t:"C",tm:"Análisis Combinatorio",d:2,p:"¿De cuántas maneras distintas se pueden sentar 5 personas en una fila?",o:["24","60","120","720"],a:2,tip:"Permutación de 5: 5! = 5 × 4 × 3 × 2 × 1 = 120."},
+  {n:21,t:"C",tm:"Probabilidades",d:2,p:"Se lanza un dado común. ¿Cuál es la probabilidad de obtener un número primo?",o:["1/6","1/3","1/2","2/3"],a:2,tip:"Primos del 1 al 6: 2, 3 y 5 → 3 casos favorables de 6 → 3/6 = 1/2."},
+  {n:22,t:"C",tm:"Numeración",d:3,p:"¿Cuántas cifras se emplean al numerar las páginas de un libro de 150 páginas?",o:["242","342","360","450"],a:1,tip:"Del 1 al 9: 9. Del 10 al 99: 90×2 = 180. Del 100 al 150: 51×3 = 153. Total: 9 + 180 + 153 = 342."}
+];
+
 var BANCOS={
-  'Física':{time:40,qs:QS_FIS},
-  'Razonamiento Matemático':{time:75,qs:QS_RM},
-  'Química':{time:50,qs:QS_QUIM}
+  'Física':QS_FIS,
+  'Química':QS_QUIM,
+  'Aritmética':QS_ARIT,
+  'Razonamiento Matemático':QS_RM,
+  'Razonamiento Verbal':QS_RV
 };
 var DIF_LBL={1:'Básico',2:'Intermedio',3:'Avanzado'};
 var DIF_NUM={'Básico':1,'Intermedio':2,'Avanzado':3};
 var DIF_COL={1:'#14C088',2:'#DDB85C',3:'#E06078'};
+var EXAM_N=20; // preguntas por examen (miscelánea) → 5 puntos c/u = 100
+function qSecs(q){return q.t==='C'?60:40;} // resolver 60 s · teórico 40 s
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+/* Arma el examen: 20 preguntas al azar (o las del nivel elegido), ordenadas
+   de menor a mayor dificultad para que suba como un examen de admisión real. */
+function pickExam(pool,nivel){
+  var arr;
+  if(nivel!=='Miscelánea'){arr=pool.filter(function(q){return q.d===DIF_NUM[nivel];});if(!arr.length)arr=pool.slice();}
+  else arr=pool.slice();
+  shuffle(arr);arr=arr.slice(0,EXAM_N);
+  arr.sort(function(a,b){return a.d-b.d;});
+  return arr;
+}
 
 var QS=QS_FIS,TSEC=40,TOTAL=QS.length;
-var stu={n:'',carrera:'',area:'',curso:'',nivel:'Miscelánea'};
+var stu={n:'',carrera:'',area:'',universidad:'',curso:'',nivel:'Miscelánea'};
 var NIVEL='Miscelánea',curStreak=0;
 var idx=0,ans=[],tmr=null,tLeft=0,done=false,transitioning=false;
 var tipoLbl={T:'Teoría',F:'Fórmula',U:'Unidad',C:'Cálculo'};
@@ -640,43 +724,44 @@ function selNivel(n,btn){
   document.querySelectorAll('#seg-nivel button').forEach(function(b){b.classList.remove('on');});
   btn.classList.add('on');
 }
+function tipoText(q){return q.tl||tipoLbl[q.t];}
 function chk(){
   var n=document.getElementById('inp-n').value.trim();
   var c=document.getElementById('sel-car').value;
+  var u=document.getElementById('sel-uni').value;
   var cu=document.getElementById('sel-curso').value;
   var b=document.getElementById('btn-start');
-  if(n&&c&&cu)b.classList.add('ready');else b.classList.remove('ready');
+  if(n&&c&&u&&cu)b.classList.add('ready');else b.classList.remove('ready');
 }
 function startExam(){
   var n=document.getElementById('inp-n').value.trim();
   var c=document.getElementById('sel-car').value;
+  var u=document.getElementById('sel-uni').value;
   var cu=document.getElementById('sel-curso').value;
-  if(!n||!c||!cu)return;
-  stu.n=n;stu.carrera=c;stu.area=AREA_DE[c]||'Otra';stu.curso=cu;stu.nivel=NIVEL;
-  var banco=BANCOS[cu];
-  QS=banco.qs;
-  if(NIVEL!=='Miscelánea'){
-    var f=banco.qs.filter(function(q){return q.d===DIF_NUM[NIVEL];});
-    if(f.length)QS=f;else stu.nivel='Miscelánea';
-  }
-  TSEC=banco.time;TOTAL=QS.length;curStreak=0;
+  if(!n||!c||!u||!cu)return;
+  stu.n=n;stu.carrera=c;stu.area=AREA_DE[c]||'Otra';stu.universidad=u;stu.curso=cu;stu.nivel=NIVEL;
+  var pool=BANCOS[cu]||QS_FIS;
+  if(NIVEL!=='Miscelánea'&&!pool.some(function(q){return q.d===DIF_NUM[NIVEL];}))stu.nivel='Miscelánea';
+  QS=pickExam(pool,stu.nivel);
+  TOTAL=QS.length;curStreak=0;
   registrarIngreso();
   idx=0;ans=[];transitioning=false;
   sw('screen-exam');renderQ();
 }
-/* Registro de ingreso en tiempo real: guarda nombre, carrera y curso en
-   Sheets apenas el alumno pulsa COMENZAR (no bloquea el inicio) */
+/* Registro de ingreso en tiempo real: guarda nombre, universidad, carrera y
+   curso en Sheets apenas el alumno pulsa COMENZAR (no bloquea el inicio) */
 function registrarIngreso(){
-  var url=APPS_SCRIPT_URL+'?ingreso=1&alumno='+encodeURIComponent(stu.n)+'&carrera='+encodeURIComponent(stu.carrera)+'&area='+encodeURIComponent(stu.area)+'&curso='+encodeURIComponent(stu.curso+(stu.nivel!=='Miscelánea'?' · '+stu.nivel:''))+'&dispositivo='+encodeURIComponent(/Mobi|Android/i.test(navigator.userAgent)?'móvil':'escritorio');
+  var url=APPS_SCRIPT_URL+'?ingreso=1&alumno='+encodeURIComponent(stu.n)+'&universidad='+encodeURIComponent(stu.universidad)+'&carrera='+encodeURIComponent(stu.carrera)+'&area='+encodeURIComponent(stu.area)+'&curso='+encodeURIComponent(stu.curso+(stu.nivel!=='Miscelánea'?' · '+stu.nivel:''))+'&dispositivo='+encodeURIComponent(/Mobi|Android/i.test(navigator.userAgent)?'móvil':'escritorio');
   try{fetch(url).catch(function(){});}catch(e){}
 }
 function sw(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 
 /* ---------- EXAMEN ---------- */
 function renderQ(){
-  done=false;tLeft=TSEC;transitioning=false;
-  var q=QS[idx];var pct=Math.round((idx/TOTAL)*100);
-  document.getElementById('bar-st').innerHTML='<strong>'+esc(stu.n)+'</strong> · '+esc(stu.carrera);
+  done=false;transitioning=false;
+  var q=QS[idx];TSEC=qSecs(q);tLeft=TSEC;
+  var pct=Math.round((idx/TOTAL)*100);
+  document.getElementById('bar-st').innerHTML='<strong>'+esc(stu.n)+'</strong> · '+esc(stu.curso);
   document.getElementById('bar-ctr').textContent=(idx+1)+'/'+TOTAL;
   document.getElementById('bar-fill').style.width=pct+'%';
   document.getElementById('bar-pct').textContent=pct+'%';
@@ -694,8 +779,8 @@ function renderQ(){
     optHtml+='<div class="opt '+(isPureMath?'opt-display':'')+'" id="o'+oi+'" onclick="pick('+oi+')"><span class="opt-lt">'+LETTERS[oi]+'</span><span class="opt-tx">'+optText+'</span></div>';
   }
   document.getElementById('qw').innerHTML=
-    '<div class="timer-row"><div class="timer-ring tr-ok" id="tr"><svg viewBox="0 0 52 52"><circle class="ring-bg" cx="26" cy="26" r="20"/><circle class="ring-bar" id="rb" cx="26" cy="26" r="20"/></svg><span class="ring-txt" id="rt">'+TSEC+'</span></div><div class="timer-meta"><span class="timer-strong">'+TSEC+' segundos</span><span class="timer-sub">'+tipoLbl[q.t]+' · '+q.tm+'</span></div></div>'+
-    '<div class="q-card '+q.t+' q-anim" id="qc"><div class="q-meta"><span class="q-badge">'+tipoLbl[q.t]+'</span><span class="q-tema">'+q.tm+'</span><span class="q-diff dif'+q.d+'">'+'★'.repeat(q.d)+' '+DIF_LBL[q.d]+'</span></div><div class="q-text" id="qtext"></div><div class="options" id="opts">'+optHtml+'</div><div class="to-badge" id="tob">⏱ Tiempo agotado — la respuesta correcta está marcada</div><div class="tip-box" id="tipb"><div class="tip-lbl" id="tipl"></div><span id="tipt"></span></div></div>';
+    '<div class="timer-row"><div class="timer-ring tr-ok" id="tr"><svg viewBox="0 0 52 52"><circle class="ring-bg" cx="26" cy="26" r="20"/><circle class="ring-bar" id="rb" cx="26" cy="26" r="20"/></svg><span class="ring-txt" id="rt">'+TSEC+'</span></div><div class="timer-meta"><span class="timer-strong">'+TSEC+' segundos</span><span class="timer-sub">'+tipoText(q)+' · '+q.tm+'</span></div></div>'+
+    '<div class="q-card '+q.t+' q-anim" id="qc"><div class="q-meta"><span class="q-badge">'+tipoText(q)+'</span><span class="q-tema">'+q.tm+'</span><span class="q-diff dif'+q.d+'">'+'★'.repeat(q.d)+' '+DIF_LBL[q.d]+'</span></div><div class="q-text" id="qtext"></div><div class="options" id="opts">'+optHtml+'</div><div class="to-badge" id="tob">⏱ Tiempo agotado — la respuesta correcta está marcada</div><div class="tip-box" id="tipb"><div class="tip-lbl" id="tipl"></div><span id="tipt"></span></div></div>';
   document.getElementById('qtext').innerHTML=q.p;
   renderMath(document.getElementById('qw'));window.scrollTo(0,0);startTmr();
 }
@@ -789,7 +874,7 @@ function showResults(){
   var record={
     fecha:new Date().toISOString(),
     fechaLocal:new Date().toLocaleString('es-PE'),
-    nombre:stu.n,apellido:'',area:stu.area,carrera:stu.carrera,
+    nombre:stu.n,apellido:'',universidad:stu.universidad,area:stu.area,carrera:stu.carrera,
     curso:stu.curso,modo:stu.nivel,
     puntaje:pct,correctas:ok,incorrectas:err-to,sinTiempo:to,total:TOTAL,
     nivel:rank.label,colorFila:rank.sheetColor,
@@ -800,9 +885,9 @@ function showResults(){
   };
   sendToSheets(record);
 
-  document.getElementById('r-st').innerHTML='<strong>'+esc(stu.n)+'</strong> · '+esc(stu.carrera)+' · '+esc(stu.curso);
+  document.getElementById('r-st').innerHTML='<strong>'+esc(stu.n)+'</strong> · '+esc(stu.carrera);
   var rc=document.getElementById('r-curso');
-  if(rc)rc.textContent=stu.curso+(stu.nivel!=='Miscelánea'?' · '+stu.nivel:'');
+  if(rc)rc.textContent=stu.universidad.split(' — ')[0]+' · '+stu.curso+(stu.nivel!=='Miscelánea'?' · '+stu.nivel:'');
   document.getElementById('rank-hero-slot').innerHTML=
     '<div class="rank-hero '+rank.cls+'"><div class="rank-inner"><div class="rank-badge-box"><span class="rank-badge-pct">'+pct+'</span><span class="rank-badge-label">pts</span></div><div class="rank-info"><div class="rank-label">'+rank.icon+' Nivel '+rank.label+'</div><div class="rank-title">'+rank.title+'</div><div class="rank-sub">'+rank.sub+'</div></div></div></div>';
   var sc=document.getElementById('r-score');sc.textContent=pct;sc.className='big-score '+rank.scoreCls;
@@ -901,10 +986,11 @@ function buildReview(){
 
 function retry(){
   clearInterval(tmr);idx=0;ans=[];transitioning=false;curStreak=0;
-  stu={n:'',carrera:'',area:'',curso:'',nivel:'Miscelánea'};
+  stu={n:'',carrera:'',area:'',universidad:'',curso:'',nivel:'Miscelánea'};
   sw('screen-register');
   document.getElementById('inp-n').value='';
   document.getElementById('sel-car').value='';
+  document.getElementById('sel-uni').value='';
   document.getElementById('sel-curso').value='';
   NIVEL='Miscelánea';
   document.querySelectorAll('#seg-nivel button').forEach(function(b,i){b.classList.toggle('on',i===0);});
@@ -934,7 +1020,7 @@ function sendToSheets(record){
 }
 /* Compatibilidad con el Apps Script antiguo (solo doGet) */
 function legacySend(record){
-  var url=APPS_SCRIPT_URL+'?fecha='+encodeURIComponent(record.fechaLocal)+'&nombre='+encodeURIComponent(record.nombre)+'&apellido='+encodeURIComponent(record.apellido)+'&area='+encodeURIComponent(record.area)+'&carrera='+encodeURIComponent(record.carrera)+'&curso='+encodeURIComponent(record.curso)+'&puntaje='+encodeURIComponent(record.puntaje)+'&correctas='+encodeURIComponent(record.correctas)+'&incorrectas='+encodeURIComponent(record.incorrectas)+'&sinTiempo='+encodeURIComponent(record.sinTiempo)+'&total='+encodeURIComponent(record.total)+'&nivel='+encodeURIComponent(record.nivel)+'&colorFila='+encodeURIComponent(record.colorFila)+'&ordenar=true';
+  var url=APPS_SCRIPT_URL+'?fecha='+encodeURIComponent(record.fechaLocal)+'&nombre='+encodeURIComponent(record.nombre)+'&apellido='+encodeURIComponent(record.apellido)+'&universidad='+encodeURIComponent(record.universidad||'')+'&area='+encodeURIComponent(record.area)+'&carrera='+encodeURIComponent(record.carrera)+'&curso='+encodeURIComponent(record.curso)+'&puntaje='+encodeURIComponent(record.puntaje)+'&correctas='+encodeURIComponent(record.correctas)+'&incorrectas='+encodeURIComponent(record.incorrectas)+'&sinTiempo='+encodeURIComponent(record.sinTiempo)+'&total='+encodeURIComponent(record.total)+'&nivel='+encodeURIComponent(record.nivel)+'&colorFila='+encodeURIComponent(record.colorFila)+'&ordenar=true';
   fetch(url,{method:'GET',mode:'no-cors'})
     .then(function(){setSheetsStatus('ok','✓ Guardado (modo compatible). Actualiza el Apps Script para métricas completas.');showToast('✓ Guardado en Sheets');})
     .catch(function(){setSheetsStatus('err','✗ Sin conexión. El resultado quedó guardado en este dispositivo y se reenviará automáticamente.');});

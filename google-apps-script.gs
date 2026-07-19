@@ -30,9 +30,9 @@
    funciona aunque el proyecto de Apps Script no esté vinculado a la hoja. */
 var SPREADSHEET_ID = '1woitAAesn5TJr6pp2f1MNobx2r3ACo-Jl60kyp25iac';
 
-var HEADERS_RESULTADOS = ['Fecha','Nombre','Apellido','Área','Carrera','Curso','Puntaje','Nivel','Correctas','Incorrectas','Sin tiempo','Total','Seg/pregunta','Mejor racha','Mejor tema','Peor tema','Dispositivo','Modo'];
+var HEADERS_RESULTADOS = ['Fecha','Nombre','Apellido','Área','Carrera','Curso','Puntaje','Nivel','Correctas','Incorrectas','Sin tiempo','Total','Seg/pregunta','Mejor racha','Mejor tema','Peor tema','Dispositivo','Modo','Universidad'];
 var HEADERS_DETALLE    = ['Fecha','Nombre','Apellido','Área','Carrera','Tema','Correctas','Preguntas','Precisión','Curso'];
-var HEADERS_INGRESOS   = ['Fecha','Nombre','Carrera','Área','Dispositivo','Curso'];
+var HEADERS_INGRESOS   = ['Fecha','Nombre','Carrera','Área','Dispositivo','Curso','Universidad'];
 
 function fechaLima() {
   return Utilities.formatDate(new Date(), 'America/Lima', 'dd/MM/yyyy HH:mm:ss');
@@ -56,7 +56,7 @@ function doGet(e) {
     var p = (e && e.parameter) || {};
     if (p.ping) return respuestaJSON({ ok: true, ping: 'pong' });
     if (p.ingreso) {
-      guardarIngreso({ nombre: p.alumno || '', carrera: p.carrera || '', area: p.area || '', dispositivo: p.dispositivo || '', curso: p.curso || '' });
+      guardarIngreso({ nombre: p.alumno || '', carrera: p.carrera || '', area: p.area || '', dispositivo: p.dispositivo || '', curso: p.curso || '', universidad: p.universidad || '' });
       return respuestaJSON({ ok: true, tipo: 'ingreso' });
     }
     if (!p.nombre) return respuestaJSON({ ok: false, error: 'sin datos' });
@@ -64,6 +64,7 @@ function doGet(e) {
       fechaLocal: p.fecha || fechaLima(),
       nombre: p.nombre, apellido: p.apellido || '', area: p.area || '',
       carrera: p.carrera || '', curso: p.curso || 'Física',
+      universidad: p.universidad || '',
       puntaje: Number(p.puntaje) || 0, nivel: p.nivel || '',
       correctas: Number(p.correctas) || 0, incorrectas: Number(p.incorrectas) || 0,
       sinTiempo: Number(p.sinTiempo) || 0, total: Number(p.total) || 0,
@@ -87,7 +88,7 @@ function guardarIngreso(d) {
   try {
     var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
     var hoja = obtenerHoja(ss, 'Ingresos', HEADERS_INGRESOS);
-    hoja.appendRow([fechaLima(), d.nombre || '', d.carrera || '', d.area || '', d.dispositivo || '', d.curso || '']);
+    hoja.appendRow([fechaLima(), d.nombre || '', d.carrera || '', d.area || '', d.dispositivo || '', d.curso || '', d.universidad || '']);
   } finally {
     lock.releaseLock();
   }
@@ -110,7 +111,7 @@ function guardarResultado(data) {
       Number(data.sinTiempo) || 0, Number(data.total) || 0,
       Number(data.tiempoMedio) || '', Number(data.mejorRacha) || '',
       data.mejorTema || '', data.peorTema || '', data.dispositivo || '',
-      data.modo || 'Miscelánea'
+      data.modo || 'Miscelánea', data.universidad || ''
     ];
     hoja.appendRow(fila);
     var r = hoja.getLastRow();
@@ -182,13 +183,16 @@ function crearResumenSiFalta(ss) {
   h.getRange('A9').setFormula('=IFERROR(QUERY(DetalleTemas!A2:J,"select J, F, sum(G), sum(H), round(sum(G)/sum(H)*100,1) where F is not null group by J, F order by J, sum(G)/sum(H) asc label J \'Curso\', F \'Tema\', sum(G) \'Correctas\', sum(H) \'Preguntas\', round(sum(G)/sum(H)*100,1) \'% acierto\'",0),"Aún no hay datos")');
 
   h.getRange('F8').setValue('📚 RENDIMIENTO POR CURSO').setFontWeight('bold');
-  h.getRange('F9').setFormula('=IFERROR(QUERY(Resultados!A2:R,"select F, count(F), round(avg(G),1) where F is not null group by F label F \'Curso\', count(F) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
+  h.getRange('F9').setFormula('=IFERROR(QUERY(Resultados!A2:S,"select F, count(F), round(avg(G),1) where F is not null group by F label F \'Curso\', count(F) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
 
-  h.getRange('F14').setValue('🏛 RENDIMIENTO POR ÁREA').setFontWeight('bold');
-  h.getRange('F15').setFormula('=IFERROR(QUERY(Resultados!A2:R,"select D, count(D), round(avg(G),1) where D is not null group by D label D \'Área\', count(D) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
+  h.getRange('F14').setValue('🏛 RENDIMIENTO POR UNIVERSIDAD').setFontWeight('bold');
+  h.getRange('F15').setFormula('=IFERROR(QUERY(Resultados!A2:S,"select S, count(S), round(avg(G),1) where S is not null group by S order by count(S) desc label S \'Universidad\', count(S) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
 
-  h.getRange('F20').setValue('🎓 RENDIMIENTO POR CARRERA').setFontWeight('bold');
-  h.getRange('F21').setFormula('=IFERROR(QUERY(Resultados!A2:R,"select E, count(E), round(avg(G),1) where E is not null group by E order by count(E) desc label E \'Carrera\', count(E) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
+  h.getRange('F21').setValue('🏛 RENDIMIENTO POR ÁREA').setFontWeight('bold');
+  h.getRange('F22').setFormula('=IFERROR(QUERY(Resultados!A2:S,"select D, count(D), round(avg(G),1) where D is not null group by D label D \'Área\', count(D) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
+
+  h.getRange('F27').setValue('🎓 RENDIMIENTO POR CARRERA').setFontWeight('bold');
+  h.getRange('F28').setFormula('=IFERROR(QUERY(Resultados!A2:S,"select E, count(E), round(avg(G),1) where E is not null group by E order by count(E) desc label E \'Carrera\', count(E) \'Exámenes\', round(avg(G),1) \'Promedio\'",0),"Aún no hay datos")');
 
   h.getRange('A1:K1').merge();
   h.setColumnWidths(1, 11, 140);
