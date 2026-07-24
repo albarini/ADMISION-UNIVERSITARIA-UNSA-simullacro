@@ -43,7 +43,17 @@ h1,h2,h3{text-wrap:balance;}
 .reg-topbar{border-bottom:1px solid var(--border);background:rgba(7,7,10,.92);position:relative;}
 .reg-topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--lux-line);}
 .reg-topbar-in{display:flex;align-items:center;justify-content:center;padding-block:1.15rem;}
-.reg-main{max-width:34rem;margin-inline:auto;padding:clamp(2.75rem,8vh,5.5rem) clamp(1.25rem,5vw,2rem) 3rem;text-align:center;}
+.reg-main{max-width:34rem;margin-inline:auto;padding:clamp(1.5rem,4vh,3rem) clamp(1.25rem,5vw,2rem) 3rem;text-align:center;}
+.quick{max-width:34rem;margin-inline:auto;padding:1.4rem clamp(1.25rem,5vw,2rem) .3rem;text-align:center;}
+.quick-lbl{display:block;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold2);margin-bottom:.85rem;}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(5.4rem,1fr));gap:.55rem;}
+.quick-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;padding:.85rem .35rem;background:var(--obsidian3);border:1px solid var(--border2);border-radius:2px;cursor:pointer;transition:border-color .2s,background .2s,transform .12s;min-height:4.3rem;}
+.qc-ico{font-size:1.35rem;line-height:1;}
+.qc-name{font-family:'Cormorant Garamond',serif;font-size:.92rem;color:var(--cream);line-height:1.1;text-align:center;}
+.quick-card:active{transform:scale(.96);border-color:var(--gold-dark);}
+@media(hover:hover){.quick-card:hover{border-color:var(--gold-dark);background:var(--obsidian4);}}
+@keyframes formGlow{0%,100%{box-shadow:0 0 0 0 rgba(196,160,68,0);}35%{box-shadow:0 0 0 2px rgba(196,160,68,.35);}}
+.reg-form.jump{animation:formGlow 1.3s ease;border-radius:4px;}
 @keyframes riseIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
 .reg-h1{font-family:'Playfair Display',serif;font-weight:400;font-size:clamp(3rem,9vw,4.6rem);line-height:.98;letter-spacing:-.02em;color:var(--cream);margin-bottom:1.5rem;animation:riseIn .8s cubic-bezier(.16,1,.3,1) both;}
 .reg-h1 em{font-style:italic;color:var(--gold3);text-shadow:0 0 40px rgba(196,160,68,.28);}
@@ -333,6 +343,16 @@ h1,h2,h3{text-wrap:balance;}
       </span>
     </div>
   </header>
+  <section class="quick" aria-label="Acceso rápido a los cursos">
+    <span class="quick-lbl">Elige tu curso y empieza</span>
+    <div class="quick-grid">
+      <button type="button" class="quick-card" onclick="quickStart('Física')"><span class="qc-ico">⚛️</span><span class="qc-name">Física</span></button>
+      <button type="button" class="quick-card" onclick="quickStart('Química')"><span class="qc-ico">⚗️</span><span class="qc-name">Química</span></button>
+      <button type="button" class="quick-card" onclick="quickStart('Aritmética')"><span class="qc-ico">🔢</span><span class="qc-name">Aritmética</span></button>
+      <button type="button" class="quick-card" onclick="quickStart('Razonamiento Matemático')"><span class="qc-ico">📐</span><span class="qc-name">Raz. Matemático</span></button>
+      <button type="button" class="quick-card" onclick="quickStart('Razonamiento Verbal')"><span class="qc-ico">📖</span><span class="qc-name">Raz. Verbal</span></button>
+    </div>
+  </section>
   <main class="reg-main">
     <h1 class="reg-h1"><em>Simulacro</em><span>de Admisión</span></h1>
     <div class="reg-rule" aria-hidden="true"></div>
@@ -342,7 +362,7 @@ h1,h2,h3{text-wrap:balance;}
       <span><strong>20</strong>preguntas</span><i aria-hidden="true"></i>
       <span><strong>100</strong>puntos</span>
     </div>
-    <form class="reg-form" onsubmit="event.preventDefault();startExam();">
+    <form class="reg-form" id="reg-form" onsubmit="event.preventDefault();startExam();">
       <div class="field">
         <label for="inp-n">Nombres completos</label>
         <input id="inp-n" type="text" placeholder="Ing. David" autocomplete="name" oninput="chk()">
@@ -799,6 +819,16 @@ function selNivel(n,btn){
   NIVEL=n;
   document.querySelectorAll('#seg-nivel button').forEach(function(b){b.classList.remove('on');});
   btn.classList.add('on');
+}
+/* Acceso rápido: al tocar un curso arriba, lo preselecciona, baja al
+   formulario y resalta lo que falta completar para empezar. */
+function quickStart(curso){
+  document.getElementById('sel-curso').value=curso;chk();
+  var form=document.getElementById('reg-form');
+  form.scrollIntoView({behavior:'smooth',block:'center'});
+  form.classList.remove('jump');void form.offsetWidth;form.classList.add('jump');
+  var n=document.getElementById('inp-n');
+  if(!n.value.trim())setTimeout(function(){try{n.focus({preventScroll:true});}catch(e){}},450);
 }
 function tipoText(q){return q.tl||tipoLbl[q.t];}
 function chk(){
